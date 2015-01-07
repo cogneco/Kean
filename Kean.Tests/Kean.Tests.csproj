@@ -33,13 +33,6 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=1.1.1161.61462, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenTK.1.1.1161.61462\lib\NET40\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK.GLControl, Version=1.1.1161.61462, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OpenTK.GLControl.1.1.1161.61462\lib\NET40\OpenTK.GLControl.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="glib-sharp">
       <HintPath>..\..\packages\GLib.Sharp.2.28.1.2\lib\glib-sharp.dll</HintPath>
@@ -51,11 +44,17 @@
       <HintPath>..\..\packages\Pango.1.28.3.2\lib\pango-sharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\..\packages\OpenTK.GLControl.1.1.1589.5942\lib\NET40\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>..\..\packages\MySql.Data.6.8.3\lib\net40\MySql.Data.dll</HintPath>
+      <HintPath>..\..\packages\MySql.Data.6.9.5\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +279,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="../packages/GLib.Sharp.2.28.1.2/build/GLib.Sharp.targets" Condition="Exists('../packages/GLib.Sharp.2.28.1.2/build/GLib.Sharp.targets')" />
   <Import Project="../packages/Cairo.2.0.0.2/build/Cairo.targets" Condition="Exists('../packages/Cairo.2.0.0.2/build/Cairo.targets')" />
