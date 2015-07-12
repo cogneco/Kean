@@ -79,15 +79,15 @@ namespace Kean.IO.Net.Http.Header
 		public Uri.Locator Location { get { return this.location ?? (this.location = this["Location"]); } set { this["Location"] = this.location = value; } }
 		#endregion
 		#region ContentLength
-		int? contentLength;
-		public int ContentLength
+		long? contentLength;
+		public long ContentLength
 		{
 			get
 			{ 
-				int result;
+				long result;
 				if (contentLength.HasValue)
 					result = this.contentLength.Value;
-				else if (int.TryParse(this["Content-Length"], out result))
+				else if (long.TryParse(this["Content-Length"], out result))
 					this.contentLength = result;
 				else
 					result = 0;
@@ -98,6 +98,19 @@ namespace Kean.IO.Net.Http.Header
 				this.contentLength = value;
 				this["Content-Length"] = this.contentLength.HasValue ? this.contentLength.ToString() : null; 
 			} 
+		}
+		#endregion
+		#region ContentRange
+		Range contentRange;
+		public Range ContentRange
+		{
+			get 
+			{
+				if (this.contentRange == null)
+					this.contentRange = this["Content-Range"];
+				return this.contentRange;
+			}
+			set { this["Content-Range"] = this.contentRange = value; }
 		}
 		#endregion
 		#region Link

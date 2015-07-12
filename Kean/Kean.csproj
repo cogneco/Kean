@@ -546,7 +546,6 @@
     <Compile Include="Math\Integer.cs" />
     <Compile Include="Math\Single.Function.cs" />
     <Compile Include="Math\Single.cs" />
-    <Compile Include="Math\UnsignedInteger.Function.cs" />
     <Compile Include="Math\Complex\Double.cs" />
     <Compile Include="Math\Complex\Single.cs" />
     <Compile Include="Math\Complex\Template.cs" />
@@ -868,6 +867,13 @@
     <Compile Include="IO\Net\Http\Header\Links.cs" />
     <Compile Include="IO\Net\Http\Header\Response.cs" />
     <Compile Include="IO\Wrap\FixedLengthByteInDevice.cs" />
+    <Compile Include="IO\Net\Http\Header\Range.cs" />
+    <Compile Include="IO\ISeekable.cs" />
+    <Compile Include="IO\ISeekableBlockInDevice.cs" />
+    <Compile Include="IO\Wrap\SlicedBlockInDevice.cs" />
+    <Compile Include="Math\UnsignedLong.Function.cs" />
+    <Compile Include="Math\Long.Function.cs" />
+    <Compile Include="IO\Extension\SeekableBlockInDeviceExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Kean.nuspec" />

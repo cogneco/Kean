@@ -26,11 +26,13 @@ using Collection = Kean.Collection;
 using Kean.Collection.Extension;
 using Uri = Kean.Uri;
 using Generic = System.Collections.Generic;
+using Integer = Kean.Math.Integer;
 
 namespace Kean.IO
 {
 	public class BlockDevice :
-		IBlockDevice
+		IBlockDevice, 
+	ISeekableBlockInDevice
 	{
 		System.IO.Stream stream;
 		public bool Wrapped { get; set; }
@@ -42,6 +44,19 @@ namespace Kean.IO
 		{
 			this.stream = stream;
 			this.Resource = "stream:///";
+		}
+		#endregion
+		#region ISeekable implementation
+		public bool Seekable { get { return this.stream.NotNull() && this.stream.CanSeek; } }
+		public long? Position 
+		{ 
+			get { return this.stream.NotNull() ? (long?)this.stream.Position : null; } 
+			set { if (value.HasValue) this.stream.Seek(value.Value < 0 ? -value.Value : value.Value, value.Value < 0 ? System.IO.SeekOrigin.End : System.IO.SeekOrigin.Begin); }
+		}
+		public long? Size { get { return this.stream.NotNull() ? (long?)this.stream.Length : null; } }
+		public long? Seek(long position)
+		{
+			return this.stream.NotNull() ?  (long?)this.stream.Seek(position, System.IO.SeekOrigin.Current) : null;
 		}
 		#endregion
 		#region IBlockInDevice
