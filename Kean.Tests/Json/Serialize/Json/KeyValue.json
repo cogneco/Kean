@@ -1,0 +1,7 @@
+{ 
+	"$type": "Kean.Serialize.Test.Data.KeyValue Kean.Tests", 
+	"data": { 
+		"Key": "This is Kean.", 
+		"Value": "2111-11-11T11:11:11.1110000" 
+	} 
+}

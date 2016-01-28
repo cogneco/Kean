@@ -1,0 +1,981 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Kean</RootNamespace>
+    <AssemblyName>Kean</AssemblyName>
+    <UseMSBuildEngine>False</UseMSBuildEngine>
+    <RestorePackages>true</RestorePackages>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x86</PlatformTarget>
+    <BuildPackage>true</BuildPackage>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\packages\OpenTK.1.1.1161.61462\lib\NET40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\..\packages\OpenTK.GLControl.1.1.1161.61462\lib\NET40\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="glib-sharp">
+      <HintPath>..\..\packages\GLib.Sharp.2.28.1.2\lib\glib-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cairo">
+      <HintPath>..\..\packages\Cairo.2.0.0.2\lib\Mono.Cairo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="pango-sharp">
+      <HintPath>..\..\packages\Pango.1.28.3.2\lib\pango-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Draw\Cairo\Surface.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Data.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Data1D.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Data2D.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Data3D.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Data1D.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Data2D.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Data3D.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Renderer.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Renderer.cs" />
+    <Compile Include="Draw\OpenGL\Surface.cs" />
+    <Compile Include="Draw\Surface.cs" />
+    <Compile Include="Draw\Vector\Surface.cs" />
+    <Compile Include="Extension\DisposableExtension.cs" />
+    <Compile Include="IO\BlockDevice.cs" />
+    <Compile Include="IO\BufferBlockOutDevice.cs" />
+    <Compile Include="IO\BlockDeviceCombiner.cs" />
+    <Compile Include="IO\Net\Http\Method.cs" />
+    <Compile Include="IO\Net\Http\Server.cs" />
+    <Compile Include="IO\Net\Http\Status.cs" />
+    <Compile Include="IO\Wrap\ByteStream.cs" />
+    <Compile Include="IO\Wrap\BlockStream.cs" />
+    <Compile Include="IO\Wrap\PartialByteInDevice.cs" />
+    <Compile Include="Math\Exception\Abstract.cs" />
+    <Compile Include="Math\Exception\IndexOutOfRange.cs" />
+    <Compile Include="Math\Geometry2D\Box.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Box.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Math\Geometry3D\Transform.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Transform.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Comparer.cs" />
+    <Compile Include="Enumerable.cs" />
+    <Compile Include="Enumerator.cs" />
+    <Compile Include="Environment.cs" />
+    <Compile Include="IBinary.cs" />
+    <Compile Include="IComparable.cs" />
+    <Compile Include="IEqualsWithin.cs" />
+    <Compile Include="IString.cs" />
+    <Compile Include="KeyValue.cs" />
+    <Compile Include="NonNullable.cs" />
+    <Compile Include="NotifyAttribute.cs" />
+    <Compile Include="OperatingSystem.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="ReferenceCounter.cs" />
+    <Compile Include="Synchronized.cs" />
+    <Compile Include="Buffer\Byte.cs" />
+    <Compile Include="Buffer\Double.cs" />
+    <Compile Include="Buffer\Integer.cs" />
+    <Compile Include="Buffer\Pointer.cs" />
+    <Compile Include="Buffer\Single.cs" />
+    <Compile Include="Buffer\Sized.cs" />
+    <Compile Include="Buffer\Vector.cs" />
+    <Compile Include="Cli\ConsoleDevice.cs" />
+    <Compile Include="Cli\ConsoleTerminal.cs" />
+    <Compile Include="Cli\EditCommand.cs" />
+    <Compile Include="Cli\ITerminal.cs" />
+    <Compile Include="Cli\Terminal.cs" />
+    <Compile Include="Cli\VT100.cs" />
+    <Compile Include="Cli\Argument\Argument.cs" />
+    <Compile Include="Cli\Argument\Parser.cs" />
+    <Compile Include="Cli\LineBuffer\Abstract.cs" />
+    <Compile Include="Cli\LineBuffer\Interactive.cs" />
+    <Compile Include="Cli\LineBuffer\InteractiveWithHistory.cs" />
+    <Compile Include="Cli\LineBuffer\Simple.cs" />
+    <Compile Include="Collection\Dictionary.cs" />
+    <Compile Include="Collection\Enumerable.cs" />
+    <Compile Include="Collection\IArrayConvertible.cs" />
+    <Compile Include="Collection\IDictionary.cs" />
+    <Compile Include="Collection\ILink.cs" />
+    <Compile Include="Collection\IList.cs" />
+    <Compile Include="Collection\IQueue.cs" />
+    <Compile Include="Collection\IReadOnlyDictionary.cs" />
+    <Compile Include="Collection\IReadOnlyVector.cs" />
+    <Compile Include="Collection\ISet.cs" />
+    <Compile Include="Collection\IStack.cs" />
+    <Compile Include="Collection\IVector.cs" />
+    <Compile Include="Collection\List.cs" />
+    <Compile Include="Collection\Merge.cs" />
+    <Compile Include="Collection\Queue.cs" />
+    <Compile Include="Collection\ReadOnlyDictionary.cs" />
+    <Compile Include="Collection\ReadOnlyMerge.cs" />
+    <Compile Include="Collection\ReadOnlySlice.cs" />
+    <Compile Include="Collection\ReadOnlyVector.cs" />
+    <Compile Include="Collection\Set.cs" />
+    <Compile Include="Collection\Slice.cs" />
+    <Compile Include="Collection\Stack.cs" />
+    <Compile Include="Collection\Vector.cs" />
+    <Compile Include="Collection\Abstract\CommonVector.cs" />
+    <Compile Include="Collection\Abstract\List.cs" />
+    <Compile Include="Collection\Abstract\ListSet.cs" />
+    <Compile Include="Collection\Abstract\ReadOnlyDictionary.cs" />
+    <Compile Include="Collection\Abstract\ReadOnlyVector.cs" />
+    <Compile Include="Collection\Abstract\Vector.cs" />
+    <Compile Include="Collection\Array\List.cs" />
+    <Compile Include="Collection\Array\Queue.cs" />
+    <Compile Include="Collection\Array\ReadOnlyVector.cs" />
+    <Compile Include="Collection\Array\Set.cs" />
+    <Compile Include="Collection\Array\Stack.cs" />
+    <Compile Include="Collection\Array\Vector.cs" />
+    <Compile Include="Collection\Cast\ReadOnlyDictionary.cs" />
+    <Compile Include="Collection\Cast\ReadOnlyVector.cs" />
+    <Compile Include="Collection\Cast\Vector.cs" />
+    <Compile Include="Collection\Exception\Empty.cs" />
+    <Compile Include="Collection\Exception\Exception.cs" />
+    <Compile Include="Collection\Exception\InvalidArgument.cs" />
+    <Compile Include="Collection\Exception\InvalidIndex.cs" />
+    <Compile Include="Collection\Exception\Unsortable.cs" />
+    <Compile Include="Collection\Extension\ArrayExtension.cs" />
+    <Compile Include="Collection\Extension\ArrayParallelExtension.cs" />
+    <Compile Include="Collection\Extension\DictionaryExtension.cs" />
+    <Compile Include="Collection\Extension\ListExtension.cs" />
+    <Compile Include="Collection\Extension\QueueExtension.cs" />
+    <Compile Include="Collection\Extension\ReadOnlyDictionaryExtension.cs" />
+    <Compile Include="Collection\Extension\ReadOnlyVectorExtension.cs" />
+    <Compile Include="Collection\Extension\ReadOnlyVectorParallelExtension.cs" />
+    <Compile Include="Collection\Extension\SetExtension.cs" />
+    <Compile Include="Collection\Extension\VectorExtension.cs" />
+    <Compile Include="Collection\Extension\VectorParallelExtension.cs" />
+    <Compile Include="Collection\Hash\Dictionary.cs" />
+    <Compile Include="Collection\Hash\Set.cs" />
+    <Compile Include="Collection\Hooked\FilteredList.cs" />
+    <Compile Include="Collection\Hooked\IList.cs" />
+    <Compile Include="Collection\Hooked\IQueue.cs" />
+    <Compile Include="Collection\Hooked\IStack.cs" />
+    <Compile Include="Collection\Hooked\IVector.cs" />
+    <Compile Include="Collection\Hooked\List.cs" />
+    <Compile Include="Collection\Hooked\Queue.cs" />
+    <Compile Include="Collection\Hooked\Stack.cs" />
+    <Compile Include="Collection\Hooked\Vector.cs" />
+    <Compile Include="Collection\Linked\Dictionary.cs" />
+    <Compile Include="Collection\Linked\Link.cs" />
+    <Compile Include="Collection\Linked\List.cs" />
+    <Compile Include="Collection\Linked\Queue.cs" />
+    <Compile Include="Collection\Linked\Set.cs" />
+    <Compile Include="Collection\Linked\Stack.cs" />
+    <Compile Include="Collection\Linked\Extension\LinkExtension.cs" />
+    <Compile Include="Collection\Sorted\List.cs" />
+    <Compile Include="Collection\Synchronized\Dictionary.cs" />
+    <Compile Include="Collection\Synchronized\List.cs" />
+    <Compile Include="Collection\Synchronized\Queue.cs" />
+    <Compile Include="Collection\Synchronized\Stack.cs" />
+    <Compile Include="Collection\Synchronized\Vector.cs" />
+    <Compile Include="Collection\Tree\INode.cs" />
+    <Compile Include="Collection\Tree\ITree.cs" />
+    <Compile Include="Collection\Wrap\List.cs" />
+    <Compile Include="Collection\Wrap\ListDictionary.cs" />
+    <Compile Include="Collection\Wrap\ListQueue.cs" />
+    <Compile Include="Collection\Wrap\ListStack.cs" />
+    <Compile Include="Collection\Wrap\Queue.cs" />
+    <Compile Include="Collection\Wrap\ReadOnlyVector.cs" />
+    <Compile Include="Collection\Wrap\Set.cs" />
+    <Compile Include="Collection\Wrap\Stack.cs" />
+    <Compile Include="Collection\Wrap\Vector.cs" />
+    <Compile Include="DB\DataAttribute.cs" />
+    <Compile Include="DB\Database.cs" />
+    <Compile Include="DB\ITable.cs" />
+    <Compile Include="DB\IndexAttribute.cs" />
+    <Compile Include="DB\Item.cs" />
+    <Compile Include="DB\Query.cs" />
+    <Compile Include="DB\Sorting.cs" />
+    <Compile Include="DB\Table.cs" />
+    <Compile Include="DB\TableAttribute.cs" />
+    <Compile Include="DB\Extension\TableExtension.cs" />
+    <Compile Include="DB\Sql\Database.cs" />
+    <Compile Include="DB\Sql\QueryGenerator.cs" />
+    <Compile Include="DB\Sql\Table.cs" />
+    <Compile Include="Draw\Canvas.cs" />
+    <Compile Include="Draw\Colors.cs" />
+    <Compile Include="Draw\CoordinateSystem.cs" />
+    <Compile Include="Draw\Font.cs" />
+    <Compile Include="Draw\FontSlant.cs" />
+    <Compile Include="Draw\FontWeight.cs" />
+    <Compile Include="Draw\IColor.cs" />
+    <Compile Include="Draw\IPaint.cs" />
+    <Compile Include="Draw\Image.cs" />
+    <Compile Include="Draw\LineCap.cs" />
+    <Compile Include="Draw\LineJoin.cs" />
+    <Compile Include="Draw\Map.cs" />
+    <Compile Include="Draw\Path.cs" />
+    <Compile Include="Draw\Stroke.cs" />
+    <Compile Include="Draw\Text.cs" />
+    <Compile Include="Draw\TextAlign.cs" />
+    <Compile Include="Draw\Cairo\Bgra.cs" />
+    <Compile Include="Draw\Cairo\Canvas.cs" />
+    <Compile Include="Draw\Cairo\Image.cs" />
+    <Compile Include="Draw\Cairo\Raster.cs" />
+    <Compile Include="Draw\Cairo\Extension\ColorExtension.cs" />
+    <Compile Include="Draw\Cairo\Extension\FontExtension.cs" />
+    <Compile Include="Draw\Cairo\Extension\LineCapExtension.cs" />
+    <Compile Include="Draw\Cairo\Extension\LineJoinExtension.cs" />
+    <Compile Include="Draw\Cairo\Extension\TextAlignExtension.cs" />
+    <Compile Include="Draw\Cairo\Extension\TextExtension.cs" />
+    <Compile Include="Draw\Color\Bgr.cs" />
+    <Compile Include="Draw\Color\Bgra.cs" />
+    <Compile Include="Draw\Color\Convert.cs" />
+    <Compile Include="Draw\Color\Monochrome.cs" />
+    <Compile Include="Draw\Color\Yuv.cs" />
+    <Compile Include="Draw\OpenGL\Bgr.cs" />
+    <Compile Include="Draw\OpenGL\Bgra.cs" />
+    <Compile Include="Draw\OpenGL\Canvas.cs" />
+    <Compile Include="Draw\OpenGL\Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Draw\OpenGL\Image.cs" />
+    <Compile Include="Draw\OpenGL\Map.cs" />
+    <Compile Include="Draw\OpenGL\Monochrome.cs" />
+    <Compile Include="Draw\OpenGL\Packed.cs" />
+    <Compile Include="Draw\OpenGL\Planar.cs" />
+    <Compile Include="Draw\OpenGL\Window.cs" />
+    <Compile Include="Draw\OpenGL\Yuv420.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Composition.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Context.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Draw\OpenGL\Backend\Depth.cs" />
+    <Compile Include="Draw\OpenGL\Backend\FrameBuffer.cs" />
+    <Compile Include="Draw\OpenGL\Backend\IData.cs" />
+    <Compile Include="Draw\OpenGL\Backend\ITexture.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Program.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Programs.cs" />
+    <Compile Include="Draw\OpenGL\Backend\RecycleBin.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Resource.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Shader.cs" />
+    <Compile Include="Draw\OpenGL\Backend\ShaderType.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Texture.cs" />
+    <Compile Include="Draw\OpenGL\Backend\TextureType.cs" />
+    <Compile Include="Draw\OpenGL\Backend\ThreadPool.cs" />
+    <Compile Include="Draw\OpenGL\Backend\WasteBin.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Window.cs" />
+    <Compile Include="Draw\OpenGL\Backend\Extension\Geometry2D.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Composition.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Context.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Depth.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\FrameBuffer.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Program.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Shader.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Texture.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\ThreadPool.cs" />
+    <Compile Include="Draw\OpenGL\Backend\OpenGL21\Window.cs" />
+    <Compile Include="Draw\OpenGL\Exception\ContextNotCreatable.cs" />
+    <Compile Include="Draw\OpenGL\Exception\Exception.cs" />
+    <Compile Include="Draw\OpenGL\Exception\Framebuffer.cs" />
+    <Compile Include="Draw\Paint\Gradient.cs" />
+    <Compile Include="Draw\Paint\GradientStop.cs" />
+    <Compile Include="Draw\Paint\LinearGradient.cs" />
+    <Compile Include="Draw\Paint\RadialGradient.cs" />
+    <Compile Include="Draw\PathSegment\Abstract.cs" />
+    <Compile Include="Draw\PathSegment\Close.cs" />
+    <Compile Include="Draw\PathSegment\CurveTo.cs" />
+    <Compile Include="Draw\PathSegment\EllipticalArcTo.cs" />
+    <Compile Include="Draw\PathSegment\LineTo.cs" />
+    <Compile Include="Draw\PathSegment\MoveTo.cs" />
+    <Compile Include="Draw\PathSegment\Parser.cs" />
+    <Compile Include="Draw\Raster\Bgr.cs" />
+    <Compile Include="Draw\Raster\Bgra.cs" />
+    <Compile Include="Draw\Raster\Compression.cs" />
+    <Compile Include="Draw\Raster\Image.cs" />
+    <Compile Include="Draw\Raster\Monochrome.cs" />
+    <Compile Include="Draw\Raster\Packed.cs" />
+    <Compile Include="Draw\Raster\Planar.cs" />
+    <Compile Include="Draw\Raster\Uyvy.cs" />
+    <Compile Include="Draw\Raster\Yuv420.cs" />
+    <Compile Include="Draw\Raster\Yuv422.cs" />
+    <Compile Include="Draw\Raster\Yuv444.cs" />
+    <Compile Include="Draw\Raster\YuvPacked.cs" />
+    <Compile Include="Draw\Raster\YuvPlanar.cs" />
+    <Compile Include="Draw\Raster\Yuyv.cs" />
+    <Compile Include="Draw\Raster\Yvu420.cs" />
+    <Compile Include="Draw\Raster\Extension\GdiExtension.cs" />
+    <Compile Include="Draw\Vector\Canvas.cs" />
+    <Compile Include="Draw\Vector\Image.cs" />
+    <Compile Include="Draw\Vector\Element\Abstract.cs" />
+    <Compile Include="Draw\Vector\Element\Group.cs" />
+    <Compile Include="Draw\Vector\Element\Image.cs" />
+    <Compile Include="Draw\Vector\Element\Paintable.cs" />
+    <Compile Include="Draw\Vector\Element\Path.cs" />
+    <Compile Include="Draw\Vector\Element\Text.cs" />
+    <Compile Include="Error\Entry.cs" />
+    <Compile Include="Error\Exception.cs" />
+    <Compile Include="Error\IError.cs" />
+    <Compile Include="Error\IEvent.cs" />
+    <Compile Include="Error\Level.cs" />
+    <Compile Include="Error\Log.cs" />
+    <Compile Include="Error\Extension\ErrorExtension.cs" />
+    <Compile Include="Extension\ActionExtension.cs" />
+    <Compile Include="Extension\ArrayExtension.cs" />
+    <Compile Include="Extension\ComparableExtension.cs" />
+    <Compile Include="Extension\ComparerExtension.cs" />
+    <Compile Include="Extension\ComparisonExtension.cs" />
+    <Compile Include="Extension\EnumerableExtension.cs" />
+    <Compile Include="Extension\EnumeratorExtension.cs" />
+    <Compile Include="Extension\FuncExtension.cs" />
+    <Compile Include="Extension\ObjectExtension.cs" />
+    <Compile Include="Extension\SingleExtension.cs" />
+    <Compile Include="Extension\StringExtension.cs" />
+    <Compile Include="Extension\TypeExtension.cs" />
+    <Compile Include="Html\Dom\Abbreviation.cs" />
+    <Compile Include="Html\Dom\Address.cs" />
+    <Compile Include="Html\Dom\Anchor.cs" />
+    <Compile Include="Html\Dom\Area.cs" />
+    <Compile Include="Html\Dom\Article.cs" />
+    <Compile Include="Html\Dom\Aside.cs" />
+    <Compile Include="Html\Dom\Audio.cs" />
+    <Compile Include="Html\Dom\Base.cs" />
+    <Compile Include="Html\Dom\BidirectionalOverride.cs" />
+    <Compile Include="Html\Dom\BlockQuote.cs" />
+    <Compile Include="Html\Dom\Body.cs" />
+    <Compile Include="Html\Dom\Bold.cs" />
+    <Compile Include="Html\Dom\Button.cs" />
+    <Compile Include="Html\Dom\Canvas.cs" />
+    <Compile Include="Html\Dom\Caption.cs" />
+    <Compile Include="Html\Dom\Cite.cs" />
+    <Compile Include="Html\Dom\Code.cs" />
+    <Compile Include="Html\Dom\Column.cs" />
+    <Compile Include="Html\Dom\ColumnGroup.cs" />
+    <Compile Include="Html\Dom\DataList.cs" />
+    <Compile Include="Html\Dom\DefinitionTerm.cs" />
+    <Compile Include="Html\Dom\Definition.cs" />
+    <Compile Include="Html\Dom\Deleted.cs" />
+    <Compile Include="Html\Dom\DefinitionData.cs" />
+    <Compile Include="Html\Dom\DefinitionList.cs" />
+    <Compile Include="Html\Dom\Details.cs" />
+    <Compile Include="Html\Dom\Dialog.cs" />
+    <Compile Include="Html\Dom\Division.cs" />
+    <Compile Include="Html\Dom\Document.cs" />
+    <Compile Include="Html\Dom\Element.cs" />
+    <Compile Include="Html\Dom\Embedded.cs" />
+    <Compile Include="Html\Dom\Emphasized.cs" />
+    <Compile Include="Html\Dom\FieldSet.cs" />
+    <Compile Include="Html\Dom\Figure.cs" />
+    <Compile Include="Html\Dom\FigureCaption.cs" />
+    <Compile Include="Html\Dom\Footer.cs" />
+    <Compile Include="Html\Dom\Form.cs" />
+    <Compile Include="Html\Dom\Head.cs" />
+    <Compile Include="Html\Dom\Header.cs" />
+    <Compile Include="Html\Dom\Heading1.cs" />
+    <Compile Include="Html\Dom\Heading2.cs" />
+    <Compile Include="Html\Dom\Heading3.cs" />
+    <Compile Include="Html\Dom\Heading4.cs" />
+    <Compile Include="Html\Dom\Heading5.cs" />
+    <Compile Include="Html\Dom\Heading6.cs" />
+    <Compile Include="Html\Dom\HeadingGroup.cs" />
+    <Compile Include="Html\Dom\HorizontalRule.cs" />
+    <Compile Include="Html\Dom\Image.cs" />
+    <Compile Include="Html\Dom\Incorrect.cs" />
+    <Compile Include="Html\Dom\InlineFrame.cs" />
+    <Compile Include="Html\Dom\Input.cs" />
+    <Compile Include="Html\Dom\Insert.cs" />
+    <Compile Include="Html\Dom\Italic.cs" />
+    <Compile Include="Html\Dom\KeyBoardInput.cs" />
+    <Compile Include="Html\Dom\KeyGenerator.cs" />
+    <Compile Include="Html\Dom\Label.cs" />
+    <Compile Include="Html\Dom\Legend.cs" />
+    <Compile Include="Html\Dom\LineBreak.cs" />
+    <Compile Include="Html\Dom\Link.cs" />
+    <Compile Include="Html\Dom\ListItem.cs" />
+    <Compile Include="Html\Dom\Map.cs" />
+    <Compile Include="Html\Dom\Mark.cs" />
+    <Compile Include="Html\Dom\MediaSource.cs" />
+    <Compile Include="Html\Dom\MetaData.cs" />
+    <Compile Include="Html\Dom\Meter.cs" />
+    <Compile Include="Html\Dom\NavigationLink.cs" />
+    <Compile Include="Html\Dom\NoScript.cs" />
+    <Compile Include="Html\Dom\Node.cs" />
+    <Compile Include="Html\Dom\Object.cs" />
+    <Compile Include="Html\Dom\Option.cs" />
+    <Compile Include="Html\Dom\OptionGroup.cs" />
+    <Compile Include="Html\Dom\OrderedList.cs" />
+    <Compile Include="Html\Dom\Output.cs" />
+    <Compile Include="Html\Dom\Paragraph.cs" />
+    <Compile Include="Html\Dom\Parameter.cs" />
+    <Compile Include="Html\Dom\PreformattedText.cs" />
+    <Compile Include="Html\Dom\Progress.cs" />
+    <Compile Include="Html\Dom\Quote.cs" />
+    <Compile Include="Html\Dom\Sample.cs" />
+    <Compile Include="Html\Dom\Script.cs" />
+    <Compile Include="Html\Dom\Section.cs" />
+    <Compile Include="Html\Dom\Select.cs" />
+    <Compile Include="Html\Dom\Small.cs" />
+    <Compile Include="Html\Dom\Span.cs" />
+    <Compile Include="Html\Dom\Strong.cs" />
+    <Compile Include="Html\Dom\Style.cs" />
+    <Compile Include="Html\Dom\SubScript.cs" />
+    <Compile Include="Html\Dom\Summary.cs" />
+    <Compile Include="Html\Dom\SuperScript.cs" />
+    <Compile Include="Html\Dom\Table.cs" />
+    <Compile Include="Html\Dom\TableBody.cs" />
+    <Compile Include="Html\Dom\TableData.cs" />
+    <Compile Include="Html\Dom\TableFoot.cs" />
+    <Compile Include="Html\Dom\TableHead.cs" />
+    <Compile Include="Html\Dom\TableHeading.cs" />
+    <Compile Include="Html\Dom\TableRow.cs" />
+    <Compile Include="Html\Dom\Text.cs" />
+    <Compile Include="Html\Dom\TextArea.cs" />
+    <Compile Include="Html\Dom\Time.cs" />
+    <Compile Include="Html\Dom\Title.cs" />
+    <Compile Include="Html\Dom\Track.cs" />
+    <Compile Include="Html\Dom\UnderLine.cs" />
+    <Compile Include="Html\Dom\UnorderedList.cs" />
+    <Compile Include="Html\Dom\Variable.cs" />
+    <Compile Include="Html\Dom\Video.cs" />
+    <Compile Include="Html\Dom\WordBreak.cs" />
+    <Compile Include="IO\BufferingByteDevice.cs" />
+    <Compile Include="IO\ByteDevice.cs" />
+    <Compile Include="IO\ByteDeviceCombiner.cs" />
+    <Compile Include="IO\CharacterDevice.cs" />
+    <Compile Include="IO\CharacterReader.cs" />
+    <Compile Include="IO\CharacterWriter.cs" />
+    <Compile Include="IO\Decoder.cs" />
+    <Compile Include="IO\Encoder.cs" />
+    <Compile Include="IO\IBlockDevice.cs" />
+    <Compile Include="IO\IBlockInDevice.cs" />
+    <Compile Include="IO\IBlockOutDevice.cs" />
+    <Compile Include="IO\IByteDevice.cs" />
+    <Compile Include="IO\IByteInDevice.cs" />
+    <Compile Include="IO\IByteOutDevice.cs" />
+    <Compile Include="IO\ICharacterDevice.cs" />
+    <Compile Include="IO\ICharacterInDevice.cs" />
+    <Compile Include="IO\ICharacterOutDevice.cs" />
+    <Compile Include="IO\ICharacterReader.cs" />
+    <Compile Include="IO\ICharacterWriter.cs" />
+    <Compile Include="IO\IDevice.cs" />
+    <Compile Include="IO\IInDevice.cs" />
+    <Compile Include="IO\IOutDevice.cs" />
+    <Compile Include="IO\Abstract\CharacterWriter.cs" />
+    <Compile Include="IO\Extension\BlockOutDeviceExtension.cs" />
+    <Compile Include="IO\Filter\CharacterInDevice.cs" />
+    <Compile Include="IO\Net\Tcp\Connection.cs" />
+    <Compile Include="IO\Net\Tcp\Server.cs" />
+    <Compile Include="IO\Net\Telnet\Command.cs" />
+    <Compile Include="IO\Net\Telnet\Option.cs" />
+    <Compile Include="IO\Net\Telnet\Server.cs" />
+    <Compile Include="IO\Net\Udp\Sender.cs" />
+    <Compile Include="IO\Null\ByteDevice.cs" />
+    <Compile Include="IO\Null\CharacterDevice.cs" />
+    <Compile Include="IO\Null\CharacterReader.cs" />
+    <Compile Include="IO\Null\CharacterWriter.cs" />
+    <Compile Include="IO\Tap\ByteDevice.cs" />
+    <Compile Include="IO\Tap\CharacterDevice.cs" />
+    <Compile Include="IO\Text\Buffer.cs" />
+    <Compile Include="IO\Text\Builder.cs" />
+    <Compile Include="IO\Text\CharacterInDevice.cs" />
+    <Compile Include="IO\Text\CharacterOutDevice.cs" />
+    <Compile Include="IO\Text\Indenter.cs" />
+    <Compile Include="IO\Text\Mark.cs" />
+    <Compile Include="IO\Text\Position.cs" />
+    <Compile Include="IO\Text\Reader.cs" />
+    <Compile Include="IO\Text\Region.cs" />
+    <Compile Include="IO\Text\WriteBuffer.cs" />
+    <Compile Include="IO\Text\Writer.cs" />
+    <Compile Include="IO\Wrap\ByteDevice.cs" />
+    <Compile Include="Json\Dom\Array.cs" />
+    <Compile Include="Json\Dom\Boolean.cs" />
+    <Compile Include="Json\Dom\Collection.cs" />
+    <Compile Include="Json\Dom\IWriter.cs" />
+    <Compile Include="Json\Dom\Item.cs" />
+    <Compile Include="Json\Dom\Label.cs" />
+    <Compile Include="Json\Dom\Null.cs" />
+    <Compile Include="Json\Dom\Number.cs" />
+    <Compile Include="Json\Dom\Object.cs" />
+    <Compile Include="Json\Dom\Primitive.cs" />
+    <Compile Include="Json\Dom\String.cs" />
+    <Compile Include="Json\Dom\Writer\Formatting.cs" />
+    <Compile Include="Json\Sax\Parser.cs" />
+    <Compile Include="Json\Sax\Token.cs" />
+    <Compile Include="Json\Sax\Tokenizer.cs" />
+    <Compile Include="Json\Serialize\Preprocessor.cs" />
+    <Compile Include="Json\Serialize\Storage.cs" />
+    <Compile Include="Math\Abstract.cs" />
+    <Compile Include="Math\Double.Function.cs" />
+    <Compile Include="Math\Double.cs" />
+    <Compile Include="Math\Fraction.cs" />
+    <Compile Include="Math\Integer.Function.cs" />
+    <Compile Include="Math\Integer.cs" />
+    <Compile Include="Math\Single.Function.cs" />
+    <Compile Include="Math\Single.cs" />
+    <Compile Include="Math\Complex\Double.cs" />
+    <Compile Include="Math\Complex\Single.cs" />
+    <Compile Include="Math\Complex\Template.cs" />
+    <Compile Include="Math\Exception\DivisionByZero.cs" />
+    <Compile Include="Math\Exception\NotAllowed.cs" />
+    <Compile Include="Math\Geometry2D\Point.cs" />
+    <Compile Include="Math\Geometry2D\Shell.cs" />
+    <Compile Include="Math\Geometry2D\Size.cs" />
+    <Compile Include="Math\Geometry2D\Transform.cs" />
+    <Compile Include="Math\Geometry2D\Double\Box.cs" />
+    <Compile Include="Math\Geometry2D\Double\Point.cs" />
+    <Compile Include="Math\Geometry2D\Double\Shell.cs" />
+    <Compile Include="Math\Geometry2D\Double\Size.cs" />
+    <Compile Include="Math\Geometry2D\Double\Transform.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Box.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Point.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Shell.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Size.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Transform.cs" />
+    <Compile Include="Math\Geometry2D\Single\Box.cs" />
+    <Compile Include="Math\Geometry2D\Single\Point.cs" />
+    <Compile Include="Math\Geometry2D\Single\Shell.cs" />
+    <Compile Include="Math\Geometry2D\Single\Size.cs" />
+    <Compile Include="Math\Geometry2D\Single\Transform.cs" />
+    <Compile Include="Math\Geometry3D\Box.cs" />
+    <Compile Include="Math\Geometry3D\Point.cs" />
+    <Compile Include="Math\Geometry3D\Shell.cs" />
+    <Compile Include="Math\Geometry3D\Size.cs" />
+    <Compile Include="Math\Geometry3D\Double\Box.cs" />
+    <Compile Include="Math\Geometry3D\Double\Point.cs" />
+    <Compile Include="Math\Geometry3D\Double\Quaternion.cs" />
+    <Compile Include="Math\Geometry3D\Double\Shell.cs" />
+    <Compile Include="Math\Geometry3D\Double\Size.cs" />
+    <Compile Include="Math\Geometry3D\Double\Transform.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Box.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Point.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Shell.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Size.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Transform.cs" />
+    <Compile Include="Math\Geometry3D\Single\Box.cs" />
+    <Compile Include="Math\Geometry3D\Single\Point.cs" />
+    <Compile Include="Math\Geometry3D\Single\Shell.cs" />
+    <Compile Include="Math\Geometry3D\Single\Size.cs" />
+    <Compile Include="Math\Geometry3D\Single\Transform.cs" />
+    <Compile Include="Math\Matrix\Double.cs" />
+    <Compile Include="Math\Matrix\Single.cs" />
+    <Compile Include="Math\Matrix\Template.cs" />
+    <Compile Include="Math\Matrix\Exception\DivisionByZero.cs" />
+    <Compile Include="Math\Matrix\Exception\InvalidDimensions.cs" />
+    <Compile Include="Math\Matrix\Exception\NonPositive.cs" />
+    <Compile Include="Math\Random\Boolean.cs" />
+    <Compile Include="Math\Random\Exponential.cs" />
+    <Compile Include="Math\Random\Generator.cs" />
+    <Compile Include="Math\Random\IExponential.cs" />
+    <Compile Include="Math\Random\IGenerator.cs" />
+    <Compile Include="Math\Random\IInterval.cs" />
+    <Compile Include="Math\Random\INormal.cs" />
+    <Compile Include="Math\Random\Interval.cs" />
+    <Compile Include="Math\Random\Normal.cs" />
+    <Compile Include="Math\Random\Byte\Interval.cs" />
+    <Compile Include="Math\Random\Byte\Positive.cs" />
+    <Compile Include="Math\Random\Byte\Uniform.cs" />
+    <Compile Include="Math\Random\Double\Exponential.cs" />
+    <Compile Include="Math\Random\Double\Interval.cs" />
+    <Compile Include="Math\Random\Double\Normal.cs" />
+    <Compile Include="Math\Random\Double\Uniform.cs" />
+    <Compile Include="Math\Random\Integer\Interval.cs" />
+    <Compile Include="Math\Random\Integer\Positive.cs" />
+    <Compile Include="Math\Random\Integer\Uniform.cs" />
+    <Compile Include="Math\Random\Long\Interval.cs" />
+    <Compile Include="Math\Random\Long\Positive.cs" />
+    <Compile Include="Math\Random\Long\Uniform.cs" />
+    <Compile Include="Math\Random\Single\Exponential.cs" />
+    <Compile Include="Math\Random\Single\Interval.cs" />
+    <Compile Include="Math\Random\Single\Normal.cs" />
+    <Compile Include="Math\Random\Single\Uniform.cs" />
+    <Compile Include="Math\Random\UnsignedInteger\Interval.cs" />
+    <Compile Include="Math\Random\UnsignedInteger\Positive.cs" />
+    <Compile Include="Math\Random\UnsignedInteger\Uniform.cs" />
+    <Compile Include="Math\Random\UnsignedLong\Interval.cs" />
+    <Compile Include="Math\Random\UnsignedLong\Uniform.cs" />
+    <Compile Include="Math\Regression\Filter\Kalman.cs" />
+    <Compile Include="Math\Regression\Filter\Point.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Double.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Method.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Single.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Geometry2D\Double\Point.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Geometry2D\Double\Transform.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Geometry2D\Single\Point.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Geometry2D\Single\Transform.cs" />
+    <Compile Include="Math\Regression\Minimization\GaussNewton\Double.cs" />
+    <Compile Include="Math\Regression\Minimization\GaussNewton\Single.cs" />
+    <Compile Include="Math\Regression\Minimization\LevenbergMarquardt\Double.cs" />
+    <Compile Include="Math\Regression\Minimization\LevenbergMarquardt\Single.cs" />
+    <Compile Include="Math\Regression\Ransac\Estimation.cs" />
+    <Compile Include="Math\Regression\Ransac\Estimator.cs" />
+    <Compile Include="Math\Regression\Ransac\Model.cs" />
+    <Compile Include="Math\Regression\Ransac\Exception\Exception.cs" />
+    <Compile Include="Math\Regression\Ransac\Exception\InputData.cs" />
+    <Compile Include="Math\Regression\Ransac\Exception\ModelSetup.cs" />
+    <Compile Include="Math\Regression\Ransac\Exception\NotUnique.cs" />
+    <Compile Include="Parallel\ITask.cs" />
+    <Compile Include="Parallel\RepeatThread.cs" />
+    <Compile Include="Parallel\Task.cs" />
+    <Compile Include="Parallel\Thread.cs" />
+    <Compile Include="Parallel\ThreadPool.cs" />
+    <Compile Include="Parallel\Worker.cs" />
+    <Compile Include="Parallel\Exception\Exception.cs" />
+    <Compile Include="Parallel\Exception\ThreadPoolDisposed.cs" />
+    <Compile Include="Platform\Application.cs" />
+    <Compile Include="Platform\Environment.cs" />
+    <Compile Include="Platform\IHasApplication.cs" />
+    <Compile Include="Platform\IRunner.cs" />
+    <Compile Include="Platform\Mode.cs" />
+    <Compile Include="Platform\Module.cs" />
+    <Compile Include="Platform\Placeholder.cs" />
+    <Compile Include="Platform\Waiter.cs" />
+    <Compile Include="Platform\Exception\Abstract.cs" />
+    <Compile Include="Platform\Log\Cache.cs" />
+    <Compile Include="Platform\Log\Module.cs" />
+    <Compile Include="Platform\Log\Writer\Abstract.cs" />
+    <Compile Include="Platform\Log\Writer\Csv.cs" />
+    <Compile Include="Platform\Settings\Asynchronous.cs" />
+    <Compile Include="Platform\Settings\Dynamic.cs" />
+    <Compile Include="Platform\Settings\IDynamic.cs" />
+    <Compile Include="Platform\Settings\IReload.cs" />
+    <Compile Include="Platform\Settings\Member.cs" />
+    <Compile Include="Platform\Settings\MemberAttribute.cs" />
+    <Compile Include="Platform\Settings\Method.cs" />
+    <Compile Include="Platform\Settings\MethodAttribute.cs" />
+    <Compile Include="Platform\Settings\Module.cs" />
+    <Compile Include="Platform\Settings\Object.cs" />
+    <Compile Include="Platform\Settings\ObjectAttribute.cs" />
+    <Compile Include="Platform\Settings\ParameterAttribute.cs" />
+    <Compile Include="Platform\Settings\Parser.cs" />
+    <Compile Include="Platform\Settings\Property.cs" />
+    <Compile Include="Platform\Settings\PropertyAttribute.cs" />
+    <Compile Include="Platform\Settings\PropertyMode.cs" />
+    <Compile Include="Platform\Settings\Remote.cs" />
+    <Compile Include="Platform\Settings\RemoteConfiguration.cs" />
+    <Compile Include="Platform\Settings\Root.cs" />
+    <Compile Include="Platform\Settings\Parameter\Abstract.cs" />
+    <Compile Include="Platform\Settings\Parameter\Boolean.cs" />
+    <Compile Include="Platform\Settings\Parameter\DateTime.cs" />
+    <Compile Include="Platform\Settings\Parameter\Double.cs" />
+    <Compile Include="Platform\Settings\Parameter\Enumeration.cs" />
+    <Compile Include="Platform\Settings\Parameter\Integer.cs" />
+    <Compile Include="Platform\Settings\Parameter\Long.cs" />
+    <Compile Include="Platform\Settings\Parameter\Pointer.cs" />
+    <Compile Include="Platform\Settings\Parameter\Single.cs" />
+    <Compile Include="Platform\Settings\Parameter\String.cs" />
+    <Compile Include="Platform\Settings\Parameter\StringCastable.cs" />
+    <Compile Include="Platform\Settings\Parameter\StringInterface.cs" />
+    <Compile Include="Platform\Settings\Parameter\TimeSpan.cs" />
+    <Compile Include="Recycle\Bin.cs" />
+    <Compile Include="Recycle\Bins.cs" />
+    <Compile Include="Recycle\IBin.cs" />
+    <Compile Include="Reflect\Action.cs" />
+    <Compile Include="Reflect\Event.cs" />
+    <Compile Include="Reflect\EventInformation.cs" />
+    <Compile Include="Reflect\Field.cs" />
+    <Compile Include="Reflect\FieldInformation.cs" />
+    <Compile Include="Reflect\Function.cs" />
+    <Compile Include="Reflect\Member.cs" />
+    <Compile Include="Reflect\MemberFilter.cs" />
+    <Compile Include="Reflect\Method.cs" />
+    <Compile Include="Reflect\MethodInformation.cs" />
+    <Compile Include="Reflect\Object.cs" />
+    <Compile Include="Reflect\Parameter.cs" />
+    <Compile Include="Reflect\Property.cs" />
+    <Compile Include="Reflect\PropertyInformation.cs" />
+    <Compile Include="Reflect\Type.cs" />
+    <Compile Include="Reflect\TypeCategory.cs" />
+    <Compile Include="Reflect\Extension\MemberFilterExtension.cs" />
+    <Compile Include="Reflect\Extension\ObjectExtension.cs" />
+    <Compile Include="Reflect\Extension\TypeCategoryExtension.cs" />
+    <Compile Include="Serialize\Casing.cs" />
+    <Compile Include="Serialize\DictionaryAttribute.cs" />
+    <Compile Include="Serialize\IDeserialized.cs" />
+    <Compile Include="Serialize\IRebuilder.cs" />
+    <Compile Include="Serialize\ISerializable.cs" />
+    <Compile Include="Serialize\ISerializer.cs" />
+    <Compile Include="Serialize\ISerializing.cs" />
+    <Compile Include="Serialize\IStorage.cs" />
+    <Compile Include="Serialize\MethodAttribute.cs" />
+    <Compile Include="Serialize\ParameterAttribute.cs" />
+    <Compile Include="Serialize\Resolver.cs" />
+    <Compile Include="Serialize\Storage.cs" />
+    <Compile Include="Serialize\Data\Binary.cs" />
+    <Compile Include="Serialize\Data\Boolean.cs" />
+    <Compile Include="Serialize\Data\Branch.cs" />
+    <Compile Include="Serialize\Data\Byte.cs" />
+    <Compile Include="Serialize\Data\Character.cs" />
+    <Compile Include="Serialize\Data\Collection.cs" />
+    <Compile Include="Serialize\Data\DateTime.cs" />
+    <Compile Include="Serialize\Data\DateTimeOffset.cs" />
+    <Compile Include="Serialize\Data\Decimal.cs" />
+    <Compile Include="Serialize\Data\Double.cs" />
+    <Compile Include="Serialize\Data\Enumeration.cs" />
+    <Compile Include="Serialize\Data\Integer.cs" />
+    <Compile Include="Serialize\Data\Leaf.cs" />
+    <Compile Include="Serialize\Data\Link.cs" />
+    <Compile Include="Serialize\Data\Long.cs" />
+    <Compile Include="Serialize\Data\Node.cs" />
+    <Compile Include="Serialize\Data\Short.cs" />
+    <Compile Include="Serialize\Data\SignedByte.cs" />
+    <Compile Include="Serialize\Data\Single.cs" />
+    <Compile Include="Serialize\Data\String.cs" />
+    <Compile Include="Serialize\Data\TimeSpan.cs" />
+    <Compile Include="Serialize\Data\UnsignedInteger.cs" />
+    <Compile Include="Serialize\Data\UnsignedLong.cs" />
+    <Compile Include="Serialize\Data\UnsignedShort.cs" />
+    <Compile Include="Serialize\Exception\Abstract.cs" />
+    <Compile Include="Serialize\Exception\CreateAbstract.cs" />
+    <Compile Include="Serialize\Exception\DuplicateIdentifier.cs" />
+    <Compile Include="Serialize\Exception\FieldMissing.cs" />
+    <Compile Include="Serialize\Exception\PropertyMissing.cs" />
+    <Compile Include="Serialize\Exception\PropertyNotWritable.cs" />
+    <Compile Include="Serialize\Exception\UnknownType.cs" />
+    <Compile Include="Serialize\Extension\StringExtension.cs" />
+    <Compile Include="Serialize\Rebuilder\Collection.cs" />
+    <Compile Include="Serialize\Rebuilder\Default.cs" />
+    <Compile Include="Serialize\Rebuilder\Group.cs" />
+    <Compile Include="Serialize\Rebuilder\Identity.cs" />
+    <Compile Include="Serialize\Serializer\Array.cs" />
+    <Compile Include="Serialize\Serializer\Boolean.cs" />
+    <Compile Include="Serialize\Serializer\Byte.cs" />
+    <Compile Include="Serialize\Serializer\Cache.cs" />
+    <Compile Include="Serialize\Serializer\Character.cs" />
+    <Compile Include="Serialize\Serializer\Class.cs" />
+    <Compile Include="Serialize\Serializer\Collection.cs" />
+    <Compile Include="Serialize\Serializer\DateTime.cs" />
+    <Compile Include="Serialize\Serializer\DateTimeOffset.cs" />
+    <Compile Include="Serialize\Serializer\Decimal.cs" />
+    <Compile Include="Serialize\Serializer\Default.cs" />
+    <Compile Include="Serialize\Serializer\Dictionary.cs" />
+    <Compile Include="Serialize\Serializer\Double.cs" />
+    <Compile Include="Serialize\Serializer\Enumeration.cs" />
+    <Compile Include="Serialize\Serializer\Group.cs" />
+    <Compile Include="Serialize\Serializer\Integer.cs" />
+    <Compile Include="Serialize\Serializer\IntegralTypes.cs" />
+    <Compile Include="Serialize\Serializer\List.cs" />
+    <Compile Include="Serialize\Serializer\Long.cs" />
+    <Compile Include="Serialize\Serializer\PrimitiveTypes.cs" />
+    <Compile Include="Serialize\Serializer\Short.cs" />
+    <Compile Include="Serialize\Serializer\SignedByte.cs" />
+    <Compile Include="Serialize\Serializer\Single.cs" />
+    <Compile Include="Serialize\Serializer\String.cs" />
+    <Compile Include="Serialize\Serializer\StringCastable.cs" />
+    <Compile Include="Serialize\Serializer\StringInterface.cs" />
+    <Compile Include="Serialize\Serializer\Structure.cs" />
+    <Compile Include="Serialize\Serializer\SystemTypes.cs" />
+    <Compile Include="Serialize\Serializer\TimeSpan.cs" />
+    <Compile Include="Serialize\Serializer\UnsignedInteger.cs" />
+    <Compile Include="Serialize\Serializer\UnsignedLong.cs" />
+    <Compile Include="Serialize\Serializer\UnsignedShort.cs" />
+    <Compile Include="Uri\Authority.cs" />
+    <Compile Include="Uri\Domain.cs" />
+    <Compile Include="Uri\Endpoint.cs" />
+    <Compile Include="Uri\Locator.cs" />
+    <Compile Include="Uri\Path.cs" />
+    <Compile Include="Uri\PathLink.cs" />
+    <Compile Include="Uri\Position.cs" />
+    <Compile Include="Uri\Query.cs" />
+    <Compile Include="Uri\QueryLink.cs" />
+    <Compile Include="Uri\Region.cs" />
+    <Compile Include="Uri\Scheme.cs" />
+    <Compile Include="Uri\User.cs" />
+    <Compile Include="Xml\Dom\Attribute.cs" />
+    <Compile Include="Xml\Dom\Comment.cs" />
+    <Compile Include="Xml\Dom\Data.cs" />
+    <Compile Include="Xml\Dom\Document.cs" />
+    <Compile Include="Xml\Dom\Element.cs" />
+    <Compile Include="Xml\Dom\Fragment.cs" />
+    <Compile Include="Xml\Dom\IWriter.cs" />
+    <Compile Include="Xml\Dom\Node.cs" />
+    <Compile Include="Xml\Dom\Object.cs" />
+    <Compile Include="Xml\Dom\ProcessingInstruction.cs" />
+    <Compile Include="Xml\Dom\Processor.cs" />
+    <Compile Include="Xml\Dom\Text.cs" />
+    <Compile Include="Xml\Dom\Exception\Abstract.cs" />
+    <Compile Include="Xml\Dom\Exception\EndTagUnmatched.cs" />
+    <Compile Include="Xml\Dom\Exception\StartTagMissing.cs" />
+    <Compile Include="Xml\Dom\Writer\Formatting.cs" />
+    <Compile Include="Xml\Exception\Abstract.cs" />
+    <Compile Include="Xml\Sax\Parser.cs" />
+    <Compile Include="Xml\Sax\Exception\Abstract.cs" />
+    <Compile Include="Xml\Serialize\Preprocessor.cs" />
+    <Compile Include="Xml\Serialize\Storage.cs" />
+    <Compile Include="Test\Fixture.cs" />
+    <Compile Include="Test\Test.cs" />
+    <Compile Include="Buffer\Exception\Exception.cs" />
+    <Compile Include="Buffer\Exception\IndexOutOfRange.cs" />
+    <Compile Include="Buffer\Exception\NullArgument.cs" />
+    <Compile Include="IO\BufferByteInDevice.cs" />
+    <Compile Include="Serialize\Storer.cs" />
+    <Compile Include="DB\Items.cs" />
+    <Compile Include="Serialize\Serializer\Enumerable.cs" />
+    <Compile Include="Serialize\Data\Null.cs" />
+    <Compile Include="IO\Extension\BlockInDeviceExtension.cs" />
+    <Compile Include="IO\Extension\ByteOutDeviceExtension.cs" />
+    <Compile Include="IO\Extension\ByteInDeviceExtension.cs" />
+    <Compile Include="Password\Generator.cs" />
+    <Compile Include="Password\PhonemeGenerator.cs" />
+    <Compile Include="Password\Element.cs" />
+    <Compile Include="IO\Net\Tcp\ThreadedServer.cs" />
+    <Compile Include="IO\Extension\CharacterInDeviceExtension.cs" />
+    <Compile Include="IO\Extension\CharacterReaderExtension.cs" />
+    <Compile Include="IO\Net\Http\Path.cs" />
+    <Compile Include="IO\Net\Http\ChunkedBlockOutDevice.cs" />
+    <Compile Include="IO\Wrap\BlockByteOutDevice.cs" />
+    <Compile Include="IO\Device.cs" />
+    <Compile Include="IO\Net\Http\Header\Request.cs" />
+    <Compile Include="IO\Net\Http\Client.cs" />
+    <Compile Include="IO\Net\Http\Header\Authorization.cs" />
+    <Compile Include="IO\Net\Http\Header\BasicAuthorization.cs" />
+    <Compile Include="IO\Net\Http\Header\Link.cs" />
+    <Compile Include="IO\Net\Http\Header\LinkRelation.cs" />
+    <Compile Include="IO\Net\Http\Header\Links.cs" />
+    <Compile Include="IO\Net\Http\Header\Response.cs" />
+    <Compile Include="IO\Wrap\FixedLengthByteInDevice.cs" />
+    <Compile Include="IO\Net\Http\Header\Range.cs" />
+    <Compile Include="IO\ISeekable.cs" />
+    <Compile Include="IO\ISeekableBlockInDevice.cs" />
+    <Compile Include="IO\Wrap\SlicedBlockInDevice.cs" />
+    <Compile Include="Math\UnsignedLong.Function.cs" />
+    <Compile Include="Math\Long.Function.cs" />
+    <Compile Include="IO\Extension\SeekableBlockInDeviceExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Kean.nuspec" />
+    <None Include="Kean.targets" />
+    <None Include="Math\Complex\Template.tt" />
+    <None Include="Math\Geometry2D\Box.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Box.cs</LastGenOutput>
+    </None>
+    <None Include="Math\Geometry2D\Point.tt" />
+    <None Include="Math\Geometry2D\Shell.tt">
+      <LastGenOutput>Shell1.cs</LastGenOutput>
+    </None>
+    <None Include="Math\Geometry2D\Size.tt" />
+    <None Include="Math\Geometry2D\Transform.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Transform1.cs</LastGenOutput>
+    </None>
+    <None Include="Math\Geometry3D\Box.tt" />
+    <None Include="Math\Geometry3D\Point.tt" />
+    <None Include="Math\Geometry3D\Shell.tt" />
+    <None Include="Math\Geometry3D\Size.tt" />
+    <None Include="Math\Geometry3D\Transform.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Transform.cs</LastGenOutput>
+    </None>
+    <None Include="Math\Matrix\Template.tt" />
+    <None Include="Modules\Log.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Platform\Settings\Kean.Platform.Settings.targets" />
+    <None Include="Modules\Settings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy TabsToSpaces="False" EolMarker="Unix" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="NewLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" AfterDelegateDeclarationParameterComma="True" NewParentheses="False" SpacesBeforeBrackets="False" BlankLinesBeforeUsings="1" BlankLinesBetweenMembers="0" BlankLinesAroundRegion="0" BlankLinesInsideRegion="0" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+          <TextStylePolicy FileWidth="120" TabsToSpaces="False" NoTabsAfterNonTabs="True" EolMarker="Windows" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName" />
+          <TextStylePolicy TabsToSpaces="False" EolMarker="Unix" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/t4-template" />
+          <TextStylePolicy TabWidth="2" IndentWidth="2" NoTabsAfterNonTabs="True" EolMarker="Unix" inheritsSet="Mono" inheritsScope="text/plain" scope="application/xml" />
+          <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml">
+            <DefaultFormat AlignAttributes="True" AlignAttributeValues="True" />
+          </XmlFormattingPolicy>
+          <TextStylePolicy TabWidth="2" IndentWidth="2" NoTabsAfterNonTabs="True" EolMarker="Unix" inheritsSet="Mono" inheritsScope="text/plain" scope="application/config+xml" />
+          <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/config+xml">
+            <DefaultFormat AlignAttributes="True" AlignAttributeValues="True" />
+          </XmlFormattingPolicy>
+          <StandardHeader Text="&#xD;&#xA; ${FileName}&#xA; &#xA; Author:&#xA;      ${AuthorName} &lt;${AuthorEmail}&gt;&#xA; &#xA; Copyright (c) ${Year} ${CopyrightHolder}&#xA;&#xA; This program is free software: you can redistribute it and/or modify&#xA; it under the terms of the GNU Lesser General Public License as published by&#xA; the Free Software Foundation, either version 3 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xA; GNU Lesser General Public License for more details.&#xA;&#xA; You should have received a copy of the GNU Lesser General Public License&#xA; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;." IncludeInNewFiles="True" />
+          <NameConventionPolicy>
+            <Rules>
+              <NamingRule Name="Namespaces" AffectedEntity="Namespace" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Types" AffectedEntity="Class, Struct, Enum, Delegate" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Interfaces" AffectedEntity="Interface" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredPrefixes>
+                  <String>I</String>
+                </RequiredPrefixes>
+              </NamingRule>
+              <NamingRule Name="Attributes" AffectedEntity="CustomAttributes" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredSuffixes>
+                  <String>Attribute</String>
+                </RequiredSuffixes>
+              </NamingRule>
+              <NamingRule Name="Event Arguments" AffectedEntity="CustomEventArgs" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Exceptions" AffectedEntity="CustomExceptions" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Methods" AffectedEntity="Methods" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Static Readonly Fields" AffectedEntity="ReadonlyField" VisibilityMask="Internal, Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="False" IncludeStaticEntities="True" />
+              <NamingRule Name="Fields (Non Private)" AffectedEntity="Field" VisibilityMask="Internal, Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="ReadOnly Fields (Non Private)" AffectedEntity="ReadonlyField" VisibilityMask="Internal, Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="False" />
+              <NamingRule Name="Fields (Private)" AffectedEntity="Field, ReadonlyField" VisibilityMask="Private" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="False" />
+              <NamingRule Name="Static Fields (Private)" AffectedEntity="Field" VisibilityMask="Private" NamingStyle="CamelCase" IncludeInstanceMembers="False" IncludeStaticEntities="True" />
+              <NamingRule Name="ReadOnly Fields (Private)" AffectedEntity="ReadonlyField" VisibilityMask="Private" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="False" />
+              <NamingRule Name="Constant Fields" AffectedEntity="ConstantField" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Properties" AffectedEntity="Property" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Events" AffectedEntity="Event" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Enum Members" AffectedEntity="EnumMember" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Parameters" AffectedEntity="Parameter" VisibilityMask="VisibilityMask" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Type Parameters" AffectedEntity="TypeParameter" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredPrefixes>
+                  <String>T</String>
+                </RequiredPrefixes>
+              </NamingRule>
+            </Rules>
+          </NameConventionPolicy>
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <Import Project="../../packages/GLib.Sharp.2.28.1.2/build/GLib.Sharp.targets" Condition="Exists('../../packages/GLib.Sharp.2.28.1.2/build/GLib.Sharp.targets')" />
+  <Import Project="../../packages/Cairo.2.0.0.2/build/Cairo.targets" Condition="Exists('../../packages/Cairo.2.0.0.2/build/Cairo.targets')" />
+  <Import Project="../../packages/Pango.1.28.3.2/build/Pango.targets" Condition="Exists('../../packages/Pango.1.28.3.2/build/Pango.targets')" />
+  <Import Project="$(MSBuildBinPath)/Microsoft.CSharp.targets" />
+  <Import Project="..\..\.nuget\NuGet.targets" Condition="Exists('..\..\.nuget\NuGet.targets')" />
+  <ItemGroup />
+</Project>

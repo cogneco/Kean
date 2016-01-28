@@ -1,0 +1,152 @@
+{ 
+	"$type": "Kean.Serialize.Test.Data.Dictionary Kean.Tests", 
+	"classes": [ 
+		{ 
+			"Key": 0, 
+			"Value": { 
+				"$type": "Kean.Serialize.Test.Data.ComplexClass Kean.Tests", 
+				"boolean": true, 
+				"class": { 
+					"boolean": true, 
+					"enumerator": "Second", 
+					"float": -13.37, 
+					"integer": -1337, 
+					"string": "This is Kean." 
+				}, 
+				"enumerator": "Second", 
+				"float": -13.37, 
+				"integer": -1337, 
+				"string": "This is Kean.", 
+				"structure": { 
+					"Boolean": true, 
+					"Enumerator": "Second", 
+					"Float": -13.37, 
+					"Integer": -1337, 
+					"String": "This is Kean." 
+				} 
+			} 
+		}, 
+		{ 
+			"Key": 1, 
+			"Value": { 
+				"boolean": true, 
+				"enumerator": "Second", 
+				"float": -13.37, 
+				"integer": -1337, 
+				"string": "This is Kean." 
+			} 
+		} 
+	], 
+	"empty": [ 
+	], 
+	"Number": [ 
+		{ 
+			"Key": "one", 
+			"Value": 1 
+		}, 
+		{ 
+			"Key": "seven", 
+			"Value": 7 
+		}, 
+		{ 
+			"Key": "three", 
+			"Value": 3 
+		}, 
+		{ 
+			"Key": "five", 
+			"Value": 5 
+		}, 
+		{ 
+			"Key": "nine", 
+			"Value": 9 
+		}, 
+		{ 
+			"Key": "zero", 
+			"Value": 0 
+		}, 
+		{ 
+			"Key": "six", 
+			"Value": 6 
+		}, 
+		{ 
+			"Key": "four", 
+			"Value": 4 
+		}, 
+		{ 
+			"Key": "two", 
+			"Value": 2 
+		}, 
+		{ 
+			"Key": "eight", 
+			"Value": 8 
+		} 
+	], 
+	"objects": [ 
+		{ 
+			"Key": "boolean", 
+			"Value": true 
+		}, 
+		{ 
+			"Key": "time", 
+			"Value": "2111-11-11T11:11:11.1110000" 
+		}, 
+		{ 
+			"Key": "complex", 
+			"Value": { 
+				"$type": "Kean.Serialize.Test.Data.ComplexClass Kean.Tests", 
+				"boolean": true, 
+				"class": { 
+					"boolean": true, 
+					"enumerator": "Second", 
+					"float": -13.37, 
+					"integer": -1337, 
+					"string": "This is Kean." 
+				}, 
+				"enumerator": "Second", 
+				"float": -13.37, 
+				"integer": -1337, 
+				"string": "This is Kean.", 
+				"structure": { 
+					"Boolean": true, 
+					"Enumerator": "Second", 
+					"Float": -13.37, 
+					"Integer": -1337, 
+					"String": "This is Kean." 
+				} 
+			} 
+		}, 
+		{ 
+			"Key": "class", 
+			"Value": { 
+				"$type": "Kean.Serialize.Test.Data.Class Kean.Tests", 
+				"boolean": true, 
+				"enumerator": "Second", 
+				"float": -13.37, 
+				"integer": -1337, 
+				"string": "This is Kean." 
+			} 
+		} 
+	], 
+	"structures": [ 
+		{ 
+			"Key": 0, 
+			"Value": { 
+				"Boolean": true, 
+				"Enumerator": "Second", 
+				"Float": -13.37, 
+				"Integer": -1337, 
+				"String": "This is Kean." 
+			} 
+		}, 
+		{ 
+			"Key": 1, 
+			"Value": { 
+				"Boolean": true, 
+				"Enumerator": "Second", 
+				"Float": -13.37, 
+				"Integer": -1337, 
+				"String": "This is Kean." 
+			} 
+		} 
+	] 
+}

@@ -1,0 +1,15 @@
+{ 
+	"$type": "Kean.Serialize.Test.Data.Nullable Kean.Tests", 
+	"boolean": true, 
+	"enumerator": "Second", 
+	"float": -13.37, 
+	"integer": -1337, 
+	"structure": { 
+		"$type": "Kean.Serialize.Test.Data.Structure Kean.Tests", 
+		"Boolean": true, 
+		"Enumerator": "Second", 
+		"Float": -13.37, 
+		"Integer": -1337, 
+		"String": "This is Kean." 
+	} 
+}

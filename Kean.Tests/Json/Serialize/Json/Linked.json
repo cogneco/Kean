@@ -1,0 +1,51 @@
+{ 
+	"$type": "Kean.Serialize.Test.Data.Linked Kean.Tests", 
+	"class0": { 
+		"boolean": true, 
+		"enumerator": "Second", 
+		"float": -13.37, 
+		"integer": -1337, 
+		"string": "This is Kean." 
+	}, 
+	"class1": { 
+		"$ref": "#class0" 
+	}, 
+	"complexClass": { 
+		"boolean": true, 
+		"class": { 
+			"$ref": "#class0" 
+		}, 
+		"enumerator": "Second", 
+		"float": -13.37, 
+		"integer": -1337, 
+		"string": "This is Kean.", 
+		"structure": { 
+			"Boolean": true, 
+			"Enumerator": "Second", 
+			"Float": -13.37, 
+			"Integer": -1337, 
+			"String": "This is Kean." 
+		} 
+	}, 
+	"otherClass": { 
+		"boolean": true, 
+		"enumerator": "Second", 
+		"float": -13.37, 
+		"integer": -1337, 
+		"string": "This is Kean." 
+	}, 
+	"structure0": { 
+		"Boolean": true, 
+		"Enumerator": "Second", 
+		"Float": -13.37, 
+		"Integer": -1337, 
+		"String": "This is Kean." 
+	}, 
+	"structure1": { 
+		"Boolean": true, 
+		"Enumerator": "Second", 
+		"Float": -13.37, 
+		"Integer": -1337, 
+		"String": "This is Kean." 
+	} 
+}

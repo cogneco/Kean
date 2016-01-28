@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Dictionary type="Kean.Serialize.Test.Data.Dictionary Kean.Tests">
+	<Classes>
+		<Key>0</Key>
+		<Value type="Kean.Serialize.Test.Data.ComplexClass Kean.Tests">
+			<Boolean>true</Boolean>
+			<Class>
+				<Boolean>true</Boolean>
+				<Enumerator>Second</Enumerator>
+				<Float>-13.37</Float>
+				<Integer>-1337</Integer>
+				<String>This is Kean.</String>
+			</Class>
+			<Enumerator>Second</Enumerator>
+			<Float>-13.37</Float>
+			<Integer>-1337</Integer>
+			<String>This is Kean.</String>
+			<Structure>
+				<Boolean>true</Boolean>
+				<Enumerator>Second</Enumerator>
+				<Float>-13.37</Float>
+				<Integer>-1337</Integer>
+				<String>This is Kean.</String>
+			</Structure>
+		</Value>
+	</Classes>
+	<Classes>
+		<Key>1</Key>
+		<Value>
+			<Boolean>true</Boolean>
+			<Enumerator>Second</Enumerator>
+			<Float>-13.37</Float>
+			<Integer>-1337</Integer>
+			<String>This is Kean.</String>
+		</Value>
+	</Classes>
+	<Number>
+		<Key>eight</Key>
+		<Value>8</Value>
+	</Number>
+	<Number>
+		<Key>six</Key>
+		<Value>6</Value>
+	</Number>
+	<Number>
+		<Key>seven</Key>
+		<Value>7</Value>
+	</Number>
+	<Number>
+		<Key>four</Key>
+		<Value>4</Value>
+	</Number>
+	<Number>
+		<Key>two</Key>
+		<Value>2</Value>
+	</Number>
+	<Number>
+		<Key>one</Key>
+		<Value>1</Value>
+	</Number>
+	<Number>
+		<Key>nine</Key>
+		<Value>9</Value>
+	</Number>
+	<Number>
+		<Key>zero</Key>
+		<Value>0</Value>
+	</Number>
+	<Number>
+		<Key>five</Key>
+		<Value>5</Value>
+	</Number>
+	<Number>
+		<Key>three</Key>
+		<Value>3</Value>
+	</Number>
+	<Objects>
+		<Key>time</Key>
+		<Value type="System.DateTime">2111-11-11T11:11:11.1110000</Value>
+	</Objects>
+	<Objects>
+		<Key>complex</Key>
+		<Value type="Kean.Serialize.Test.Data.ComplexClass Kean.Tests">
+			<Boolean>true</Boolean>
+			<Class>
+				<Boolean>true</Boolean>
+				<Enumerator>Second</Enumerator>
+				<Float>-13.37</Float>
+				<Integer>-1337</Integer>
+				<String>This is Kean.</String>
+			</Class>
+			<Enumerator>Second</Enumerator>
+			<Float>-13.37</Float>
+			<Integer>-1337</Integer>
+			<String>This is Kean.</String>
+			<Structure>
+				<Boolean>true</Boolean>
+				<Enumerator>Second</Enumerator>
+				<Float>-13.37</Float>
+				<Integer>-1337</Integer>
+				<String>This is Kean.</String>
+			</Structure>
+		</Value>
+	</Objects>
+	<Objects>
+		<Key>boolean</Key>
+		<Value type="bool">true</Value>
+	</Objects>
+	<Objects>
+		<Key>class</Key>
+		<Value type="Kean.Serialize.Test.Data.Class Kean.Tests">
+			<Boolean>true</Boolean>
+			<Enumerator>Second</Enumerator>
+			<Float>-13.37</Float>
+			<Integer>-1337</Integer>
+			<String>This is Kean.</String>
+		</Value>
+	</Objects>
+	<Structures>
+		<Key>0</Key>
+		<Value>
+			<Boolean>true</Boolean>
+			<Enumerator>Second</Enumerator>
+			<Float>-13.37</Float>
+			<Integer>-1337</Integer>
+			<String>This is Kean.</String>
+		</Value>
+	</Structures>
+	<Structures>
+		<Key>1</Key>
+		<Value>
+			<Boolean>true</Boolean>
+			<Enumerator>Second</Enumerator>
+			<Float>-13.37</Float>
+			<Integer>-1337</Integer>
+			<String>This is Kean.</String>
+		</Value>
+	</Structures>
+</Dictionary>

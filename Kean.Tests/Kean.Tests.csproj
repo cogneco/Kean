@@ -1,0 +1,579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2678B75E-8DA1-45EB-8F0C-252048ACE936}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Kean.Tests</RootNamespace>
+    <AssemblyName>Kean.Tests</AssemblyName>
+    <UseMSBuildEngine>False</UseMSBuildEngine>
+    <RestorePackages>true</RestorePackages>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+    <Commandlineparameters>-d -r stdio:// -r  telnet://:2323</Commandlineparameters>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="glib-sharp">
+      <HintPath>..\..\packages\GLib.Sharp.2.28.1.2\lib\glib-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cairo">
+      <HintPath>..\..\packages\Cairo.2.0.0.2\lib\Mono.Cairo.dll</HintPath>
+    </Reference>
+    <Reference Include="pango-sharp">
+      <HintPath>..\..\packages\Pango.1.28.3.2\lib\pango-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\packages\MySql.Data.6.8.3\lib\net40\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\packages\OpenTK.1.1.1161.61462\lib\NET40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\..\packages\OpenTK.GLControl.1.1.1161.61462\lib\NET40\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kean\Kean.csproj">
+      <Project>{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}</Project>
+      <Name>Kean</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IO\Program.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Shell.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="All.cs" />
+    <Compile Include="NonNullable.cs" />
+    <Compile Include="StringExtension.cs" />
+    <Compile Include="Cli\Program.cs" />
+    <Compile Include="Collection\All.cs" />
+    <Compile Include="Collection\Dictionary.cs" />
+    <Compile Include="Collection\List.cs" />
+    <Compile Include="Collection\Queue.cs" />
+    <Compile Include="Collection\ReadOnly.cs" />
+    <Compile Include="Collection\Stack.cs" />
+    <Compile Include="Collection\Vector.cs" />
+    <Compile Include="Collection\Array\List.cs" />
+    <Compile Include="Collection\Array\Queue.cs" />
+    <Compile Include="Collection\Array\Stack.cs" />
+    <Compile Include="Collection\Array\Vector.cs" />
+    <Compile Include="Collection\Base\Dictionary.cs" />
+    <Compile Include="Collection\Base\List.cs" />
+    <Compile Include="Collection\Base\Queue.cs" />
+    <Compile Include="Collection\Base\Stack.cs" />
+    <Compile Include="Collection\Base\Vector.cs" />
+    <Compile Include="Collection\Hash\Dictionary.cs" />
+    <Compile Include="Collection\Linked\Dictionary.cs" />
+    <Compile Include="Collection\Linked\List.cs" />
+    <Compile Include="Collection\Linked\Queue.cs" />
+    <Compile Include="Collection\Linked\Stack.cs" />
+    <Compile Include="Collection\Sorted\List.cs" />
+    <Compile Include="Collection\Wrap\ListDictionary.cs" />
+    <Compile Include="DB\Sql\Item.cs" />
+    <Compile Include="DB\Sql\Program.cs" />
+    <Compile Include="Draw\All.cs" />
+    <Compile Include="Draw\Parser.cs" />
+    <Compile Include="Draw\Path.cs" />
+    <Compile Include="Draw\Cairo\All.cs" />
+    <Compile Include="Draw\Cairo\Bgra.cs" />
+    <Compile Include="Draw\Color\Convert.cs" />
+    <Compile Include="Draw\OpenGL\All.cs" />
+    <Compile Include="Draw\OpenGL\Bgra.cs" />
+    <Compile Include="Draw\OpenGL\Canvas.cs" />
+    <Compile Include="Draw\OpenGL\Convert.cs" />
+    <Compile Include="Draw\OpenGL\Fixture.cs" />
+    <Compile Include="Draw\OpenGL\Monochrome.cs" />
+    <Compile Include="Draw\Raster\All.cs" />
+    <Compile Include="Draw\Raster\Bgr.cs" />
+    <Compile Include="Draw\Raster\Bgra.cs" />
+    <Compile Include="Draw\Raster\Convert.cs" />
+    <Compile Include="Draw\Raster\Fixture.cs" />
+    <Compile Include="Draw\Raster\Image.cs" />
+    <Compile Include="Draw\Raster\Transform.cs" />
+    <Compile Include="Draw\Vector\All.cs" />
+    <Compile Include="Draw\Vector\Image.cs" />
+    <Compile Include="Error\All.cs" />
+    <Compile Include="Error\Error.cs" />
+    <Compile Include="Error\Exception\Abstract.cs" />
+    <Compile Include="Error\Exception\Test.cs" />
+    <Compile Include="Html\All.cs" />
+    <Compile Include="Html\Save.cs" />
+    <Compile Include="Math\All.cs" />
+    <Compile Include="Math\Fraction.cs" />
+    <Compile Include="Math\Complex\All.cs" />
+    <Compile Include="Math\Complex\Double.cs" />
+    <Compile Include="Math\Complex\Single.cs" />
+    <Compile Include="Math\Complex\Template.cs" />
+    <Compile Include="Math\Geometry2D\All.cs" />
+    <Compile Include="Math\Geometry2D\Box.cs" />
+    <Compile Include="Math\Geometry2D\Point.cs" />
+    <Compile Include="Math\Geometry2D\Size.cs" />
+    <Compile Include="Math\Geometry2D\Transform.cs" />
+    <Compile Include="Math\Geometry2D\Double\Box.cs" />
+    <Compile Include="Math\Geometry2D\Double\Point.cs" />
+    <Compile Include="Math\Geometry2D\Double\Size.cs" />
+    <Compile Include="Math\Geometry2D\Double\Transform.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Box.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Point.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Size.cs" />
+    <Compile Include="Math\Geometry2D\Integer\Transform.cs" />
+    <Compile Include="Math\Geometry2D\Single\Box.cs" />
+    <Compile Include="Math\Geometry2D\Single\Point.cs" />
+    <Compile Include="Math\Geometry2D\Single\Size.cs" />
+    <Compile Include="Math\Geometry2D\Single\Transform.cs" />
+    <Compile Include="Math\Geometry3D\All.cs" />
+    <Compile Include="Math\Geometry3D\Double\Box.cs" />
+    <Compile Include="Math\Geometry3D\Double\Point.cs" />
+    <Compile Include="Math\Geometry3D\Double\Quaternion.cs" />
+    <Compile Include="Math\Geometry3D\Double\Size.cs" />
+    <Compile Include="Math\Geometry3D\Double\Transform.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Box.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Point.cs" />
+    <Compile Include="Math\Geometry3D\Integer\Size.cs" />
+    <Compile Include="Math\Geometry3D\Single\Box.cs" />
+    <Compile Include="Math\Geometry3D\Single\Point.cs" />
+    <Compile Include="Math\Geometry3D\Single\Size.cs" />
+    <Compile Include="Math\Geometry3D\Single\Transform.cs" />
+    <Compile Include="Math\Matrix\All.cs" />
+    <Compile Include="Math\Matrix\Double.cs" />
+    <Compile Include="Math\Matrix\Single.cs" />
+    <Compile Include="Math\Matrix\Template.cs" />
+    <Compile Include="Math\Random\All.cs" />
+    <Compile Include="Math\Random\Generator.cs" />
+    <Compile Include="Math\Regression\All.cs" />
+    <Compile Include="Math\Regression\Filter\Kalman.cs" />
+    <Compile Include="Math\Regression\Interpolation\Splines\Point.cs" />
+    <Compile Include="Math\Regression\Minimization\Double.cs" />
+    <Compile Include="Math\Regression\Minimization\Single.cs" />
+    <Compile Include="Math\Regression\Ransac\Single.cs" />
+    <Compile Include="Platform\Settings\Loader.cs" />
+    <Compile Include="Platform\Settings\Object.cs" />
+    <Compile Include="Platform\Settings\Program.cs" />
+    <Compile Include="Platform\Settings\Command\Application.cs" />
+    <Compile Include="Platform\Settings\Command\Car.cs" />
+    <Compile Include="Platform\Settings\Command\Configuration.cs" />
+    <Compile Include="Platform\Settings\Command\Media.cs" />
+    <Compile Include="Platform\Settings\Command\MediaState.cs" />
+    <Compile Include="Platform\Settings\Command\Mode.cs" />
+    <Compile Include="Platform\Settings\Command\Vehicle.cs" />
+    <Compile Include="Platform\Settings\Command\Geometry2D\Double.cs" />
+    <Compile Include="Platform\Settings\Command\Geometry2D\Integer.cs" />
+    <Compile Include="Platform\Settings\Command\Geometry2D\Single.cs" />
+    <Compile Include="Platform\Settings\Command\Geometry3D\Double.cs" />
+    <Compile Include="Platform\Settings\Command\Geometry3D\Integer.cs" />
+    <Compile Include="Platform\Settings\Command\Geometry3D\Single.cs" />
+    <Compile Include="Reflect\All.cs" />
+    <Compile Include="Reflect\Type.cs" />
+    <Compile Include="Reflect\Data\ParentClass.cs" />
+    <Compile Include="Serialize\BasicTypes.cs" />
+    <Compile Include="Serialize\CollectionTypes.cs" />
+    <Compile Include="Serialize\CoreTypes.cs" />
+    <Compile Include="Serialize\Factory.cs" />
+    <Compile Include="Serialize\IFactory.cs" />
+    <Compile Include="Serialize\Misfit.cs" />
+    <Compile Include="Serialize\NullableTypes.cs" />
+    <Compile Include="Serialize\SystemTypes.cs" />
+    <Compile Include="Serialize\Verifier.cs" />
+    <Compile Include="Serialize\Data\Array.cs" />
+    <Compile Include="Serialize\Data\Class.cs" />
+    <Compile Include="Serialize\Data\ComplexClass.cs" />
+    <Compile Include="Serialize\Data\Dictionary.cs" />
+    <Compile Include="Serialize\Data\EmptyClass.cs" />
+    <Compile Include="Serialize\Data\Enumerator.cs" />
+    <Compile Include="Serialize\Data\IData.cs" />
+    <Compile Include="Serialize\Data\Include.cs" />
+    <Compile Include="Serialize\Data\KeyValue.cs" />
+    <Compile Include="Serialize\Data\Linked.cs" />
+    <Compile Include="Serialize\Data\List.cs" />
+    <Compile Include="Serialize\Data\ListExisting.cs" />
+    <Compile Include="Serialize\Data\ListInterface.cs" />
+    <Compile Include="Serialize\Data\Nullable.cs" />
+    <Compile Include="Serialize\Data\StringCast.cs" />
+    <Compile Include="Serialize\Data\StringInterface.cs" />
+    <Compile Include="Serialize\Data\Structure.cs" />
+    <Compile Include="Uri\All.cs" />
+    <Compile Include="Uri\Authority.cs" />
+    <Compile Include="Uri\Domain.cs" />
+    <Compile Include="Uri\Endpoint.cs" />
+    <Compile Include="Uri\Locator.cs" />
+    <Compile Include="Uri\Path.cs" />
+    <Compile Include="Uri\Query.cs" />
+    <Compile Include="Uri\Scheme.cs" />
+    <Compile Include="Uri\User.cs" />
+    <Compile Include="Xml\Dom\All.cs" />
+    <Compile Include="Xml\Dom\Factory.cs" />
+    <Compile Include="Xml\Dom\Fragment.cs" />
+    <Compile Include="Xml\Dom\Open.cs" />
+    <Compile Include="Xml\Dom\Save.cs" />
+    <Compile Include="Xml\Dom\Tests.cs" />
+    <Compile Include="Xml\Serialize\All.cs" />
+    <Compile Include="Xml\Serialize\Missing.cs" />
+    <Compile Include="Xml\Serialize\Named.cs" />
+    <Compile Include="Xml\Serialize\Preprocessor.cs" />
+    <Compile Include="Xml\Serialize\Verifier.cs" />
+    <Compile Include="Json\Dom\All.cs" />
+    <Compile Include="Json\Dom\Equality.cs" />
+    <Compile Include="Json\Dom\Factory.cs" />
+    <Compile Include="Json\Dom\Open.cs" />
+    <Compile Include="Json\Dom\Save.cs" />
+    <Compile Include="Json\Dom\Tests.cs" />
+    <Compile Include="Json\Serialize\All.cs" />
+    <Compile Include="Json\Serialize\Verifier.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Math\Complex\Template.tt" />
+    <None Include="Math\Geometry2D\Box.tt" />
+    <None Include="Math\Geometry2D\Point.tt" />
+    <None Include="Math\Geometry2D\Size.tt" />
+    <None Include="Math\Geometry2D\Transform.tt" />
+    <None Include="Math\Geometry3D\Box.tt" />
+    <None Include="Math\Geometry3D\Point.tt" />
+    <None Include="Math\Geometry3D\Size.tt" />
+    <None Include="Math\Geometry3D\Transform.tt" />
+    <None Include="Math\Matrix\Template.tt" />
+    <None Include="Platform\Settings\Kean.Platform.Settings.Test.conf" />
+    <None Include="Platform\Settings\settings.conf" />
+    <None Include="Platform\Settings\Settings\name.conf" />
+    <None Include="Platform\Settings\resources\settings.css" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="../packages/GLib.Sharp.2.28.1.2/build/GLib.Sharp.targets" Condition="Exists('../packages/GLib.Sharp.2.28.1.2/build/GLib.Sharp.targets')" />
+  <Import Project="../packages/Cairo.2.0.0.2/build/Cairo.targets" Condition="Exists('../packages/Cairo.2.0.0.2/build/Cairo.targets')" />
+  <Import Project="../packages/Pango.1.28.3.2/build/Pango.targets" Condition="Exists('../packages/Pango.1.28.3.2/build/Pango.targets')" />
+  <ItemGroup>
+    <EmbeddedResource Include="Json\Serialize\Json\Dictionary.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\List.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\ListExisting.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\ListInterface.json" />
+    <EmbeddedResource Include="Draw\Cairo\Correct\Bgra\Create.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\Blend.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\BlendWithClipping.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\Clear.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\ClearArea.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\ConvertToRaster.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\CreateFromRaster.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawColor.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawColorRegion.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawColorRegionWithClipping.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawColorRegionWithTransformAndClipping.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawImageOnPosition.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawImageOnRegion.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawImageOnRegionWithClipping.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\ResizeTo.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\ResizeWithin.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\BgrToBgra.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\BgrToMonochrome.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\BgrToYuv420.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\BgraToBgr.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\BgraToMonochrome.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\BgraToYuv420.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\MonochromeToBgr.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\MonochromeToBgra.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\MonochromeToYuv420.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\Yuv420ToBgr.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\Yuv420ToBgra.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Convert\Yuv420ToMonochrome.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\ClearArea.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\ConvertToRaster.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\CreateFromRaster.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\DrawColor.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\DrawColorRegion.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\DrawImageOnBgra.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\DrawImageOnRegion.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\ResizeTo.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\ResizeWithin.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Input\ElephantSeal.jpg" />
+    <EmbeddedResource Include="Draw\OpenGL\Input\Flower.jpg" />
+    <EmbeddedResource Include="Draw\OpenGL\Input\Hercules.jpg" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Array.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Class.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ClassMisfit.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ClassNamed.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ComplexClass.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ComplexClassMisfit.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ComplexClassNamed.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\DateTime.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\DateTimeOffset.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Dictionary.mono.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Dictionary.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\EmptyClass.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Enumerator.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\KeyValue.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Linked.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\List.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ListExisting.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ListInterface.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28DateTime%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28DateTimeOffset%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28Enumerator%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28Structure%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28TimeSpan%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28bool%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28byte%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28char%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28decimal%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28double%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28float%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28int%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28long%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28sbyte%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28short%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28uint%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28ulong%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable%28ushort%29.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Nullable.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\StringCast.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\StringInterface.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Structure.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\StructureMisfit.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\StructureNamed.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\TimeSpan.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\bool.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\byte.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\byteNamed.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\char.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\decimal.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\double.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\float.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\int.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\long.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\sbyte.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\short.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\string.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\uint.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ulong.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\ushort.xml" />
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Classes0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Classes1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number4.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number5.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number6.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number7.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number8.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Number9.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Objects0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Objects1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Objects2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Objects3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Structures0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Serialize\Xml\Include\Structures1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xml\Dom\Data\fragment001.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid001.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid002.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid003.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid004.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid005.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid006.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid007.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid008.xml" />
+    <EmbeddedResource Include="Xml\Dom\Data\valid009.xml" />
+    <EmbeddedResource Include="Json\Dom\Data\Array.json" />
+    <EmbeddedResource Include="Json\Dom\Data\BooleanFalse.json" />
+    <EmbeddedResource Include="Json\Dom\Data\BooleanTrue.json" />
+    <EmbeddedResource Include="Json\Dom\Data\Empty.json" />
+    <EmbeddedResource Include="Json\Dom\Data\Null.json" />
+    <EmbeddedResource Include="Json\Dom\Data\Number.json" />
+    <EmbeddedResource Include="Json\Dom\Data\Object.json" />
+    <EmbeddedResource Include="Json\Dom\Data\ObjectEmpty.json" />
+    <EmbeddedResource Include="Json\Dom\Data\ObjectNested.json" />
+    <EmbeddedResource Include="Json\Dom\Data\ObjectSingle.json" />
+    <EmbeddedResource Include="Json\Dom\Data\String.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Array.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Class.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\ClassMisfit.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\ComplexClass.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\ComplexClassMisfit.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\DateTime.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\DateTimeOffset.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Dictionary.mono.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\EmptyClass.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Enumerator.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\KeyValue.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Linked.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28DateTime%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28DateTimeOffset%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28Enumerator%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28Structure%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28TimeSpan%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28bool%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28byte%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28char%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28decimal%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28double%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28float%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28int%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28long%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28sbyte%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28short%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28uint%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28ulong%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable%28ushort%29.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Nullable.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\StringCast.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\StringInterface.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\Structure.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\StructureMisfit.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\TimeSpan.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\bool.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\byte.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\char.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\decimal.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\double.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\float.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\int.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\long.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\sbyte.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\short.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\string.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\uint.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\ulong.json" />
+    <EmbeddedResource Include="Json\Serialize\Json\ushort.json" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Abbreviation.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Address.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Anchor.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Aside.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Audio.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Base.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.BidirectionalOverride.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Caption.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Cite.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Code.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Definition.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.DescriptionList.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Division.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Emphasized.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Form.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Heading.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.InlineFrame.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Italic.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.KeyBoardInput.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Mark.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Meter.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.NoScript.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Object.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.OrderedList.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Paragraph.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.PreformattedText.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Progress.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Quote.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Sample.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Select.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Small.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Strong.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.TextArea.0.html" />
+    <EmbeddedResource Include="Html\Correct\Kean.Html.Dom.Test.Save.Variable.0.html" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\Bitmap.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\BitmapRectangle.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\BitmapText.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\Circle.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\CircleFill.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\Create.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\CurveTo.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\Ellipse.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\EllipseStroke.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\EllipticalArcTo.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\MoveToLineTo.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\Rectangle.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\RectangleFill.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\RectangleFillOnly.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\RectangleFillStrokePath.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\RoundedRectangle.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\RoundedRectangleStroke.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\Text.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\TextFill.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\TextStroke.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Bgra\Triangle.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Convert\monochrome.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Convert\original.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Convert\original.txt" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\aspect.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\coordinateSystem.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\original.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\resized1.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\resized2.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\rotated.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\scaled.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\shiftedBgr.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\shiftedBgra.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\shiftedMonochrome.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\shiftedYuv420.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\shiftedYuyv.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\shiftedYvu420.png" />
+    <EmbeddedResource Include="Draw\Raster\Correct\Transform\translated.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Monochrome\DrawColorRegionWithoutBackground.png" />
+    <EmbeddedResource Include="Draw\OpenGL\Correct\Bgra\DrawImageUsingMapping.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>$id$</id>
+		<version>$version$</version>
+		<authors>simonmika</authors>
+		<owners>simonmika</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>$description$</description>
+		<dependencies>
+			<dependency id="OpenTK.GLControl" version="[1.1.1161.61462]" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Modules\**.xml" target="build\Modules" />
+		<file src="Kean.targets" target="build" />
+	</files>
+</package>

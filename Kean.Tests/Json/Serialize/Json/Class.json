@@ -1,0 +1,8 @@
+{ 
+	"$type": "Kean.Serialize.Test.Data.Class Kean.Tests", 
+	"boolean": true, 
+	"enumerator": "Second", 
+	"float": -13.37, 
+	"integer": -1337, 
+	"string": "This is Kean." 
+}

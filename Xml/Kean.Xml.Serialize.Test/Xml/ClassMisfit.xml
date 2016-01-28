@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Class type="Kean.Core.Serialize.Test:Data.Class">
-	<Boolean>true</Boolean>
-	<Enumerator>Second</Enumerator>
-	<Float>-13.37</Float>
-	<Misfit>This does not exist in class.</Misfit>
-	<Integer>-1337</Integer>
-	<String>This is Kean.</String>
-</Class>

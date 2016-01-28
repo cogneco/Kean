@@ -1,0 +1,25 @@
+{ 
+	"$type": "Kean.Serialize.Test.Data.ComplexClass Kean.Tests", 
+	"Boolean": true, 
+	"Class": { 
+		"Boolean": true, 
+		"Enumerator": "Second", 
+		"Misfit": 42,
+		"Float": -13,37, 
+		"Integer": -1337, 
+		"String": "This is Kean." 
+	}, 
+	"Enumerator": "Second", 
+	"Float": -13,37, 
+	"Misfit": 42,
+	"Integer": -1337, 
+	"String": "This is Kean.", 
+	"Structure": { 
+		"Boolean": true, 
+		"Enumerator": "Second", 
+		"Misfit": 42,
+		"Float": -13,37, 
+		"Integer": -1337, 
+		"String": "This is Kean." 
+	} 
+}

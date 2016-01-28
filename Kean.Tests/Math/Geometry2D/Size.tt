@@ -1,0 +1,315 @@
+﻿<#@ template language="C#v3.5" hostspecific="True" #>
+<#
+	GenerateStart("Size", "Kean.Math.Geometry2D.Test", "Single",  "float");
+    GenerateSingle("Size", "Kean.Math.Geometry2D.Test");
+    GenerateEnd();
+    SaveOutput("Single/Size.cs");  
+    
+    GenerateStart("Size", "Kean.Math.Geometry2D.Test", "Double",  "double");
+    GenerateDouble("Size", "Kean.Math.Geometry2D.Test");
+    GenerateEnd();
+    SaveOutput("Double/Size.cs");   
+
+    GenerateStart("Size", "Kean.Math.Geometry2D.Test", "Integer",  "int");
+    GenerateInteger("Size", "Kean.Math.Geometry2D.Test");
+    GenerateEnd();
+    SaveOutput("Integer/Size.cs");  
+#>
+<#+
+  void SaveOutput(string outputFileName)
+  {
+      string templateDirectory = System.IO.Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = System.IO.Path.Combine(templateDirectory, outputFileName);
+      System.IO.File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+      this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+#>
+<#+
+    void GenerateStart(string @name, string @namespace, string @namespace1, string @value1)
+    {
+#>
+// 
+//  <#= @name #>.cs
+//  
+//  Author:
+//       Anders Frisk <andersfrisk77@gmail.com>
+//  
+//  Copyright (c) 2012 Anders Frisk
+// 
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+// 
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+// 
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+using System;
+using NUnit.Framework;
+using Target = Kean.Math.Geometry2D;
+using Kean.Extension;
+
+namespace <#= @namespace #>.<#= @namespace1 #>
+{
+    [TestFixture]
+    public class <#= @name #> :
+        Kean.Test.Fixture<<#= @name #>>
+    {
+        string prefix = "<#= @namespace #>.<#= @namespace1 #>.<#= @name #>";
+        float Precision { get { return 1e-4f; } }
+        Target.<#= @namespace1 #>.<#= @name #> CastFromString(string value)
+        {
+            return (Target.<#= @namespace1 #>.<#= @name #>)value;
+        }
+        string CastToString(Target.<#= @namespace1 #>.<#= @name #> value)
+        {
+            return value;
+        }
+        Target.<#= @namespace1 #>.<#= @name #> vector0 = new Target.<#= @namespace1 #>.<#= @name #>((<#= @value1 #>)22.221f, (<#= @value1 #>)-3.1f);
+        Target.<#= @namespace1 #>.<#= @name #> vector1 = new Target.<#= @namespace1 #>.<#= @name #>((<#= @value1 #>)12.221f, (<#= @value1 #>)13.1f);
+        Target.<#= @namespace1 #>.<#= @name #> vector2 = new Target.<#= @namespace1 #>.<#= @name #>((<#= @value1 #>)34.442f, (<#= @value1 #>)10.0f);
+        Target.<#= @namespace1 #>.<#= @name #> vector3 = new Target.<#= @namespace1 #>.<#= @name #>((<#= @value1 #>)10, (<#= @value1 #>)20);
+
+        protected override void Run()
+        {
+            this.Run(
+                this.Polar0,
+                this.Polar1,
+                this.Polar2,
+                this.Polar3,
+                this.Polar4,
+                this.Polar5,
+                this.Angles,
+                this.Casts,
+                this.StringCasts
+                );
+        }
+        #region Equality
+        [Test]
+        public void Equality()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>();
+            Verify(this.vector0, Is.EqualTo(this.vector0));
+            Verify(this.vector0.Equals(this.vector0 as object), Is.True);
+            Verify(this.vector0 == this.vector0, Is.True);
+            Verify(this.vector0 != this.vector1, Is.True);
+            Verify(this.vector0 == point, Is.False);
+            Verify(point == point, Is.True);
+            Verify(point == this.vector0, Is.False);
+        }
+        #endregion
+        #region Arithmetic
+        [Test]
+        public void Addition()
+        {
+            Verify((this.vector0 + this.vector1).Width, Is.EqualTo(this.vector2.Width).Within(this.Precision));
+            Verify((this.vector0 + this.vector1).Height, Is.EqualTo(this.vector2.Height).Within(this.Precision));
+        }
+        [Test]
+        public void Subtraction()
+        {
+            Verify(this.vector0 - this.vector0, Is.EqualTo(new Target.<#= @namespace1 #>.<#= @name #>()));
+        }
+        [Test]
+        public void ScalarMultiplication()
+        {
+            Verify((-1) * this.vector0, Is.EqualTo(-this.vector0));
+        }
+        [Test]
+        public void ScalarDivision()
+        {
+            Verify(this.vector0 / (-1), Is.EqualTo(-this.vector0));
+        }
+        #endregion
+        #region Hash Code
+        [Test]
+        public void Hash()
+        {
+            Verify(this.vector0.Hash(), Is.Not.EqualTo(0));
+        }
+        #endregion
+
+        [Test]
+        public void GetValues()
+        {
+            Verify(this.vector0.Width, Is.EqualTo((<#= @value1 #>)(22.221)).Within(this.Precision), this.prefix + "GetValues.0");
+            Verify(this.vector0.Height, Is.EqualTo((<#= @value1 #>)(-3.1)).Within(this.Precision), this.prefix + "GetValues.1");
+        }
+        [Test]
+        public void Swap()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> result = this.vector0.Swap();
+            Verify(result.Width, Is.EqualTo(this.vector0.Height), this.prefix + "Swap.0");
+            Verify(result.Height, Is.EqualTo(this.vector0.Width), this.prefix + "Swap.1");
+        }
+        [Test]
+        public void Casting()
+        {
+            string value = "10, 20";
+            Verify(this.CastToString(this.vector3), Is.EqualTo(value), this.prefix + "Casting.0");
+            Verify(this.CastFromString(value), Is.EqualTo(this.vector3), this.prefix + "Casting.1");
+        }
+        [Test]
+        public void CastingNull()
+        {
+            string value = null;
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>();
+            Verify(this.CastToString(point), Is.EqualTo(value), this.prefix + "CastingNull.0");
+            Verify(this.CastFromString(value), Is.EqualTo(point), this.prefix + "CastingNull.1");
+        }
+
+        #region Polar Representation
+        [Test]
+        public void Polar0()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>();
+            Verify(point.Norm, Is.EqualTo(0));
+            Verify(point.Azimuth, Is.EqualTo(0));
+        }
+        [Test]
+        public void Polar1()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>(1, 0);
+            Verify(point.Norm, Is.EqualTo(1));
+            Verify(point.Azimuth, Is.EqualTo(0));
+        }
+        [Test]
+        public void Polar2()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>(0, 1);
+            Verify(point.Norm, Is.EqualTo(1));
+            Verify(point.Azimuth, Is.EqualTo(Kean.Math.<#= @namespace1 #>.ToRadians(90)));
+        }
+        [Test]
+        public void Polar3()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>(0, -5);
+            Verify(point.Norm, Is.EqualTo(5));
+            Verify(point.Azimuth, Is.EqualTo(Kean.Math.<#= @namespace1 #>.ToRadians(-90)));
+        }
+        [Test]
+        public void Polar4()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>(-1, 0);
+            Verify(point.Norm, Is.EqualTo(1));
+            Verify(point.Azimuth, Is.EqualTo(Kean.Math.<#= @namespace1 #>.ToRadians(180)));
+        }
+        [Test]
+        public void Polar5()
+        {
+            Target.<#= @namespace1 #>.<#= @name #> point = new Target.<#= @namespace1 #>.<#= @name #>(-3, 0);
+            <#= @value1 #> radius = point.Norm;
+            <#= @value1 #> azimuth = point.Azimuth;
+            Target.<#= @namespace1 #>.<#= @name #> point2 = Target.<#= @namespace1 #>.<#= @name #>.Polar(radius, azimuth);
+            Verify(point.Distance(point2), Is.EqualTo(0).Within(this.Precision));
+        }
+        #endregion
+        [Test]
+        public void Angles()
+        {
+            Verify(Target.Single.<#= @name #>.BasisX.Angle(Target.Single.<#= @name #>.BasisX), Is.EqualTo(0).Within(this.Precision));
+            Verify(Target.Single.<#= @name #>.BasisX.Angle(Target.Single.<#= @name #>.BasisY), Is.EqualTo(Kean.Math.Single.Pi / 2).Within(this.Precision));
+            Verify(Target.Single.<#= @name #>.BasisX.Angle(-Target.Single.<#= @name #>.BasisY), Is.EqualTo(-Kean.Math.Single.Pi / 2).Within(this.Precision));
+            Verify(Target.Single.<#= @name #>.BasisX.Angle(-Target.Single.<#= @name #>.BasisX), Is.EqualTo(Kean.Math.Single.Pi).Within(this.Precision));
+        }
+<#+
+    }  
+#>
+<#+
+    void GenerateDouble(string @name, string @namespace)
+    {
+#>
+        [Test]
+        public void Casts()
+        {
+            // integer - double
+            {
+                Target.Integer.<#= @name #> integer = new Target.Integer.<#= @name #>(10, 20);
+                Target.Double.<#= @name #> @double = integer;
+                Verify(@double.Width, Is.EqualTo(10));
+                Verify(@double.Height, Is.EqualTo(20));
+                Verify((Target.Integer.<#= @name #>)@double, Is.EqualTo(integer));
+            }
+            // single - double
+            {
+                Target.Single.<#= @name #> single = new Target.Single.<#= @name #>(10, 20);
+                Target.Double.<#= @name #> @double = single;
+                Verify(@double.Width, Is.EqualTo(10));
+                Verify(@double.Height, Is.EqualTo(20));
+                Verify((Target.Single.<#= @name #>)@double, Is.EqualTo(single));
+            }
+        }
+        [Test]
+        public void StringCasts()
+        {
+            string textFromValue = new Target.Double.<#= @name #>(10, 20);
+            Verify(textFromValue, Is.EqualTo("10, 20"));
+            Target.Double.<#= @name #> @integerFromText = (Target.Double.<#= @name #>)"10, 20";
+            Verify(@integerFromText.Width, Is.EqualTo(10));
+            Verify(@integerFromText.Height, Is.EqualTo(20));
+        }
+<#+
+    }  
+#>
+<#+
+    void GenerateSingle(string @name, string @namespace)
+    {
+#>
+        [Test]
+        public void Casts()
+        {
+            // integer - single
+            {
+                Target.Integer.<#= @name #> integer = new Target.Integer.<#= @name #>(10, 20);
+                Target.Single.<#= @name #> @single = integer;
+                Verify(@single.Width, Is.EqualTo(10));
+                Verify(@single.Height, Is.EqualTo(20));
+                Verify((Target.Integer.<#= @name #>)@single, Is.EqualTo(integer));
+            }
+        }
+        [Test]
+        public void StringCasts()
+        {
+            string textFromValue = new Target.Single.<#= @name #>(10, 20);
+            Expect(textFromValue, Is.EqualTo("10, 20"));
+            Target.Single.<#= @name #> @integerFromText = (Target.Single.<#= @name #>)"10, 20";
+            Verify(@integerFromText.Width, Is.EqualTo(10));
+            Verify(@integerFromText.Height, Is.EqualTo(20));
+        }
+
+<#+
+    }  
+#>
+<#+
+    void GenerateInteger(string @name, string @namespace)
+    {
+#>
+        [Test]
+        public void Casts()
+        { }
+        [Test]
+        public void StringCasts()
+        {
+            string textFromValue = new Target.Integer.<#= @name #>(10, 20);
+            Verify(textFromValue, Is.EqualTo("10, 20"));
+            Target.Integer.<#= @name #> @integerFromText = (Target.Integer.<#= @name #>)"10, 20";
+            Verify(@integerFromText.Width, Is.EqualTo(10));
+            Verify(@integerFromText.Height, Is.EqualTo(20));
+        }
+<#+
+    }  
+#>
+<#+
+    void GenerateEnd()
+    {
+#>
+    }
+}
+<#+
+    }  
+#>

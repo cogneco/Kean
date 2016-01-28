@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<KeyValue type="Kean.Serialize.Test.Data.KeyValue Kean.Tests">
+	<Data>
+		<Key>This is Kean.</Key>
+		<Value type="System.DateTime">2111-11-11T11:11:11.1110000</Value>
+	</Data>
+</KeyValue>
