@@ -124,8 +124,8 @@ namespace Kean.Json.Sax
 						}
 						while (this.reader.Next() && (char.IsDigit(this.reader.Last) || this.reader.Last == '.' || this.reader.Last == '-' || char.ToLower(this.reader.Last) == 'e'));
 						decimal value;
-						if (decimal.TryParse (result.ToString (), System.Globalization.NumberStyles.AllowDecimalPoint | System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowLeadingSign, null, out value))
-							yield return new Token.Number (value, mark);
+							if (decimal.TryParse (result.ToString (), System.Globalization.NumberStyles.AllowDecimalPoint | System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowLeadingSign, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out value))
+								yield return new Token.Number (value, mark);
 					}
 					else
 						this.reader.Next ();
