@@ -21,16 +21,40 @@
 
 using System;
 using Kean.Extension;
+using Parallel = Kean.Parallel;
+using Geometry2D = Kean.Math.Geometry2D;
 
 namespace Kean.Draw.OpenGL
 {
 	public class Window :
 		IDisposable
 	{
+		public event Action Initialized;
+		public event Action<Surface> Draw;
+
+		public Parallel.ThreadPool ThreadPool { get { return this.backend.NotNull() ? this.backend.ThreadPool : null; } }
+
+		public bool Visible
+		{
+			get { return this.backend.Visible; } 
+			set { this.backend.Visible = value; }
+		}
+
 		Backend.Window backend;
 		public Window()
 		{
 			this.backend = Backend.Window.Create();
+			this.backend.Initialized += () => this.Initialized.Call();
+			this.backend.Draw += renderer =>
+			{
+				using (Surface surface = new Surface(renderer))
+				{
+					surface.Use();
+					surface.Transform = Geometry2D.Single.Transform.CreateTranslation(surface.Size / 2);
+					this.Draw(surface);
+					surface.Unuse();
+				}
+			};
 		}
 
 		~Window()
@@ -45,6 +69,9 @@ namespace Kean.Draw.OpenGL
 		{
 			this.Close();
 		}
+		public void Invalidate() {
+			this.backend.Redraw();
+		}
 		public bool Close()
 		{
 			bool result;
@@ -54,6 +81,9 @@ namespace Kean.Draw.OpenGL
 				this.backend = null;
 			}
 			return result;
+		}
+		public void Run() {
+			this.backend.Run();
 		}
 	}
 }
