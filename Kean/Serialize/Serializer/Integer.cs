@@ -41,6 +41,7 @@ namespace Kean.Serialize.Serializer
 		public object Deserialize(IStorage storage, Data.Node data, object result)
 		{
 			return data is Data.Integer ? (data as Data.Integer).Value :
+				data is Data.Decimal ? decimal.ToInt32((data as Data.Decimal).Value) :
 				data is Data.Binary ? BitConverter.ToInt32((data as Data.Binary).Value, 0) :
 				data is Data.String ? int.Parse((data as Data.String).Value, System.Globalization.CultureInfo.InvariantCulture.NumberFormat) :
 				0;

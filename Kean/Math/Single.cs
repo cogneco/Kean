@@ -150,7 +150,27 @@ namespace Kean.Math
 		{
 			return Single.Convert(System.Math.Floor(value));
 		}
-		public static float Ceiling(float value)
+		public static float RoundToValueDigits(float value, int valueDigits, bool up)
+		{
+			if (valueDigits < Logarithm(float.MaxValue, 10) && value != 0)
+			{
+				float power = 1f;
+				while (Absolute(value) > Power(10, valueDigits))
+				{
+					value /= 10f;
+					power *= 10f;
+				}
+				while (Absolute(value) < Power(10, valueDigits - 1))
+				{
+					value *= 10f;
+					power /= 10f;
+				}
+				value = up ? Ceiling(value) : Floor(value);
+				value *= power;
+			}
+			return value;
+		}
+		public override Single Ceiling()
 		{
 			return Single.Convert(System.Math.Ceiling(value));
 		}
@@ -294,5 +314,54 @@ namespace Kean.Math
 			return value * value;
 		}
 		#endregion
-	}
+    #region Comparison Functions
+    public override bool LessThan(Single other)
+    {
+        return this.Value < other.Value;
+    }
+    public override bool GreaterThan(Single other)
+    {
+        return this.Value > other.Value;
+    }
+    #endregion
+    #endregion
+    #region Cast Operators
+    public static implicit operator float(Single value)
+    {
+        return value.IsNull() ? 0 : value.Value;
+    }
+    public static implicit operator Single(float value)
+    {
+        return new Single(value);
+    }
+    #endregion
+    #region Object overides
+    public override string ToString()
+    {
+        return this.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+    }
+		public static string ToString(float value, int valueDigits)
+		{
+			string result = "";
+			if (valueDigits < Logarithm(float.MaxValue, 10) && value != 0)
+			{
+				int power = 0;
+				while (Absolute(value) > Power(10, valueDigits))
+				{
+					value /= 10f;
+					power++;
+				}
+				while (Absolute(value) < Power(10, valueDigits - 1))
+				{
+					value *= 10f;
+					power--;
+				}
+				result = (Round(value) * Power(10, power)).ToString("F" + (power < 0 ? (-power).ToString() : "0"));
+			}
+			else
+				result = value.ToString();
+			return result;
+		}
+    #endregion
+  }
 }

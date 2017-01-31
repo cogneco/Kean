@@ -97,6 +97,7 @@ namespace Kean.IO.Net.Http.Header
 			} 
 		}
 		#endregion
+		#region Url
 		Uri.Locator url;
 		public Uri.Locator Url
 		{ 
@@ -112,6 +113,8 @@ namespace Kean.IO.Net.Http.Header
 					this["Host"] = this.Host;
 			}
 		}
+		#endregion
+		#region Content-Length
 		int? contentLength;
 		public int ContentLength
 		{
@@ -122,6 +125,19 @@ namespace Kean.IO.Net.Http.Header
 				return this.contentLength.Value;
 			}
 		}
+		#endregion
+		#region Range
+		Range range;
+		public Range Range
+		{
+			get 
+			{
+				if (this.range == null)
+					this.range = this["Range"];
+				return this.range;
+			}
+		}
+		#endregion
 		#region IEnumerable implementation
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
