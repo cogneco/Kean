@@ -32,7 +32,7 @@ namespace Kean.Draw.OpenGL.Backend
 		OpenTK.NativeWindow
 	{
 		public event Action Initialized;
-		public event Action Draw;
+		public event Action<Renderer> Draw;
 		public Context Context { get; private set; }
 		ThreadPool threadPool;
 		public Parallel.ThreadPool ThreadPool { get { return this.threadPool; } }
@@ -104,8 +104,10 @@ namespace Kean.Draw.OpenGL.Backend
 		{
 			this.Dispose(false);
 		}
-		protected abstract Context CreateContext ();
+		protected abstract Context CreateContext();
+		protected abstract Renderer CreateRenderer();
 		protected abstract ThreadPool CreateThreadPool (string name, int workers);
+		protected abstract void SetupViewport();
 		public void Run ()
 		{
 			this.Initialized.Call();
@@ -115,7 +117,7 @@ namespace Kean.Draw.OpenGL.Backend
 		{
 			if (this.WindowState != OpenTK.WindowState.Minimized && (this.Visible || this.makeVisible))
 			{
-				this.Draw.Call();
+				this.Draw.Call(this.CreateRenderer());
 				if (this.threadPool.NotNull())
 				{
 #pragma warning disable 0618
@@ -164,6 +166,10 @@ namespace Kean.Draw.OpenGL.Backend
 		{
 			base.OnResize(e);
 			this.threadPool.MainContext.Update(this.WindowInfo);
+			Error.Log.Wrap(() =>
+			{
+				this.SetupViewport();
+			})();
 			this.redrawSignal.Set();
 		}
 		protected override void OnFocusedChanged (EventArgs e)

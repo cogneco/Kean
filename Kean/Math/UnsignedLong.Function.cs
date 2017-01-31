@@ -22,43 +22,43 @@ using System;
 using Kean.Extension;
 namespace Kean.Math
 {
-    public partial class UnsignedLong
+    public class UnsignedLong
     {
         #region Constants
-        public static uint NegativeInfinity { get { return uint.MinValue; } }
-        public static uint PositiveInfinity { get { return uint.MaxValue; } }
-        public static uint Epsilon { get { return 1; } }
-        public static uint MinimumValue { get { return uint.MinValue; } }
-        public static uint MaximumValue { get { return uint.MaxValue; } }
-        public static uint Pi { get { return UnsignedLong.Convert(System.Math.PI); } }
-        public static uint E { get { return UnsignedLong.Convert(System.Math.E); } }
+        public static ulong NegativeInfinity { get { return ulong.MinValue; } }
+        public static ulong PositiveInfinity { get { return ulong.MaxValue; } }
+        public static ulong Epsilon { get { return 1; } }
+        public static ulong MinimumValue { get { return ulong.MinValue; } }
+        public static ulong MaximumValue { get { return ulong.MaxValue; } }
+        public static ulong Pi { get { return UnsignedLong.Convert(System.Math.PI); } }
+        public static ulong E { get { return UnsignedLong.Convert(System.Math.E); } }
         #endregion
         #region Convert Functions
-        public static uint Convert(double value)
+        public static ulong Convert(double value)
         {
-            return System.Convert.ToUInt32(value);
+			return System.Convert.ToUInt64(value);
         }
-        public static uint Convert(float value)
+        public static ulong Convert(float value)
         {
-            return System.Convert.ToUInt32(value);
+            return System.Convert.ToUInt64(value);
         }
         /// <summary>
-        /// Parses a string to a uint
+        /// Parses a string to a ulong
         /// </summary>
         /// <exception cref="System.FormatException">When string does not contain a int</exception>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static uint Parse(string value)
+        public static ulong Parse(string value)
         {
-            return uint.Parse(value, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+            return ulong.Parse(value, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
         }
-        public static string ToString(uint value)
+        public static string ToString(ulong value)
         {
             return value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
         }
         #endregion
         #region Utility Functions
-        public static uint Clamp(uint value, uint floor, uint ceiling)
+        public static ulong Clamp(ulong value, ulong floor, ulong ceiling)
         {
             if (value > ceiling)
                 value = ceiling;
@@ -66,29 +66,29 @@ namespace Kean.Math
                 value = floor;
             return value;
         }
-        public static uint Maximum(uint first, uint second)
+        public static ulong Maximum(ulong first, ulong second)
         {
             return first > second ? first : second;
         }
-        public static uint Maximum(uint value, params uint[] values)
+        public static ulong Maximum(ulong value, params ulong[] values)
         {
-            foreach (uint v in values)
+            foreach (ulong v in values)
                 if (value < v)
                     value = v;
             return value;
         }
-        public static uint Minimum(uint first, uint second)
+        public static ulong Minimum(ulong first, ulong second)
         {
             return first < second ? first : second;
         }
-        public static uint Minimum(uint value, params uint[] values)
+        public static ulong Minimum(ulong value, params ulong[] values)
         {
-            foreach (uint v in values)
+            foreach (ulong v in values)
                 if (value > v)
                     value = v;
             return value;
         }
-        public static uint Modulo(uint dividend, uint divisor)
+        public static ulong Modulo(ulong dividend, ulong divisor)
         {
             if (dividend < 0)
                 dividend += UnsignedLong.Ceiling(dividend / (float)divisor) * divisor;
@@ -96,61 +96,61 @@ namespace Kean.Math
         }
         #endregion
         #region Rounding Functions
-        public static uint Floor(float value)
+        public static ulong Floor(float value)
         {
             return UnsignedLong.Convert(System.Math.Floor(value));
         }
-        public static uint Floor(double value)
+        public static ulong Floor(double value)
         {
             return UnsignedLong.Convert(System.Math.Floor(value));
         }
-        public static uint Ceiling(float value)
+        public static ulong Ceiling(float value)
         {
             return UnsignedLong.Convert(System.Math.Ceiling(value));
         }
-        public static uint Ceiling(double value)
+        public static ulong Ceiling(double value)
         {
             return UnsignedLong.Convert(System.Math.Ceiling(value));
         }
-        public static uint Truncate(float value)
+        public static ulong Truncate(float value)
         {
             return UnsignedLong.Convert(System.Math.Truncate(value));
         }
-        public static uint Truncate(double value)
+        public static ulong Truncate(double value)
         {
             return UnsignedLong.Convert(System.Math.Truncate(value));
         }
-        public static uint Round(float value)
+        public static ulong Round(float value)
         {
             return UnsignedLong.Convert(System.Math.Round(value));
         }
-        public static uint Round(double value)
+        public static ulong Round(double value)
         {
             return UnsignedLong.Convert(System.Math.Round(value));
         }
         #endregion
         #region Transcendental and Power Functions
-        public static uint Exponential(uint value)
+        public static ulong Exponential(ulong value)
         {
             return UnsignedLong.Convert(System.Math.Exp(value));
         }
-        public static uint Logarithm(uint value)
+        public static ulong Logarithm(ulong value)
         {
             return UnsignedLong.Convert(System.Math.Log(value));
         }
-        public static uint Logarithm(uint value, uint @base)
+        public static ulong Logarithm(ulong value, ulong @base)
         {
             return UnsignedLong.Convert(System.Math.Log(value, @base));
         }
-        public static uint Power(uint @base, uint exponent)
+        public static ulong Power(ulong @base, ulong exponent)
         {
             return UnsignedLong.Convert(System.Math.Pow(@base, exponent));
         }
-        public static uint SquareRoot(uint value)
+        public static ulong SquareRoot(ulong value)
         {
             return UnsignedLong.Convert(System.Math.Sqrt(value));
         }
-        public static uint Squared(uint value)
+        public static ulong Squared(ulong value)
         {
             return value * value;
         }

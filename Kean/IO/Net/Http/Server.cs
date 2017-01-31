@@ -4,7 +4,7 @@
 //  Author:
 //       Simon Mika <smika@hx.se>
 //  
-//  Copyright (c) 2011 Simon Mika
+//  Copyright (c) 2011-2015 Simon Mika
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -26,6 +26,7 @@ using Uri = Kean.Uri;
 using Kean.IO.Extension;
 using Kean.Collection.Extension;
 using Generic = System.Collections.Generic;
+using Long = Kean.Math.Long;
 
 namespace Kean.IO.Net.Http
 {
@@ -147,23 +148,22 @@ namespace Kean.IO.Net.Http
 			return response.Send(this.Writer);
 		}
 		#endregion
-		#region RespondChuncked
-		public IBlockOutDevice RespondChunked(Status status, string type, params KeyValue<string, string>[] headers)
+		#region Respond
+		public IBlockOutDevice Respond(Header.Response response, long contentLength)
 		{
-			return this.RespondChunked(status, type, (Generic.IEnumerable<KeyValue<string, string>>)headers);
+			response.ContentLength = contentLength;
+			return this.SendHeader(response) ? this.BlockDevice : null;
 		}
-		public IBlockOutDevice RespondChunked(Status status, string type, Generic.IEnumerable<KeyValue<string, string>> headers)
+		public IBlockOutDevice Respond(Header.Response response)
 		{
-			IBlockOutDevice result = null;
-			if (this.SendHeader(status, headers.Prepend(KeyValue.Create("Transfer-Encoding", "chunked"), KeyValue.Create("Content-Type", type))))
-				result = ChunkedBlockOutDevice.Wrap(this.BlockDevice);
-			return result;
+			response["Transfer-Encoding"] = "chunked";
+			return this.SendHeader(response) ? ChunkedBlockOutDevice.Wrap(this.BlockDevice) : null;
 		}
 		#endregion
 		#region Send
 		public bool Send<T>(T data)
 		{
-			using (var device = this.RespondChunked(Status.OK, "application/json; charset=UTF-8"))
+			using (var device = this.Respond(new Header.Response() { Status = Status.OK, ContentType = "application/json; charset=UTF-8" }))
 				return this.SendStorage.Store(data, device);
 		}
 		public bool Send(Json.Dom.Object data)
@@ -176,90 +176,97 @@ namespace Kean.IO.Net.Http
 		}
 		public bool Send(Json.Dom.Item data)
 		{
-			using (var device = this.RespondChunked(Status.OK, "application/json; charset=UTF-8"))
+			using (var device = this.Respond(new Header.Response() { Status = Status.OK, ContentType = "application/json; charset=UTF-8" }))
 				return data.Save(device);
 		}
 		#endregion
 		#region SendFile
-		public Status SendFile(Uri.Locator file, params KeyValue<string, string>[] headers)
+		public Status SendFile(Uri.Locator file, Header.Response response = new Header.Response())
 		{
-			return this.SendFile(file, (Generic.IEnumerable<KeyValue<string, string>>)headers);
-		}
-		public Status SendFile(Uri.Locator file, Generic.IEnumerable<KeyValue<string, string>> headers)
-		{
-			Status result;
 			if (this.Request.Path.Folder)
 				file += "index.html";
 			if (System.IO.Directory.Exists(file.Path.PlatformPath))
-			{
-				this.SendHeader(Header.Response.MovedPermanently(this.Request.Url + "/"));
-				result = Status.MovedPermanently;
-			}
+				this.SendHeader(response = Header.Response.MovedPermanently(this.Request.Url + "/"));
 			else
 			{
 				using (var source = IO.BlockDevice.Open(file))
 					if (source.NotNull())
 					{
-						string type;
 						switch (file.Path.Extension)
 						{
 							case "html":
-								type = "text/html; charset=utf8";
+								response.ContentType = "text/html; charset=utf8";
 								break;
 							case "css":
-								type = "text/css; charset=UTF-8";
+								response.ContentType = "text/css; charset=UTF-8";
 								break;
 							case "csv":
-								type = "text/csv; charset=UTF-8";
+								response.ContentType = "text/csv; charset=UTF-8";
 								break;
 							case "mp4":
-								type = "video/mp4";
+								response.ContentType = "video/mp4";
 								break;
 							case "webm":
-								type = "video/webm";
+								response.ContentType = "video/webm";
 								break;
 							case "png":
-								type = "image/png";
+								response.ContentType = "image/png";
 								break;
 							case "jpeg":
 							case "jpg":
-								type = "image/jpeg";
+								response.ContentType = "image/jpeg";
 								break;
 							case "svg":
-								type = "image/svg+xml";
+								response.ContentType = "image/svg+xml";
 								break;
 							case "gif":
-								type = "image/gif";
+								response.ContentType = "image/gif";
 								break;
 							case "json":
-								type = "application/json; charset=UTF-8";
+								response.ContentType = "application/json; charset=UTF-8";
 								break;
 							case "js":
-								type = "application/javascript";
+								response.ContentType = "application/javascript";
 								break;
 							case "pdf":
-								type = "application/pdf";
+								response.ContentType = "application/pdf";
 								break;
 							case "xml":
-								type = "application/xml";
+								response.ContentType = "application/xml";
 								break;
 							case "zip":
-								type = "application/zip";
+								response.ContentType = "application/zip";
 								break;
 							default:
-								type = null;
+								response.ContentType = null;
 								break;
 						}
-						using (var destination = this.RespondChunked(result = Status.OK, type, headers))
-							destination.Write(source);
+						response.Status = Status.OK;
+						if (source is ISeekableBlockInDevice && ((ISeekable)source).Size.HasValue)
+						{
+							if (this.Request.Range.NotNull() && this.Request.Range.Type == "bytes")
+							{
+								response.Status = Status.PartialContent;
+								response.ContentRange = new Header.Range("bytes", Long.Maximum(this.Request.Range.First.GetValueOrDefault(0L), 0L), Long.Minimum(this.Request.Range.Last.GetValueOrDefault(((ISeekable)source).Size.Value), ((ISeekable)source).Size.Value - 1), ((ISeekable)source).Size);
+								using (var s = ((ISeekableBlockInDevice)source).Slice(response.ContentRange.First.Value, response.ContentRange.Last.Value))
+								using (var destination = this.Respond(response, s.Size.Value))
+									destination.Write(source);
+							}
+							else
+							{
+								response["Accept-Ranges"] = "bytes";
+								using (var destination = this.Respond(response, ((ISeekable)source).Size.Value))
+									destination.Write(source);
+							}
+						}
+						else
+							using (var destination = this.Respond(response))
+								destination.Write(source);
 					}
 					else
-					{
-						this.SendHeader(Header.Response.NotFound);
-						result = Status.MovedPermanently;
-					}
+						this.SendHeader(response = Header.Response.NotFound);
 			}
-			return result;
+			return response.Status;
 		}
 		#endregion
 		#region SendMessage
@@ -276,7 +283,8 @@ namespace Kean.IO.Net.Http
 			var message = response.Status.AsHtml.AsBinary();
 			response.ContentLength = message.Length;
 			response.ContentType = "text/html; charset=utf8";
-			return this.SendHeader(response) && this.ByteDevice.Write(message);
+			using (var device = this.Respond(response))
+				return device.NotNull() && device.Write(message);
 		}
 		#endregion
 		#region Receive
@@ -341,3 +349,4 @@ namespace Kean.IO.Net.Http
 		#endregion
 	}
 }
+

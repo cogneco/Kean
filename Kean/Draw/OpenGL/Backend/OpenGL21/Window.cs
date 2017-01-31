@@ -40,9 +40,37 @@ namespace Kean.Draw.OpenGL.Backend.OpenGL21
 		{
 			return new Context();
 		}
+		protected override Backend.Renderer CreateRenderer()
+		{
+			return new Renderer(this.Context, () => new Geometry2D.Integer.Size(this.Width, this.Height), () => TextureType.Rgb);
+		}
 		protected override Backend.ThreadPool CreateThreadPool(string name, int workers)
 		{
 			return new ThreadPool(this.WindowInfo, name, workers);
+		}
+		protected override void SetupViewport()
+		{
+			GL.ClearColor(System.Drawing.SystemColors.Control);
+			GL.Viewport(0, 0, this.Width, this.Height);
+			GL.Ortho(0.0, 0.0, 1.0, 1.0, 0.0, 0.0);
+			GL.MatrixMode(OpenTK.Graphics.OpenGL.MatrixMode.Projection);
+			OpenTK.Matrix4 projection = new OpenTK.Matrix4()
+			{
+				Row0 = new OpenTK.Vector4(2.0f / this.Width, 0.0f, 0, 0),
+				Row1 = new OpenTK.Vector4(0.0f, -2.0f / this.Height, 0, 0),
+				Row2 = new OpenTK.Vector4(0, 0, 1, 0),
+				Row3 = new OpenTK.Vector4(-1.0f, 1.0f, 0, 1),
+			};
+			GL.LoadMatrix(ref projection);
+			GL.MatrixMode(OpenTK.Graphics.OpenGL.MatrixMode.Modelview);
+			OpenTK.Matrix4 identity = new OpenTK.Matrix4()
+			{
+				Row0 = new OpenTK.Vector4(1, 0, 0, 0),
+				Row1 = new OpenTK.Vector4(0, 1, 0, 0),
+				Row2 = new OpenTK.Vector4(0, 0, 1, 0),
+				Row3 = new OpenTK.Vector4(0, 0, 0, 1),
+			};
+			GL.LoadMatrix(ref identity);
 		}
 	}
 }
