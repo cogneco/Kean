@@ -47,6 +47,7 @@ namespace Kean.Uri
 		}
 		static readonly System.Collections.Generic.Dictionary<string, string> defaultFormats = new System.Collections.Generic.Dictionary<string, string> {
 			{ "Time", "HH-mm-ss-fff" },
+			{ "Sharpness", "G"},
 		};
 		/// <summary>
 		/// Recursively resolves a given variable in a PathLink, using a format specified as "$(variable:format)" in the PathLink string.

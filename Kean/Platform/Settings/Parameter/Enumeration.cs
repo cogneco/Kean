@@ -46,11 +46,11 @@ namespace Kean.Platform.Settings.Parameter
 		{ }
 		public override string AsString(object value)
 		{
-			return Enum.GetName(this.Type, value).ToLower();
+			return value.AsString();
 		}
 		public override object FromString(string value)
 		{
-			return Enum.Parse(this.Type, value, true);
+			return value.Parse(this.Type);
 		}
 		public override string Complete(string incomplete)
 		{

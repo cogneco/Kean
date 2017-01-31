@@ -37,6 +37,10 @@ namespace Kean.Draw.Color
 			this.Green = green;
 			this.Red = red;
 		}
+		public string HexString
+		{
+			get { return "#" + this.Red.ToString("x02") + this.Green.ToString("x02") + this.Blue.ToString("x02"); }
+		}
 
 		#region IColor Members
 		public IColor Copy()
@@ -77,7 +81,7 @@ namespace Kean.Draw.Color
 			return result;
 		}
 		#endregion
-		#region Object Overides
+		#region Object Overrides
 		public override string ToString()
 		{
 			return this.Blue + " " + this.Green + " " + this.Red;
