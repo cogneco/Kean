@@ -48,6 +48,7 @@ namespace Kean.Extension
 		}
 		public static T ConvertType<T>(this object me)
 		{
+// Enum ?			result = (value.NotNull() && value.GetType() == typeof(T)) ? value : default(T);
 			return (T)Convert.ChangeType(me, typeof(T));
 		}
 		public static T As<T>(this object me, T @default)
@@ -98,7 +99,7 @@ namespace Kean.Extension
 			else if (me is TimeSpan)
 				result = ((TimeSpan)me).ToString();
 			else if (me is Enum)
-				result = Enum.GetName(me.GetType(), me).ToLower();
+				result = me.ToString().ToLower();
 			else if (me is IString)
 				result = (me as IString).String;
 			else

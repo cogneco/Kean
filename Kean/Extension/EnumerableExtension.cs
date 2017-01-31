@@ -270,9 +270,8 @@ namespace Kean.Extension
 			if (count > 0)
 			{
 				var enumerator = me.GetEnumerator();
-				do
+				while (--count > 0 && enumerator.MoveNext())
 					yield return enumerator.Current;
-				while (--count > 0 && enumerator.MoveNext());
 			}
 		}
 		public static Generic.IEnumerable<T> Read<T>(this Generic.IEnumerable<T> me, params T[] separator)

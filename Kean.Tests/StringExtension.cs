@@ -24,6 +24,14 @@ using Kean.Extension;
 
 namespace Kean.Test
 {
+	[System.Flags]
+	enum Flag
+	{
+		A = 0x00,
+		B = 0x01,
+		C = 0x02
+	}
+
 	[TestFixture]
 	public class StringExtension :
 		Kean.Test.Fixture<StringExtension>
@@ -33,7 +41,8 @@ namespace Kean.Test
 			this.Run(
 				this.PercentEncode,
 				this.PercentDecode,
-				this.Split
+				this.Split,
+				this.Enum
 			);
 		}
 
@@ -61,6 +70,17 @@ namespace Kean.Test
 		{
 			Verify("string%20with%20spaces".PercentDecode(), Is.EqualTo("string with spaces"));
 			Verify("string%22with%22".PercentDecode(), Is.EqualTo("string\"with\""));
+		}
+
+		[Test]
+		public void Enum()
+		{
+			Flag flags1 = Flag.B | Flag.C;
+			Flag flags2 = ("B | C").Parse<Flag>();
+			Flag flags3 = ("B , C").Parse<Flag>();
+			Verify(flags2, Is.EqualTo(flags1));
+			Verify(flags3, Is.EqualTo(flags1));
+			Verify(flags3.ToString(), Is.EqualTo("B, C"));
 		}
 	}
 }
