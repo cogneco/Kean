@@ -20,11 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Generic = System.Collections.Generic;
 
 namespace Kean.Collection.Wrap
 {
 	public class ListQueue<T> :
-		IQueue<T>
+	IQueue<T>,
+	Generic.IEnumerable<T>
 	{
 		IList<T> data;
 		int head;
@@ -69,6 +71,19 @@ namespace Kean.Collection.Wrap
 				this.size--;
 			}
 			return result;
+		}
+		#endregion
+		#region IEnumerable implementation
+		public Generic.IEnumerator<T> GetEnumerator()
+		{
+			for (int i = this.head; i <= this.head + this.data.Count - 1; i++)
+				yield return this.data[i % (this.data.Count)];
+		}
+		#endregion
+		#region IEnumerable implementation
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return this.GetEnumerator();
 		}
 		#endregion
 	}

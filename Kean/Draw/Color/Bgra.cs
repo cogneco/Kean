@@ -39,6 +39,10 @@ namespace Kean.Draw.Color
 			this.Color = color;
 			this.Alpha = alpha;
 		}
+		public string HexString
+		{
+			get { return this.Color.HexString + this.Alpha.ToString("x02"); }
+		}
 		#region IColor Members
 		public void Set<T>(T color) where T : IColor
 		{
@@ -74,7 +78,7 @@ namespace Kean.Draw.Color
 			return Single.SquareRoot((3 * Single.Squared(this.Color.Distance(c.Color)) + Single.Squared(this.Alpha - c.Alpha)) / 4);
 		}
 		#endregion
-		#region Object Overides
+		#region Object Overrides
 		public override string ToString()
 		{
 			return this.Color.ToString() + " " + this.Alpha;

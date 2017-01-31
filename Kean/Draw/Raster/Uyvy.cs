@@ -36,7 +36,7 @@ namespace Kean.Draw.Raster
 		YuvPacked
 	{
 		protected override int BytesPerPixel { get { return 2; } }
-		public override Color.Yuv this[int x, int y]
+		public override IColor this[int x, int y]
 		{
 			get
 			{
@@ -53,10 +53,11 @@ namespace Kean.Draw.Raster
 			{ 
 				unsafe 
 				{
+					var yuv = value.Convert<Color.Yuv>(); 
 					byte* offset = (byte*)this.Buffer + y * this.Stride + x / 2 * 4;
-					*(offset + (Integer.Even(x) ? 1 : 3)) = value.Y;
-					*offset = value.U;
-					*(offset + 2) = value.V;
+					*(offset + (Integer.Even(x) ? 1 : 3)) = (Color.Monochrome)yuv.Y;
+					*offset = (Color.Monochrome)yuv.U;
+					*(offset + 2) = (Color.Monochrome)yuv.V;
 				}
 			}
 		}

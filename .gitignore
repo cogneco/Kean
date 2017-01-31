@@ -122,3 +122,6 @@ VersionInfo.Generated.wxi
 
 /.nuget/NuGet.Config
 /.nuget/NuGet.targets
+/Kean/Math/Geometry3D/Rotation.cs
+/Kean/Math/Geometry3D/EuclidTransform.cs
+/Kean/Math/Geometry3D/Quaternion.cs

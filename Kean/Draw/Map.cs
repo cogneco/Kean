@@ -23,6 +23,7 @@ using System;
 using Kean;
 using Kean.Extension;
 using Geometry2D = Kean.Math.Geometry2D;
+using Geometry3D = Kean.Math.Geometry3D;
 
 namespace Kean.Draw
 {
@@ -44,5 +45,9 @@ namespace Kean.Draw
 		public abstract void Add<T>(string name, T[,] data) where T : struct;
 		public abstract void Add<T>(string name, T[,,] data) where T : struct;
 		public abstract void Add(string name, Draw.Image data);
+		public abstract void Add(string name, Geometry2D.Integer.Size data);
+		public abstract void Add(string name, Geometry3D.Single.Point data);
+		public abstract void Add(string name, Geometry3D.Single.Size data);
+		public abstract void Add(string name, Geometry3D.Single.Transform data);
 	}
 }

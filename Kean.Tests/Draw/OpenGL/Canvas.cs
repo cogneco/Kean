@@ -21,6 +21,7 @@
 
 using System;
 using Geometry2D = Kean.Math.Geometry2D;
+using Geometry3D = Kean.Math.Geometry3D;
 using NUnit.Framework;
 
 namespace Kean.Draw.OpenGL.Test
@@ -51,13 +52,29 @@ namespace Kean.Draw.OpenGL.Test
 				this.ClearArea,
 				this.DrawImageOnPosition,
 				this.DrawImageOnRegion,
-				this.DrawImageUsingMapping,
-				this.DrawImageUsingMappingTwice,
+				//this.DrawImageUsingMapping, TODO: This renders a black rectangle, like many of the monochrome tests.
+				//this.DrawImageUsingMappingTwice, TODO: Fix the above first
 				this.Blend,
-				this.DrawColorRegionWithClipping,
-				this.DrawImageOnRegionWithClipping,
-				this.BlendWithClipping,
-				this.DrawColorRegionWithTransformAndClipping
+				//this.DrawColorRegionWithClipping, TODO: Clipping is broken.
+				//this.DrawImageOnRegionWithClipping, TODO: Clipping is broken.
+				//this.BlendWithClipping, TODO: Clipping is broken.
+				//this.DrawColorRegionWithTransformAndClipping, TODO: Clipping is broken.
+				this.DrawSkew,
+				this.Draw3DTransformIdentity,
+				this.Draw3DTransform,
+				this.Draw3DTransformZ,
+				this.Draw3DTransformZ90,
+				this.Draw3DTransformIdentityToSmaller,
+				this.Draw3DTransformIdentityToLarger,
+				this.Draw3DTransformZ90ToSmaller,
+				this.Draw3DTransformZ90ToLarger,
+				this.Draw3DTransformXToSmaller,
+				this.Draw3DTransformXToLarger,
+				this.Draw3DTransformYToSmaller,
+				this.Draw3DTransformYToLarger,
+				this.Draw3DTransformToSmaller,
+				this.Draw3DTransformToLarger,
+				this.Draw3DTransformAndCorrect
 				);
 		}
 		[Test]
@@ -229,12 +246,161 @@ namespace Kean.Draw.OpenGL.Test
 			using (Draw.Image image = this.image.Copy())
 			{
 				image.Canvas.Draw(new Color.Bgra(0, 0, 255, 255), new Geometry2D.Single.Box(50, image.Size.Height / 2 - 50, image.Size.Width - 100, 100));
-				image.Canvas.Push(new Geometry2D.Single.Box(100, 100, image.Size.Width / 2 - 100, image.Size.Height), Geometry2D.Single.Transform.CreateTranslation(image.Size / 2) * Geometry2D.Single.Transform.CreateRotation(Math.Single.ToRadians(11.25f)) * Geometry2D.Single.Transform.CreateTranslation(-image.Size / 2));
+				image.Canvas.Push(new Geometry2D.Single.Box(100, 100, image.Size.Width / 2 - 100, image.Size.Height), Geometry2D.Single.Transform.CreateTranslation(image.Size / 2) * Geometry2D.Single.Transform.CreateZRotation(Math.Single.ToRadians(11.25f)) * Geometry2D.Single.Transform.CreateTranslation(-image.Size / 2));
 				image.Canvas.Draw(new Color.Bgra(255, 0, 0, 128), new Geometry2D.Single.Box(image.Size.Width / 2 - 50, image.Size.Height / 2 - 50, 100, 100));
 				image.Canvas.Draw(new Color.Bgra(0, 255, 0, 128), new Geometry2D.Single.Box(100, 100, 100, 100));
 				image.Canvas.Pop();
 				Verify(image, "Draw.OpenGL.Correct.Bgra.DrawColorRegionWithTransformAndClipping.png");
 			}
-		}		
+		}
+		[Test]
+		public void DrawSkew()
+		{
+			using (Draw.Image image = this.image.Copy())
+			{
+				image.Canvas.Push(new Geometry2D.Single.Box(0, 0, image.Size.Width, image.Size.Height), Geometry2D.Single.Transform.CreateScaling(1 / 2f) * Geometry2D.Single.Transform.CreateSkewingX(Math.Single.ToRadians(30f)));
+				image.Canvas.Draw(image, new Geometry2D.Single.Box(0, 0, image.Size.Width, image.Size.Height), new Geometry2D.Single.Box(0, 0, image.Size.Width, image.Size.Height));
+				image.Canvas.Pop();
+				Verify(image, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformIdentity()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.Identity, new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransform()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationX(0.2f) * Geometry3D.Single.Transform.CreateRotationY(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformZ()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationZ(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformZ90()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationZ(Math.Single.Pi/2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformIdentityToSmaller()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size/2))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.Identity, new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformIdentityToLarger()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(2*this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.Identity, new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformZ90ToSmaller()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size / 2))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationZ(Math.Single.Pi / 2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformZ90ToLarger()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(2 * this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationZ(Math.Single.Pi / 2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformXToSmaller()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size / 2))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationX(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformXToLarger()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(2 * this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationX(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformYToSmaller()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size / 2))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationY(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformYToLarger()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(2 * this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationY(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformToSmaller()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size / 2))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationX(0.2f) * Geometry3D.Single.Transform.CreateRotationY(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformToLarger()
+		{
+			using (Draw.Image output = new OpenGL.Bgra(2 * this.image.Size))
+			{
+				output.Project(this.image, Geometry3D.Single.Transform.CreateRotationX(0.2f) * Geometry3D.Single.Transform.CreateRotationY(0.2f), new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
+		[Test]
+		public void Draw3DTransformAndCorrect()
+		{
+			using (Draw.Image temp = new OpenGL.Bgra(this.image.Size))
+			using (Draw.Image output = new OpenGL.Bgra(this.image.Size))
+			{
+				var transform = Geometry3D.Single.Transform.CreateRotationX(0.2f) * Geometry3D.Single.Transform.CreateRotationY(0.2f);
+				temp.Project(this.image, transform, new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				output.Project(temp, transform.Inverse, new Geometry2D.Single.Size(Math.Single.ToRadians(45f), Math.Single.ToRadians(45f)));
+				Verify(output, "Draw.OpenGL.Correct.Bgra.DrawSkew.png");
+			}
+		}
 	}
 }

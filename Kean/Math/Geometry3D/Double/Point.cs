@@ -80,7 +80,7 @@ namespace Kean.Math.Geometry3D.Double
 		#region Static Creators
 		public static Point Spherical(double radius, double azimuth, double elevation)
 		{
-			return new Point(radius * Math.Double.Cosinus(azimuth) * Math.Double.Sinus(elevation), radius * Math.Double.Sinus(azimuth) * Math.Double.Sinus(elevation), radius * Math.Double.Cosinus(elevation));
+			return new Point(radius * Math.Double.Cosine(azimuth) * Math.Double.Sine(elevation), radius * Math.Double.Sine(azimuth) * Math.Double.Sine(elevation), radius * Math.Double.Cosine(elevation));
 		}
 		#endregion
 		#region Arithmetic Vector - Vector Operators

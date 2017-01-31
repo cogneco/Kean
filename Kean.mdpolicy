@@ -18,6 +18,7 @@
     <CatchNewLinePlacement>NewLine</CatchNewLinePlacement>
     <FinallyNewLinePlacement>NewLine</FinallyNewLinePlacement>
     <WhileNewLinePlacement>NewLine</WhileNewLinePlacement>
+    <BeforeMethodDeclarationParentheses>False</BeforeMethodDeclarationParentheses>
     <BeforeMethodCallParentheses>False</BeforeMethodCallParentheses>
     <BeforeConstructorDeclarationParentheses>False</BeforeConstructorDeclarationParentheses>
     <AfterDelegateDeclarationParameterComma>True</AfterDelegateDeclarationParameterComma>

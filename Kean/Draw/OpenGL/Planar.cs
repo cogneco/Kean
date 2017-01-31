@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using Buffer = Kean.Buffer;
 using Geometry2D = Kean.Math.Geometry2D;
 using Kean.Extension;
@@ -28,7 +29,22 @@ namespace Kean.Draw.OpenGL
 	public abstract class Planar :
 		Image
 	{
-		protected Packed[] Channels { get; private set; }
+		Packed[] channels;
+		protected Packed[] Channels
+		{
+			get { return this.channels; }
+			private set
+			{
+				this.channels = value;
+				Action<bool> updateWrap = wrap =>
+				{
+					if (this.channels.NotNull())
+						this.channels.Apply(channel => channel.Wrap = wrap);
+				};
+				updateWrap(this.Wrap);
+				this.WrapChanged += updateWrap;
+			}
+		}
 		protected Planar(Geometry2D.Integer.Size size, CoordinateSystem coordinateSystem, Geometry2D.Integer.Shell crop, params Packed[] channels) :
 			base(size, coordinateSystem, crop) 
 		{

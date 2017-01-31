@@ -82,8 +82,8 @@ namespace Kean.IO
 		public virtual bool Opened { get { return this.Readable || this.Writable; } }
 		public virtual bool Close()
 		{
-			bool result;
-			if (result = this.inDevice.NotNull() && !this.Wrapped)
+			bool result = this.inDevice.NotNull() && !this.Wrapped;
+			if (result)
 			{
 				this.inDevice.Close();
 				this.inDevice = null;

@@ -38,6 +38,8 @@ namespace Kean.Draw.OpenGL
 			base(backend.Size, coordinateSystem, crop)
 		{
 			this.Backend = backend;
+			this.Backend.Wrap = this.Wrap;
+			this.WrapChanged += wrap => this.Backend.Wrap = wrap;
 		}
 		#endregion
 		internal override void Render(Map map, Geometry2D.Single.Point leftTop, Geometry2D.Single.Point rightTop, Geometry2D.Single.Point leftBottom, Geometry2D.Single.Point rightBottom, Geometry2D.Single.Box destination)

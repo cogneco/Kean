@@ -30,10 +30,10 @@ namespace Kean.Math.Regression.Interpolation.Splines.Geometry2D.Single
                         Kean.Math.Geometry2D.Single.Transform transform = this.measures[i].Item2;
                         values[0][i] = Tuple.Create(time, transform.A);
                         values[1][i] = Tuple.Create(time, transform.B);
-                        values[2][i] = Tuple.Create(time, transform.C);
-                        values[3][i] = Tuple.Create(time, transform.D);
-                        values[4][i] = Tuple.Create(time, transform.E);
-                        values[5][i] = Tuple.Create(time, transform.F);
+                        values[2][i] = Tuple.Create(time, transform.D);
+                        values[3][i] = Tuple.Create(time, transform.E);
+                        values[4][i] = Tuple.Create(time, transform.G);
+                        values[5][i] = Tuple.Create(time, transform.H);
                     }
                     this.interpolators = new Splines.Single[values.Length];
                     for(int i = 0; i < values.Length; i++)

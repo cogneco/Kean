@@ -40,7 +40,7 @@ namespace Kean.Draw.OpenGL.Backend
 		public Parallel.ThreadPool ThreadPool { get { return this.threadPool; } }
 
 		bool designMode;
-		protected new bool DesignMode 
+		protected new bool DesignMode
 		{ 
 			get { return this.designMode || base.DesignMode || System.Diagnostics.Process.GetCurrentProcess().ProcessName.StartsWith("devenv") || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime; }
 			set { this.designMode = value; }
@@ -70,8 +70,8 @@ namespace Kean.Draw.OpenGL.Backend
 		}
 		public bool Initialize()
 		{
-			bool result;
-			if (result = !this.DesignMode && !this.loaded)
+			bool result = !this.DesignMode && !this.loaded;
+			if (result)
 			{
 				OpenTK.Platform.IWindowInfo window;
 				try

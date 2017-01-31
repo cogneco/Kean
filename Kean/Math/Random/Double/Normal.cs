@@ -40,7 +40,7 @@ namespace Kean.Math.Random.Double
 			do
 				x2 = this.Next();
 			while (x2 == 0);
-			return this.Mean + this.Deviation * Kean.Math.Double.SquareRoot(-2 * Kean.Math.Double.Logarithm((double) x1 / ulong.MaxValue)) * Kean.Math.Double.Cosinus(2 * Kean.Math.Double.PI * (double) x2 / ulong.MaxValue);
+			return this.Mean + this.Deviation * Kean.Math.Double.SquareRoot(-2 * Kean.Math.Double.Logarithm((double) x1 / ulong.MaxValue)) * Kean.Math.Double.Cosine(2 * Kean.Math.Double.PI * (double) x2 / ulong.MaxValue);
 		}
 	}
 }

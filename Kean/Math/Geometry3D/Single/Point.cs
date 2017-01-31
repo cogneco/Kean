@@ -24,20 +24,27 @@ using Kean.Extension;
 
 namespace Kean.Math.Geometry3D.Single
 {
-    public struct Point:
+	public struct Point:
 	  IEquatable<Point>
-    {
+	{
 		public float X;
 		public float Y;
 		public float Z;
 
-        public Point(float x, float y, float z) 
+		public Point(float x, float y, float z) 
 		{
 			this.X = x;
 			this.Y = y;
 			this.Z = z;
 		}
+		public Point(Geometry2D.Single.Point p, float z)
+		{
+			this.X = p.X;
+			this.Y = p.Y;
+			this.Z = z;
+		}
 		#region properties
+		//public float Theta { get { return Math.Single.ArcusTangensExtended(Math.Single.SquareRoot()) } }
 		public float Norm { get { return Math.Single.SquareRoot((Math.Single.Squared(this.X) + Math.Single.Squared(this.Y) + Math.Single.Squared(this.Z))); } }
 		public float Azimuth { get { return Math.Single.ArcusTangensExtended(this.Y, this.X); } }
 		public float Elevation
@@ -47,7 +54,7 @@ namespace Kean.Math.Geometry3D.Single
 				float result = new float();
 				float r = this.Norm;
 				if (r != result)
-					result = Math.Single.Clamp(this.Z / r, -1, Math.Single.ArcusCosinus(1));
+					result = Math.Single.ArcusCosinus(Math.Single.Clamp(this.Z / r, -1, 1));
 				return result;
 			}
 		}
@@ -80,22 +87,28 @@ namespace Kean.Math.Geometry3D.Single
 		#region Static Creators
 		public static Point Spherical(float radius, float azimuth, float elevation)
 		{
-			return new Point(radius * Math.Single.Cosinus(azimuth) * Math.Single.Sinus(elevation), radius * Math.Single.Sinus(azimuth) * Math.Single.Sinus(elevation), radius * Math.Single.Cosinus(elevation));
+			return new Point(radius * Math.Single.Cosine(azimuth) * Math.Single.Sine(elevation), radius * Math.Single.Sine(azimuth) * Math.Single.Sine(elevation), radius * Math.Single.Cosine(elevation));
+		}
+		public static Point Angles(float rx, float ry, float n)
+		{
+			float z = Math.Single.SquareRoot((n * n) / (1 + Math.Single.Squared(Math.Single.Tangens(ry)) + Math.Single.Squared(Math.Single.Tangens(rx))));
+			//float z = n * Math.Single.Cosine(rx) * Math.Single.Cosine(ry);
+			return new Point(z * Math.Single.Tangens(ry), z * Math.Single.Tangens(rx), z);
 		}
 		#endregion
 		#region Arithmetic Vector - Vector Operators
 		 public static Point operator +(Point left, Point right)
-        {
-            return new Point(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
-        }
+		{
+			return new Point(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+		}
 		public static Point operator +(Point left, Size right)
 		{
 			return new Point(left.X + right.Width, left.Y + right.Height, left.Z + right.Depth);
 		}
 		 public static Point operator +(Size left, Point right)
-        {
-            return new Point(left.Width + right.X, left.Height + right.Y, left.Depth + right.Z);
-        }
+		{
+			return new Point(left.Width + right.X, left.Height + right.Y, left.Depth + right.Z);
+		}
 		public static Point operator -(Point vector)
 		{
 			return new Point(-vector.X, -vector.Y, -vector.Z);
@@ -109,33 +122,33 @@ namespace Kean.Math.Geometry3D.Single
 			return new Size(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
 		}
 		public static Point operator -(Size left, Point right)
-        {
-            return new Point(left.Width - right.X, left.Height - right.Y, left.Depth - right.Z);
-        }
+		{
+			return new Point(left.Width - right.X, left.Height - right.Y, left.Depth - right.Z);
+		}
 		public static Point operator *(Point left, Point right)
-        {
-            return new Point(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
-        }
+		{
+			return new Point(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
+		}
 		public static Point operator *(Point left, Size right)
 		{
 			return new Point(left.X * right.Width, left.Y * right.Height, left.Z * right.Depth);
 		}
 		public static Point operator *(Size left, Point right)
-        {
-            return new Point(left.Width * right.X, left.Height * right.Y,left.Depth * right.Z);
-        }
+		{
+			return new Point(left.Width * right.X, left.Height * right.Y,left.Depth * right.Z);
+		}
 		public static Point operator /(Point left, Point right)
-        {
-            return new Point(left.X / right.X, left.Y / right.Y, left.Z / right.Z);
-        }
+		{
+			return new Point(left.X / right.X, left.Y / right.Y, left.Z / right.Z);
+		}
 		public static Point operator /(Point left, Size right)
 		{
 			return new Point(left.X / right.Width, left.Y / right.Height, left.Z / right.Depth);
 		}
 		public static Point operator /(Size left, Point right)
-        {
-            return new Point(left.Width / right.X, left.Height / right.Y,left.Depth / right.Z);
-        }
+		{
+			return new Point(left.Width / right.X, left.Height / right.Y,left.Depth / right.Z);
+		}
 		#endregion
 		#region Arithmetic Vector and Scalar
 		public static Point operator *(Point left, float right)
@@ -174,21 +187,21 @@ namespace Kean.Math.Geometry3D.Single
 			return !(left == right);
 		}
 		 public static bool operator <(Point left, Point right)
-        {
-            return left.X < right.X && left.Y < right.Y && left.Z < right.Z;
-        }
-        public static bool operator >(Point left, Point right)
-        {
-            return left.X > right.X && left.Y > right.Y && left.Z > right.Z;
-        }
-        public static bool operator <=(Point left, Point right)
-        {
-            return left.X <= right.X && left.Y <= right.Y && left.Z <= right.Z;
-        }
-        public static bool operator >=(Point left, Point right)
-        {
-            return left.X >= right.X && left.Y >= right.Y && left.Z >= right.Z;
-        }
+		{
+			return left.X < right.X && left.Y < right.Y && left.Z < right.Z;
+		}
+		public static bool operator >(Point left, Point right)
+		{
+			return left.X > right.X && left.Y > right.Y && left.Z > right.Z;
+		}
+		public static bool operator <=(Point left, Point right)
+		{
+			return left.X <= right.X && left.Y <= right.Y && left.Z <= right.Z;
+		}
+		public static bool operator >=(Point left, Point right)
+		{
+			return left.X >= right.X && left.Y >= right.Y && left.Z >= right.Z;
+		}
 		#endregion
 		#region Object overides and IEquatable<VectorType>
 		public override bool Equals(object other)
@@ -214,44 +227,50 @@ namespace Kean.Math.Geometry3D.Single
 		}
 		#endregion
 		#region Casts
-        public static implicit operator string(Point value)
-        {
-            return value.NotNull() ? value.ToString() : null;
-        }
-        public static implicit operator Point(string value)
-        {
-            Point result = new Point();
-            if (value.NotEmpty())
-            {
+		public static implicit operator string(Point value)
+		{
+			return value.NotNull() ? value.ToString() : null;
+		}
+		public static implicit operator Point(string value)
+		{
+			Point result = new Point();
+			if (value.NotEmpty())
+			{
 
-                try
-                {
-                    string[] values = value.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (values.Length == 3)
-                        result = new Point(Kean.Math.Single.Parse(values[0]), Kean.Math.Single.Parse(values[1]), Kean.Math.Single.Parse(values[2]));
-                }
-                catch
-                {
-                }
-            }
-            return result;
-        }
-        public static implicit operator Point(Size value)
-        {
-            return new Point(value.Width, value.Height, value.Depth);
-        }
+				try
+				{
+					string[] values = value.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+					if (values.Length == 3)
+						result = new Point(Kean.Math.Single.Parse(values[0]), Kean.Math.Single.Parse(values[1]), Kean.Math.Single.Parse(values[2]));
+				}
+				catch
+				{
+				}
+			}
+			return result;
+		}
+		public static implicit operator Point(Size value)
+		{
+			return new Point(value.Width, value.Height, value.Depth);
+		}
 		
 		public static implicit operator Point(Integer.Point value)
-        {
-            return new Point(value.X, value.Y, value.Z);
-        }
+		{
+			return new Point(value.X, value.Y, value.Z);
+		}
 		public static explicit operator Point(Double.Point value)
-        {
-            return new Point((float)value.X, (float)value.Y, (float)value.Z);
-        }
+		{
+			return new Point((float)value.X, (float)value.Y, (float)value.Z);
+		}
 		
-		
-		
-        #endregion
-    }
+		#endregion
+
+		public Point Project(Transform transform, float planeZ)
+		{
+			return new Geometry3D.Single.Point(new Geometry2D.Single.Point(this.X, this.Y).Project(transform, planeZ), planeZ);
+			//var transformed = transform * this;
+			//var projected = transformed * planeZ / transformed.Z;
+			//return projected; // TODO: Do this properly...
+		}
+	}
 }

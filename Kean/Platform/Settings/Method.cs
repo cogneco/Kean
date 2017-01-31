@@ -35,7 +35,7 @@ namespace Kean.Platform.Settings
 		Parameter.Abstract[] parameters;
 		public Parameter.Abstract[] Parameters
 		{
-			get 
+			get
 			{
 				if (this.parameters.IsNull())
 					this.parameters = this.backend.Parameters.Map(parameter => Parameter.Abstract.Create(parameter));
@@ -63,9 +63,9 @@ namespace Kean.Platform.Settings
 		}
 		public override bool Execute(Parser editor, string[] parameters)
 		{
-			bool result;
 			object methodResult = null;
-			if (result = this.Parameters.Length == 0 && parameters.All(parameter => parameter.IsEmpty()))
+			bool result = this.Parameters.Length == 0 && parameters.All(parameter => parameter.IsEmpty());
+			if (result)
 				methodResult = this.backend.Call();
 			else if (result = parameters.Length == this.Parameters.Length && parameters.All(parameter => parameter.NotEmpty()) || parameters.Length - 1 == this.Parameters.Length && parameters[parameters.Length - 1].IsEmpty())
 			{
@@ -123,8 +123,8 @@ namespace Kean.Platform.Settings
 			return (this.Parameters.Length > 0 && parameters.Length > 0 && parameters.Length <= this.Parameters.Length) ?
 				this.Parameters[parameters.Length - 1].Help(parameters[parameters.Length - 1]) :
 				(this.Usage.NotEmpty() ? this.Usage + "\n" : "") +
-				(this.Example.NotEmpty() ? "Example: " + this.Example + "\n" : "") +
-				(this.Default.NotEmpty() ? "Default: " + this.Default + "\n" : "");
+			(this.Example.NotEmpty() ? "Example: " + this.Example + "\n" : "") +
+			(this.Default.NotEmpty() ? "Default: " + this.Default + "\n" : "");
 		}
 	}
 }

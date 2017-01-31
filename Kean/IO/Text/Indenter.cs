@@ -35,6 +35,7 @@ namespace Kean.IO.Text
 		bool lineIndented;
 		string indention = "";
 		public bool Format { get; set; }
+		[Obsolete("Use static Open instead. This constructor will be make protected.")]
 		public Indenter(ICharacterWriter backend)
 		{
 			this.backend = backend;
@@ -58,8 +59,8 @@ namespace Kean.IO.Text
 		public override bool Writable { get { return this.backend.NotNull() && this.backend.Writable; } }
 		public override bool Close()
 		{
-			bool result;
-			if (result = this.backend.NotNull() && this.backend.Close())
+			bool result = this.backend.NotNull() && this.backend.Close();
+			if (result)
 				this.backend = null;
 			return result;
 		}
@@ -87,6 +88,12 @@ namespace Kean.IO.Text
 		public override bool Flush()
 		{
 			return this.backend.NotNull() && this.backend.Flush();
+		}
+		#endregion
+		#region Static Open
+		public static Indenter Open(ICharacterWriter backend)
+		{
+			return backend.NotNull() ? new Indenter(backend) : null;
 		}
 		#endregion
 	}

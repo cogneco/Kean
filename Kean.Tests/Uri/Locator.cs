@@ -106,9 +106,9 @@ namespace Kean.Uri.Test
 			Verify((string)locator.Scheme, Is.EqualTo("schemeA+schemeB"));
 			Verify((string)locator.Authority, Is.EqualTo("name:password@example.com:80"));
 			Verify((string)locator.Path, Is.EqualTo("/folder%20a/folder%20b/file%200.extension"));
-			Verify((string)locator.Query, Is.EqualTo("key+a=value+a&keyB=valueB"));
+			Verify((string)locator.Query, Is.EqualTo("key a=value a&keyB=valueB"));
 			Verify((string)locator.Fragment, Is.EqualTo("fragment 0"));
-			Verify((string)locator, Is.EqualTo("schemeA+schemeB://name:password@example.com:80/folder%20a/folder%20b/file%200.extension?key+a=value+a&keyB=valueB#fragment%200"));
+			Verify((string)locator, Is.EqualTo("schemeA+schemeB://name:password@example.com:80/folder%20a/folder%20b/file%200.extension?key a=value a&keyB=valueB#fragment%200"));
 			Verify(locator == "schemeA+schemeB://name:password@example.com:80/folder a/folder b/file 0.extension?key a=value a&keyB=valueB#fragment 0", Is.True);
 		}
 
@@ -124,7 +124,7 @@ namespace Kean.Uri.Test
 			Verify((string)locator.Query, Is.EqualTo("key+a=value+a&keyB=valueB"));
 			Verify((string)locator.Fragment, Is.EqualTo("fragment+0"));
 			Verify((string)locator, Is.EqualTo("schemeA+schemeB://name:password@example.com:80/folder+a/folder+b/file+0.extension?key+a=value+a&keyB=valueB#fragment+0"));
-			Verify(locator == "schemeA+schemeB://name:password@example.com:80/folder+a/folder+b/file+0.extension?key a=value a&keyB=valueB#fragment+0", Is.True);
+			Verify(locator == "schemeA+schemeB://name:password@example.com:80/folder+a/folder+b/file+0.extension?key+a=value+a&keyB=valueB#fragment+0", Is.True);
 		}
 
 		[Test]

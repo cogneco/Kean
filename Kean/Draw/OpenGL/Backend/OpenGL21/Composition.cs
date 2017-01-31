@@ -26,6 +26,7 @@ using Collection = Kean.Collection;
 using Color = Kean.Draw.Color;
 using Error = Kean.Error;
 using Geometry2D = Kean.Math.Geometry2D;
+using Geometry3D = Kean.Math.Geometry3D;
 using GL = OpenTK.Graphics.OpenGL.GL;
 
 namespace Kean.Draw.OpenGL.Backend.OpenGL21
@@ -54,6 +55,8 @@ namespace Kean.Draw.OpenGL.Backend.OpenGL21
 				GL.MatrixMode(OpenTK.Graphics.OpenGL.MatrixMode.Projection);
 				GL.PushMatrix();
 				new Geometry2D.Single.Transform(2.0f / this.Size.Width, 0.0f, 0.0f, 2.0f / this.Size.Height, -1.0f, -1.0f).Load();
+				// This is the 3D equivalent:
+				//(Geometry3D.Single.Transform.CreateTranslation(-1.0f, -1.0f, 0) * Geometry3D.Single.Transform.CreateScaling(2.0f / this.Size.Width, 2.0f / this.Size.Height, 1)).Load();
 				GL.MatrixMode(OpenTK.Graphics.OpenGL.MatrixMode.Modelview);
 				GL.PushMatrix();
 				GL.LoadIdentity();

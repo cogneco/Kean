@@ -1,30 +1,47 @@
-// 
-//  MyClass.cs
-//  
+﻿//
+//  SquareRoot.cs
+//
 //  Author:
-//       Simon Mika <smika@hx.se>
-//  
-//  Copyright (c) 2011 Simon Mika
-// 
+//       Simon Mika <simon@mika.se>
+//
+//  Copyright (c) 2014 Simon Mika
+//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 using System;
-namespace Kean.Math.Geometry2D
+
+namespace Kean.Math.Algebra
 {
-	public class MyClass
+	public class SquareRoot :
+	Function
 	{
-		public MyClass()
+		protected override string Symbol { get { return "sqrt"; } }
+		public SquareRoot(Expression argument) :
+			base(argument)
 		{
+		}
+		public override float Evaluate(params KeyValue<string, float>[] variables)
+		{
+			return Single.SquareRoot(this.Argument.Evaluate(variables));
+		}
+		public override Expression Derive(string variable)
+		{
+			return 0.5f * this.Argument ^ -0.5f * this.Argument.Derive(variable);
+		}
+		public override Expression Simplify()
+		{
+			return new Power(this.Argument, 0.5f).Simplify();
 		}
 	}
 }

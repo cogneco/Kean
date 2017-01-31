@@ -87,7 +87,15 @@ namespace Kean.Draw.OpenGL.Backend.OpenGL21
 							OpenTK.Graphics.OpenGL.GL.Uniform3(OpenTK.Graphics.OpenGL.GL.GetUniformLocation(this.Identifier, variableName), values.Length, pointer);
 							break;
 						case 4:
-							OpenTK.Graphics.OpenGL.GL.Uniform4(OpenTK.Graphics.OpenGL.GL.GetUniformLocation(this.Identifier, variableName), values.Length, pointer);
+							switch (values.GetLength(0))
+							{
+								case 1:
+									OpenTK.Graphics.OpenGL.GL.Uniform4(OpenTK.Graphics.OpenGL.GL.GetUniformLocation(this.Identifier, variableName), values.Length, pointer);
+									break;
+								case 4:
+									OpenTK.Graphics.OpenGL.GL.UniformMatrix4(OpenTK.Graphics.OpenGL.GL.GetUniformLocation(this.Identifier, variableName), 1, false, pointer);
+									break;
+							}
 							break;
 					}
 				}

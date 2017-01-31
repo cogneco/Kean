@@ -33,38 +33,12 @@ namespace Kean.Draw.Raster
 	public class Bgr :
 		Packed
 	{
-		public Color.Bgr this[Geometry2D.Integer.Point position]
+		public override IColor this[int x, int y]
 		{
-			get { return this[position.X, position.Y]; }
-			set { this[position.X, position.Y] = value; }
+			get { unsafe { return this.IsValidIn(x, y) ? *((Color.Bgr*)((byte*)this.Buffer + y * this.Stride) + x) : new Color.Bgr(0, 0, 0); } }
+			set { unsafe { *((Color.Bgr*)((byte*)this.Buffer + y * this.Stride) + x) = value.Convert<Color.Bgr>(); } }
 		}
-		public Color.Bgr this[int x, int y]
-		{
-			get { unsafe { return *((Color.Bgr*)((byte*)this.Buffer + y * this.Stride) + x); } }
-			set { unsafe { *((Color.Bgr*)((byte*)this.Buffer + y * this.Stride) + x) = value; } }
-		}
-		public Color.Bgr this[Geometry2D.Single.Point position]
-		{
-			get { return this[position.X, position.Y]; }
-		}
-		public Color.Bgr this[float x, float y]
-		{
-			get
-			{
-				float left = x - Integer.Floor(x);
-				float top = y - Integer.Floor(y);
 
-				Color.Bgr topLeft = this[Integer.Floor(x), Integer.Floor(y)];
-				Color.Bgr bottomLeft = this[Integer.Floor(x), Integer.Ceiling(y)];
-				Color.Bgr topRight = this[Integer.Ceiling(x), Integer.Floor(y)];
-				Color.Bgr bottomRight = this[Integer.Ceiling(x), Integer.Ceiling(y)];
-
-				return new Color.Bgr(
-					(byte)(top * (left * topLeft.Blue + (1 - left) * topRight.Blue) + (1 - top) * (left * bottomLeft.Blue + (1 - left) * bottomRight.Blue)),
-					(byte)(top * (left * topLeft.Green + (1 - left) * topRight.Green) + (1 - top) * (left * bottomLeft.Green + (1 - left) * bottomRight.Green)),
-					(byte)(top * (left * topLeft.Red + (1 - left) * topRight.Red) + (1 - top) * (left * bottomLeft.Red + (1 - left) * bottomRight.Red)));
-			}
-		}
 		protected override int BytesPerPixel { get { return 3; } }
 		public Bgr(Geometry2D.Integer.Size size) :
 			this(size, CoordinateSystem.Default, new Geometry2D.Integer.Shell()) { }
@@ -145,8 +119,8 @@ namespace Kean.Draw.Raster
 				for (int y = 0; y < this.Size.Height; y++)
 					for (int x = 0; x < this.Size.Width; x++)
 					{
-						Color.Bgr c = this[x, y];
-						Color.Bgr o = (other as Bgr)[x, y];
+						Color.Bgr c = (Color.Bgr)this[x, y];
+						Color.Bgr o = (Color.Bgr)other[x, y];
 						if (c.Distance(o) > 0)
 						{
 							Color.Bgr maximum = o;
@@ -155,7 +129,7 @@ namespace Kean.Draw.Raster
 								for (int otherX = Integer.Maximum(0, x - this.DistanceRadius); otherX < Integer.Minimum(x + 1 + this.DistanceRadius, this.Size.Width); otherX++)
 									if (otherX != x || otherY != y)
 									{
-										Color.Bgr pixel = (other as Bgr)[otherX, otherY];
+										Color.Bgr pixel = (Color.Bgr)other[otherX, otherY];
 										if (maximum.Blue < pixel.Blue)
 											maximum.Blue = pixel.Blue;
 										else if (minimum.Blue > pixel.Blue)

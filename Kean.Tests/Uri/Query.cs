@@ -54,7 +54,7 @@ namespace Kean.Uri.Test
 			Verify(query == "keyA=valueA&keyB=valueB&key+c=value+c", Is.True);
 			Verify(query["keyA"], Is.EqualTo("valueA"));
 			Verify(query["keyB"], Is.EqualTo("valueB"));
-			Verify(query["key c"], Is.EqualTo("value c"));
+			Verify(query["key+c"], Is.EqualTo("value+c"));
 		}
 
 		[Test]

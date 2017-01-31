@@ -36,5 +36,6 @@ namespace Kean.Draw.OpenGL.Backend
 		BgrToU,
 		BgrToV,
 		Yuv420ToBgr,
+		Projection,
 	}
 }

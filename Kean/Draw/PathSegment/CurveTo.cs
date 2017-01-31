@@ -48,7 +48,7 @@ namespace Kean.Draw.PathSegment
 			Geometry2D.Single.Point p1 = this.First;
 			Geometry2D.Single.Point p2 = this.Second;
 			Geometry2D.Single.Point p3 = this.End;
-			Geometry2D.Single.Transform derivative = new Geometry2D.Single.Transform(transform.A, transform.B, transform.C, transform.D, 0, 0);
+			Geometry2D.Single.Transform derivative = new Geometry2D.Single.Transform(transform.A, transform.B, transform.D, transform.E, 0, 0);
 			Geometry2D.Single.Transform inverse = derivative.Inverse;
 			Geometry2D.Single.Point e1p = inverse * new Geometry2D.Single.Point(1, 0);
 			Geometry2D.Single.Point e2p = inverse * new Geometry2D.Single.Point(0, 1);

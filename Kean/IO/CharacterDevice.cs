@@ -85,8 +85,8 @@ namespace Kean.IO
 		public virtual bool Opened { get { return this.backend.NotNull() && this.backend.Opened; } }
 		public virtual bool Close()
 		{
-			bool result;
-			if (result = this.backend.NotNull() && (this.Wrapped || this.backend.Close() && this.decoder.Close()))
+			bool result = this.backend.NotNull() && (this.Wrapped || this.backend.Close() && this.decoder.Close());
+			if (result)
 			{
 				this.backend = null;
 				this.decoder = null;

@@ -24,23 +24,38 @@ using Kean.Extension;
 
 namespace Kean.Math.Regression.Ransac
 {
-    public class Model<Domain,Range, Transform>
-    {
-        public Func<Domain[], Range[], Transform> Estimate { get; set; }
-        public Func<Transform, Domain, Range, bool> FitModel { get; set; }
-        public int FitsWell { get; set; }
-        public int RequiredMeasures { get; set; }
-        public Model() { }
-        public Model(
-            Func<Domain[], Range[], Transform> estimate,
-            Func<Transform, Domain, Range, bool> fitModel,
-            int fitsWell,
-            int requiredMeasures)
-        {
-            this.Estimate = estimate;
-            this.FitModel = fitModel;
-            this.FitsWell = fitsWell;
-            this.RequiredMeasures = requiredMeasures;
-        }
-    }
+	public abstract class Model<TDomain, TRange, TTransform>
+	{
+		public int FitsWell { get; protected set; }
+		public int RequiredMeasures { get; protected set; }
+		protected Model() { }
+
+        /// <summary>
+        /// Estimate the movement transform from the given point ranges.
+        /// </summary>
+        /// <param name="domain">The domain point range.</param>
+        /// <param name="range">The range point range.</param>
+        /// <returns>The estimated transform.</returns>
+		public abstract TTransform Estimate(TDomain[] domain, TRange[] range);
+
+        /// <summary>
+        /// Calculates whether the transform fits two points.
+        /// </summary>
+        /// <param name="transform">The transform used.</param>
+        /// <param name="domain">The domain point.</param>
+        /// <param name="range">The range point.</param>
+        /// <returns>True if it fits.</returns>
+		public abstract bool Fits(TTransform transform, TDomain domain, TRange range);
+
+        /// <summary>
+        /// Creates an estimator with this model.
+        /// </summary>
+        /// <param name="maximumIterations">Maximum number of iterations.</param>
+        /// <param name="confidence">Result confidence.</param>
+        /// <returns>The created estimator.</returns>
+		public Regression.Ransac.Estimator<TDomain, TRange, TTransform> CreateEstimator(int maximumIterations, double confidence = 0.99)
+		{
+			return new Regression.Ransac.Estimator<TDomain, TRange, TTransform>(this, maximumIterations, confidence);
+		}
+	}
 }

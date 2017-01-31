@@ -30,6 +30,11 @@ namespace Kean.Draw.Cairo
 		Draw.Image
 	{
 		internal global::Cairo.Surface Backend { get; private set; }
+		public override IColor this[int x, int y]
+		{
+			get { throw new NotImplementedException(); }
+			set { }
+		}
 
 		Canvas canvas;
 		public override Draw.Canvas Canvas

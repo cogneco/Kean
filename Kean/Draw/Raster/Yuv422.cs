@@ -29,14 +29,15 @@ namespace Kean.Draw.Raster
 	public class Yuv422 :
 		YuvPlanar
 	{
-		public override Color.Yuv this[int x, int y]
+		public override IColor this[int x, int y]
 		{
-			get { return new Color.Yuv(this.Y[x, y], this.U[x / 2, y], this.V[x / 2, y]); }
+			get { return new Color.Yuv((byte)(Color.Monochrome)this.Y[x, y], (byte)(Color.Monochrome)this.U[x / 2, y], (byte)(Color.Monochrome)this.V[x / 2, y]); }
 			set
 			{
-				this.Y[x, y] = value.Y;
-				this.U[x / 2, y] = value.U;
-				this.V[x / 2, y] = value.V;
+				var yuv = value.Convert<Color.Yuv>();
+				this.Y[x, y] = (Color.Monochrome)yuv.Y;
+				this.U[x / 2, y] = (Color.Monochrome)yuv.U;
+				this.V[x / 2, y] = (Color.Monochrome)yuv.V;
 			}
 		}
 		public Yuv422(Geometry2D.Integer.Size size) :

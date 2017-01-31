@@ -2,6 +2,7 @@
 using Collection = Kean.Collection;
 using Kean.Extension;
 using Kean.Collection.Extension;
+using Generic = System.Collections.Generic;
 
 namespace Kean.IO.Text
 {
@@ -10,12 +11,12 @@ namespace Kean.IO.Text
 	{
 		System.Timers.Timer timer;
 		Collection.IQueue<System.Collections.Generic.IEnumerable<char>> queue;
-		public override Kean.Uri.Locator Resource { get { return "console:///"; } }
+		public override Uri.Locator Resource { get { return "console://"; } }
 		public override bool Opened { get { return this.timer.NotNull(); } }
 		public override bool Writable { get { return this.Opened; } }
 		WriteBuffer()
 		{
-			this.queue = new Collection.Synchronized.Queue<System.Collections.Generic.IEnumerable<char>>();
+			this.queue = new Collection.Synchronized.Queue<Generic.IEnumerable<char>>();
 			this.timer = new System.Timers.Timer();
 			this.timer.Interval = 500;
 			this.timer.Elapsed += (sender, e) => this.Flush();
@@ -41,7 +42,7 @@ namespace Kean.IO.Text
 		public override bool AutoFlush { get { return false; } set { ; } }
 		public override bool Flush()
 		{
-			Collection.List<char> accumulator = new Collection.List<char>();
+			var accumulator = new Collection.List<char>();
 			while (!this.queue.Empty)
 				foreach (char c in this.queue.Dequeue())
 					accumulator.Add(c);

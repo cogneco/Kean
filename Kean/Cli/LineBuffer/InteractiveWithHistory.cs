@@ -52,7 +52,7 @@ namespace Kean.Cli.LineBuffer
 			{
 				if (this.position == this.last)
 					this.history[this.Position] = this.Line;
-				this.Replace(this.history[--this.Position % this.size]);
+				this.Replace(this.history[Integer.Modulo(--this.Position, this.size)]);
 			}
 		}
 

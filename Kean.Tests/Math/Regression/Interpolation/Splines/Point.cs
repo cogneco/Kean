@@ -33,7 +33,7 @@ namespace Kean.Math.Regression.Test.Interpolation.Splines
             {
                 float time = i / (float)count;
                 Kean.Math.Geometry2D.Single.Point value = interpolate.Interpolate(time * 4);
-                Kean.Math.Geometry2D.Single.Point onCircle = new Kean.Math.Geometry2D.Single.Point( 10 * Kean.Math.Single.Cosinus(Kean.Math.Single.Pi * 2 * time), 10 * Kean.Math.Single.Sinus(Kean.Math.Single.Pi * 2 * time));
+                Kean.Math.Geometry2D.Single.Point onCircle = new Kean.Math.Geometry2D.Single.Point( 10 * Kean.Math.Single.Cosine(Kean.Math.Single.Pi * 2 * time), 10 * Kean.Math.Single.Sine(Kean.Math.Single.Pi * 2 * time));
                 float distance = onCircle.Distance(value);
                Verify(distance, Is.LessThan(0.5f), this.prefix + "Point.0");
             }

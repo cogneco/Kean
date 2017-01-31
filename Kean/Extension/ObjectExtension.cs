@@ -39,8 +39,8 @@ namespace Kean.Extension
 		}
 		public static bool SameOrEquals(this object me, object other)
 		{
-			return object.ReferenceEquals(me, other) || 
-				!object.ReferenceEquals(me, null) && me.Equals(other);
+			return object.ReferenceEquals(me, other) ||
+			!object.ReferenceEquals(me, null) && me.Equals(other);
 		}
 		public static int Hash(this object me)
 		{
@@ -50,6 +50,10 @@ namespace Kean.Extension
 		{
 // Enum ?			result = (value.NotNull() && value.GetType() == typeof(T)) ? value : default(T);
 			return (T)Convert.ChangeType(me, typeof(T));
+		}
+		public static bool Is<T>(this object me, Func<T, bool> predicate)
+		{
+			return me is T && predicate((T)me);
 		}
 		public static T As<T>(this object me, T @default)
 		{
@@ -150,7 +154,24 @@ namespace Kean.Extension
 				byte[] bytes1 = BitConverter.GetBytes(bits[1]);
 				byte[] bytes2 = BitConverter.GetBytes(bits[2]);
 				byte[] bytes3 = BitConverter.GetBytes(bits[3]);
-				result = new byte[] { bytes0[0], bytes0[1], bytes0[2], bytes0[3], bytes1[0], bytes1[1], bytes1[2], bytes1[3], bytes2[0], bytes2[1], bytes2[2], bytes2[3], bytes3[0], bytes3[1], bytes3[2], bytes3[3] };
+				result = new byte[] {
+					bytes0[0],
+					bytes0[1],
+					bytes0[2],
+					bytes0[3],
+					bytes1[0],
+					bytes1[1],
+					bytes1[2],
+					bytes1[3],
+					bytes2[0],
+					bytes2[1],
+					bytes2[2],
+					bytes2[3],
+					bytes3[0],
+					bytes3[1],
+					bytes3[2],
+					bytes3[3]
+				};
 			}
 			else if (me is DateTime)
 				result = ((DateTime)me).Ticks.AsBinary();

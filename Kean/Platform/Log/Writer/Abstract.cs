@@ -54,8 +54,8 @@ namespace Kean.Platform.Log.Writer
 		{
 			lock (this.Lock)
 			{
-				bool result;
-				if (result = this.Opened && Abstract.Call<bool>(this.CloseHelper))
+				bool result = this.Opened && Abstract.Call<bool>(this.CloseHelper);
+				if (result)
 					this.append = null;
 				return result;
 			}
@@ -73,8 +73,13 @@ namespace Kean.Platform.Log.Writer
 		static void Call(Action action)
 		{
 			if (Error.Log.CatchErrors)
-				try { action(); }
-				catch { }
+				try
+				{
+					action();
+				}
+				catch
+				{
+				}
 			else
 				action();
 		}
@@ -82,8 +87,14 @@ namespace Kean.Platform.Log.Writer
 		{
 			T result;
 			if (Error.Log.CatchErrors)
-				try { result = call(); }
-				catch (System.Exception) { result = default(T); }
+				try
+				{
+					result = call();
+				}
+				catch (System.Exception)
+				{
+					result = default(T);
+				}
 			else
 				result = call();
 			return result;

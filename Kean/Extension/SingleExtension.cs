@@ -27,11 +27,11 @@ namespace Kean.Extension
 	{
 		public static bool NotNumber(this float me)
 		{
-			return me.IsNull() || float.IsNaN(me) || float.IsInfinity(me);
+			return float.IsNaN(me) || float.IsInfinity(me);
 		}
 		public static bool IsNumber(this float me)
 		{
-			return me.NotNull() && !float.IsNaN(me) && !float.IsInfinity(me);
+			return !float.IsNaN(me) && !float.IsInfinity(me);
 		}
 	}
 }

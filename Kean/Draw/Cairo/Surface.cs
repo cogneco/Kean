@@ -45,7 +45,7 @@ namespace Kean.Draw.Cairo
 		}
 		protected override Geometry2D.Single.Transform OnTransformChange(Geometry2D.Single.Transform transform)
 		{
-			this.backend.Matrix = new global::Cairo.Matrix(transform.A, transform.B, transform.C, transform.D, transform.E, transform.F);
+			this.backend.Matrix = new global::Cairo.Matrix(transform.A, transform.B, transform.D, transform.E, transform.G, transform.H);
 			return transform;
 		}
 		#endregion

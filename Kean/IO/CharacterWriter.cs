@@ -42,8 +42,8 @@ namespace Kean.IO
 		}
 		public override bool Close()
 		{
-			bool result;
-			if (result = this.backend.NotNull() && this.backend.Close())
+			bool result = this.backend.NotNull() && this.backend.Close();
+			if (result)
 				this.backend = null;
 			return result;
 		}

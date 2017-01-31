@@ -25,7 +25,7 @@ namespace Kean.Math.Regression.Test.Filter
             float radius = 100;
             Collection.List<Geometry2D.Single.Point> measures = new Collection.List<Kean.Math.Geometry2D.Single.Point>();
             for (int i = 0; i < 360; i++)
-                measures.Add(new Kean.Math.Geometry2D.Single.Point(Kean.Math.Single.Cosinus(Kean.Math.Single.ToRadians(i)) * radius, Kean.Math.Single.Sinus(Kean.Math.Single.ToRadians(i)) * radius) + new Geometry2D.Single.Point(generator.Generate(), generator.Generate()));
+                measures.Add(new Kean.Math.Geometry2D.Single.Point(Kean.Math.Single.Cosine(Kean.Math.Single.ToRadians(i)) * radius, Kean.Math.Single.Sine(Kean.Math.Single.ToRadians(i)) * radius) + new Geometry2D.Single.Point(generator.Generate(), generator.Generate()));
             Target.Point kalman = new Target.Point(2f, 0.001f, measures[0], 2f, new Geometry2D.Single.Size(0, 0), 1f);
             Collection.List<Geometry2D.Single.Point> predictions = new Collection.List<Kean.Math.Geometry2D.Single.Point>();
             Collection.List<Geometry2D.Single.Point> estimates = new Collection.List<Kean.Math.Geometry2D.Single.Point>();

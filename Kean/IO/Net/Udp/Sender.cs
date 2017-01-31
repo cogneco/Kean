@@ -47,9 +47,9 @@ namespace Kean.IO.Net.Udp
 		#region IBlockOutDevice Members
 		public bool Write(Collection.IVector<byte> buffer)
 		{
-			bool result;
 			byte[] data = buffer.ToArray();
-			if (result = (data.NotEmpty() && this.backend.NotNull()))
+			bool result = (data.NotEmpty() && this.backend.NotNull());
+			if (result)
 				this.backend.Send(data, data.Length);
 			return result;
 		}

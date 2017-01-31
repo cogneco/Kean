@@ -18,7 +18,7 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+using System;
 using Kean;
 using Kean.Extension;
 using Geometry2D = Kean.Math.Geometry2D;
@@ -32,6 +32,11 @@ namespace Kean.Draw.Vector
 	{
 		Canvas canvas;
 		public override Draw.Canvas Canvas { get { return this.canvas; } }
+		public override IColor this[int x, int y]
+		{
+			get { throw new NotImplementedException(); }
+			set { }
+		}
 
 		public Image(Geometry2D.Integer.Size size) :
 			base(size, CoordinateSystem.Default, new Geometry2D.Integer.Shell())

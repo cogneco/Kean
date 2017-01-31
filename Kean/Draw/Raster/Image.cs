@@ -155,29 +155,31 @@ namespace Kean.Draw.Raster
 			if (type == this.Type() || type == typeof(Image))
 				result = this.Copy() as T;
 			else if (type.Inherits<Image>())
-			if (type.Inherits<Packed>())
 			{
-				if (type == typeof(Bgr))
-					result = new Bgr(this) as T;
-				else if (type == typeof(Bgra))
-					result = new Bgra(this) as T;
-				else if (type == typeof(Monochrome))
-					result = new Monochrome(this) as T;
-				else if (type == typeof(Yuyv))
-					result = new Yuyv(this) as T;
-				else if (type == typeof(Uyvy))
-					result = new Uyvy(this) as T;
-			}
-			else
-			{
-				if (type == typeof(Yuv420))
-					result = new Yuv420(this) as T;
-				else if (type == typeof(Yvu420))
-					result = new Yvu420(this) as T;
-				else if (type == typeof(Yuv444))
-					result = new Yuv444(this) as T;
-				else if (type == typeof(Yuv422))
-					result = new Yuv422(this) as T;
+				if (type.Inherits<Packed>())
+				{
+					if (type == typeof(Bgr))
+						result = new Bgr(this) as T;
+					else if (type == typeof(Bgra))
+						result = new Bgra(this) as T;
+					else if (type == typeof(Monochrome))
+						result = new Monochrome(this) as T;
+					else if (type == typeof(Yuyv))
+						result = new Yuyv(this) as T;
+					else if (type == typeof(Uyvy))
+						result = new Uyvy(this) as T;
+				}
+				else
+				{
+					if (type == typeof(Yuv420))
+						result = new Yuv420(this) as T;
+					else if (type == typeof(Yvu420))
+						result = new Yvu420(this) as T;
+					else if (type == typeof(Yuv444))
+						result = new Yuv444(this) as T;
+					else if (type == typeof(Yuv422))
+						result = new Yuv422(this) as T;
+				}
 			}
 			else if (type.Inherits<Cairo.Image>())
 			{

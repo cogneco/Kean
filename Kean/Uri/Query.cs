@@ -88,8 +88,8 @@ namespace Kean.Uri
 		#region IString Members
 		public string String
 		{
-			get { return this.Head.NotNull() ? this.Head.String.Replace(' ', '+') : ""; }
-			set { this.Head = value.NotEmpty() ? new QueryLink() { String = value.Replace('+', ' ') } : null; }
+			get { return this.Head.NotNull() ? this.Head.String : ""; }
+			set { this.Head = value.NotEmpty() ? new QueryLink() { String = value } : null; }
 		}
 		#endregion
 		#region IEquatable<Query> Members

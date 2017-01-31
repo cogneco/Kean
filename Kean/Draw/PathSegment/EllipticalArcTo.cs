@@ -54,7 +54,7 @@ namespace Kean.Draw.PathSegment
 			Tuple<Geometry2D.Single.Point, float, float> coordinates = this.PlatformctArcCoordinates();
 			float startAngle = coordinates.Item2;
 			float endAngle = coordinates.Item3;
-			Geometry2D.Single.Transform derivative = new Geometry2D.Single.Transform(transform.A, transform.B, transform.C, transform.D, 0, 0);
+			Geometry2D.Single.Transform derivative = new Geometry2D.Single.Transform(transform.A, transform.B, transform.D, transform.E, 0, 0);
 			Geometry2D.Single.Transform inverse = derivative.Inverse;
 			Geometry2D.Single.Point e1p = inverse * new Geometry2D.Single.Point(1, 0);
 			Geometry2D.Single.Point e2p = inverse * new Geometry2D.Single.Point(0, 1);
@@ -67,7 +67,7 @@ namespace Kean.Draw.PathSegment
 			for (int i = 0; i < points.Length; i++)
 			{
 				float angle = angles[i];
-				points[i] = transform * (new Geometry2D.Single.Point(this.Radius.Width * Kean.Math.Single.Cosinus(angle), this.Radius.Height * Kean.Math.Single.Sinus(angle)) + coordinates.Item1);
+				points[i] = transform * (new Geometry2D.Single.Point(this.Radius.Width * Kean.Math.Single.Cosine(angle), this.Radius.Height * Kean.Math.Single.Sine(angle)) + coordinates.Item1);
 			}
 			result = Geometry2D.Single.Box.Bounds(points);
 			return result;
@@ -96,8 +96,8 @@ namespace Kean.Draw.PathSegment
 			float deltaTheta;
 			float k1, k2, k3, k4;
 
-			float cosPhi = Kean.Math.Single.Cosinus(phi),
-				  sinPhi = Kean.Math.Single.Sinus(phi);
+			float cosPhi = Kean.Math.Single.Cosine(phi),
+				  sinPhi = Kean.Math.Single.Sine(phi);
 
 			if (rx < 0)
 				rx = -rx;

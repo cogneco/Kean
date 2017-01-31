@@ -136,8 +136,8 @@ namespace Kean.Math
 		#endregion
 
 		#region Trigonometric Functions
-		public abstract R Sinus();
-		public abstract R Cosinus();
+		public abstract R Sine();
+		public abstract R Cosine();
 		public abstract R Tangens();
 		#endregion
 

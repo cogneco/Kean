@@ -27,13 +27,18 @@ namespace Kean.Tests
 	{
 		static void Main(string[] args)
 		{
-			Kean.Error.Log.CatchErrors = false;
-			Kean.Test.StringExtension.Test();
-			Kean.Uri.Test.All.Test();
+			Error.Log.CatchErrors = true;
+            Kean.Math.Test.All.Test();
+            //new Kean.Math.Algebra.Test.MatrixTest().Multiply();
+			new Kean.Math.Geometry2D.Test.Single.Point().Project8DofMulti();
+            //new Kean.Math.Geometry2D.Test.Single.Point().AngleFormulas();
+			//Kean.Math.Algebra.Test.All.Test();
+			//Kean.Test.StringExtension.Test();
+			//Kean.Uri.Test.All.Test();
 			//Cli.Test.Program.Run(args);
 			//IO.Net.Test.Program.Run(args);
 			//DB.Sql.Test.Program.Run(args);
-			Platform.Settings.Test.Program.Run(args);
+			//Platform.Settings.Test.Program.Run(args);
 			#region Draw
 			//Draw.OpenGL.Test.All.Test();
 			//Draw.Test.All.Test();
@@ -44,31 +49,31 @@ namespace Kean.Tests
 			//Draw.Jpeg.Test.All.Test();
 			#endregion
 			#region Core
-			Kean.Test.All.Test();
-			Kean.Collection.Test.All.Test();
-			Kean.Error.Test.All.Test();
-			Kean.Reflect.Test.All.Test();
-			Kean.Uri.Test.All.Test();
+			//Kean.Test.All.Test();
+			//Kean.Collection.Test.All.Test();
+			//Kean.Error.Test.All.Test();
+			//Kean.Reflect.Test.All.Test();
+			//Kean.Uri.Test.All.Test();
 			#endregion
 			#region Json
-			Json.Dom.Test.All.Test();
-			Json.Serialize.Test.All.Test();
+			//Json.Dom.Test.All.Test();
+			//Json.Serialize.Test.All.Test();
 			#endregion
 			#region Xml
-			Xml.Serialize.Test.All.Test();
-			Xml.Dom.Test.All.Test();
+			//Xml.Serialize.Test.All.Test();
+			//Xml.Dom.Test.All.Test();
 			#endregion
 			#region Html
-			Html.Dom.Test.All.Test();
+			//Html.Dom.Test.All.Test();
 			#endregion
 			#region Math
-			Math.Test.All.Test();
-			Math.Complex.Test.All.Test();
-			Math.Geometry2D.Test.All.Test();
-			Math.Geometry3D.Test.All.Test();
-			Math.Matrix.Test.All.Test();
-			Math.Random.Test.All.Test();
-			Math.Regression.Test.All.Test();
+			//Kean.Math.Test.All.Test();
+			//Kean.Math.Complex.Test.All.Test();
+			//Kean.Math.Geometry2D.Test.All.Test();
+			//Kean.Math.Geometry3D.Test.All.Test();
+			//Kean.Math.Matrix.Test.All.Test();
+			//Kean.Math.Random.Test.All.Test();
+			//Kean.Math.Regression.Test.All.Test();
 			#endregion
 			Console.WriteLine();
 			Console.WriteLine("Press any key to continue");

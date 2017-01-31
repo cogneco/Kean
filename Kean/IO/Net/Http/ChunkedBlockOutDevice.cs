@@ -80,8 +80,8 @@ namespace Kean.IO.Net.Http
 		#region IDevice implementation
 		public bool Close()
 		{
-			bool result;
-			if (result = (this.BackendWrite("0\r\n\r\n") && (result = this.Wrapped || this.backend.Close())))
+			bool result = (this.BackendWrite("0\r\n\r\n") && (result = this.Wrapped || this.backend.Close()));
+			if (result)
 				this.backend = null;
 			return result;
 		}

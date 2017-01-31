@@ -26,6 +26,7 @@ using Collection = Kean.Collection;
 using Color = Kean.Draw.Color;
 using Error = Kean.Error;
 using Geometry2D = Kean.Math.Geometry2D;
+using Geometry3D = Kean.Math.Geometry2D;
 using GL = OpenTK.Graphics.OpenGL.GL;
 
 namespace Kean.Draw.OpenGL.Backend.OpenGL21
@@ -142,6 +143,10 @@ namespace Kean.Draw.OpenGL.Backend.OpenGL21
 			GL.Vertex2(region.Right, region.Top);
 			GL.Vertex2(region.Right, region.Bottom);
 			GL.Vertex2(region.Left, region.Bottom);
+			//GL.Vertex3(region.Left, region.Top, 0);
+			//GL.Vertex3(region.Right, region.Top, 200);
+			//GL.Vertex3(region.Right, region.Bottom, 400);
+			//GL.Vertex3(region.Left, region.Bottom, -600);
 			GL.End();
 		}
 		public override Backend.Renderer Refurbish()

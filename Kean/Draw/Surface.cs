@@ -147,8 +147,7 @@ namespace Kean.Draw
 		}
 		public virtual void Draw(Map map, Draw.Image image, Geometry2D.Single.Point position)
 		{
-			Geometry2D.Integer.Box region = image.Crop.Decrease(image.Size);
-			this.Draw(map, image, region, new Geometry2D.Single.Box(position, region.Size));
+			this.Draw(map, image, new Geometry2D.Single.Box(new Geometry2D.Single.Point(), image.Size), new Geometry2D.Single.Box(position, image.Size));
 		}
 		public virtual void Draw(Draw.Image image, Geometry2D.Single.Box source, Geometry2D.Single.Box destination)
 		{

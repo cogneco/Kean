@@ -923,6 +923,12 @@ namespace Kean.Math.Matrix
                 }
             return new Single[] { l, u, p };
         }
+
+        /// <summary>
+        /// Swaps the position of two rows
+        /// </summary>
+        /// <param name="row1">First row</param>
+        /// <param name="row2">Second row</param>
         void SwapRows(int row1, int row2)
         {
             int order = this.Order;

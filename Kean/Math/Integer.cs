@@ -4,7 +4,7 @@
 //  Author:
 //       Simon Mika <smika@hx.se>
 //  
-//  Copyright (c) 2011 Simon Mika
+//  Copyright (c) 2011-2014 Simon Mika
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -22,172 +22,246 @@ using System;
 using Kean.Extension;
 namespace Kean.Math
 {
-	public partial class Integer :
-		Abstract<Integer, int>
+	public static class Integer
 	{
-		#region Abtract Properties
-		protected override Integer EpsilonHelper { get { return Integer.Epsilon; } }
-		protected override Integer PiHelper { get { return Integer.Pi; } }
+		#region Constants
+		public static int NegativeInfinity { get { return int.MinValue; } }
+		public static int PositiveInfinity { get { return int.MaxValue; } }
+		public static int Epsilon { get { return 1; } }
+		public static int MinimumValue { get { return int.MinValue; } }
+		public static int MaximumValue { get { return int.MaxValue; } }
+		public static int Pi { get { return Integer.Convert(System.Math.PI); } }
+		public static int E { get { return Integer.Convert(System.Math.E); } }
 		#endregion
-		#region Constructors
-		public Integer() :
-			base(0)
-		{ }
-		public Integer(int value) :
-			base(value)
-		{ }
-		#endregion
-		public override Integer CreateConstant(int value)
+		#region Convert Functions
+		public static int Convert(double value)
 		{
-			return new Integer(value);
+			return System.Convert.ToInt32(value);
 		}
-		#region Functions
-		#region Arithmetic Functions
-		public override Integer Add(int value)
+		public static int Convert(float value)
 		{
-			return new Integer(this.Value + value);
+			return System.Convert.ToInt32(value);
 		}
-		public override Integer Substract(int value)
+		/// <summary>
+		/// Parses a string to a int
+		/// </summary>
+		/// <exception cref="System.FormatException">When string does not contain a int</exception>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static int Parse(string value)
 		{
-			return new Integer(this.Value - value);
+			return int.Parse(value, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 		}
-		public override Integer Multiply(int value)
+		public static int Parse(string value, int @default)
 		{
-			return new Integer(this.Value * value);
+			int result;
+			if (!int.TryParse(value, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out result))
+				result = @default;
+			return result;
 		}
-		public override Integer Divide(int value)
+		public static string ToString(int value)
 		{
-			return new Integer(this.Value / value);
-		}
-		public override Integer Negate()
-		{
-			return new Integer(-this.Value);
-		}
-		public override Integer Invert()
-		{
-			throw new Exception.NotAllowed();
-		}
-		#endregion
-		#region Trigonometric Helpers
-		public override Integer ToRadians()
-		{
-			return Integer.Pi / 180 * this;
-		}
-		public override Integer ToDegrees()
-		{
-			return 180 / Integer.Pi * this;
+			return value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 		}
 		#endregion
 		#region Utility Functions
-		public override Integer Round()
+		public static int Absolute(int value)
 		{
-			return Integer.Round(this);
+			return Integer.Convert(System.Math.Abs(value));
 		}
-		public override Integer Ceiling()
+		public static int Sign(int value)
 		{
-			return Integer.Ceiling(this);
+			return System.Math.Sign(value);
 		}
-		public override Integer Floor()
+		public static int Clamp(int value, int floor, int ceiling)
 		{
-			return Integer.Floor(this);
+			if (value > ceiling)
+				value = ceiling;
+			else if (value < floor)
+				value = floor;
+			return value;
+		}
+		public static int Maximum(int first, int second)
+		{
+			return first > second ? first : second;
+		}
+		public static int Maximum(int value, params int[] values)
+		{
+			foreach (int v in values)
+				if (value < v)
+					value = v;
+			return value;
+		}
+		public static int Minimum(int first, int second)
+		{
+			return first < second ? first : second;
+		}
+		public static int Minimum(int value, params int[] values)
+		{
+			foreach (int v in values)
+				if (value > v)
+					value = v;
+			return value;
+		}
+		public static int Modulo(int dividend, int divisor)
+		{
+			if (dividend < 0)
+				dividend += Integer.Ceiling(Integer.Absolute(dividend) / (float)divisor) * divisor;
+			return dividend % divisor;
+		}
+		public static bool Odd(int value)
+		{
+			return Integer.Modulo(value, 2) == 1;
+		}
+		public static bool Even(int value)
+		{
+			return Integer.Modulo(value, 2) == 0;
+		}
+		#endregion
+		#region Rounding Functions
+		public static int Floor(float value)
+		{
+			return Integer.Convert(System.Math.Floor(value));
+		}
+		public static int Floor(double value)
+		{
+			return Integer.Convert(System.Math.Floor(value));
+		}
+		public static int Ceiling(float value)
+		{
+			return Integer.Convert(System.Math.Ceiling(value));
+		}
+		public static int Ceiling(double value)
+		{
+			return Integer.Convert(System.Math.Ceiling(value));
+		}
+		public static int Truncate(float value)
+		{
+			return Integer.Convert(System.Math.Truncate(value));
+		}
+		public static int Truncate(double value)
+		{
+			return Integer.Convert(System.Math.Truncate(value));
+		}
+		public static int Round(float value)
+		{
+			return Integer.Convert(Double.Clamp(System.Math.Round(value), int.MinValue, int.MaxValue));
+		}
+		public static int Round(double value)
+		{
+			return Integer.Convert(System.Math.Round(value));
+		}
+		public static int Round(float value, int digits)
+		{
+			return Integer.Convert(System.Math.Round(value, digits));
+		}
+		public static int Round(double value, int digits)
+		{
+			return Integer.Convert(System.Math.Round(value, digits));
 		}
 		#endregion
 		#region Trigonometric Functions
-		public override Integer Sinus()
+		public static int ToRadians(int angle)
 		{
-			return Integer.Sinus(this.Value);
+			return Integer.Convert(Single.ToRadians(angle));
 		}
-		public override Integer Cosinus()
+		public static int ToDegrees(int angle)
 		{
-			return Integer.Cosinus(this.Value);
+			return Integer.Convert(Single.ToDegrees(angle));
 		}
-		public override Integer Tangens()
+		public static int ToDegrees(float angle)
 		{
-			return Integer.Tangens(this.Value);
+			return Integer.Convert(Single.ToDegrees(angle));
 		}
-		#endregion
-		#region Inverse Trigonometric Functions
-		public override Integer ArcusSinus()
+		public static int ToDegrees(double angle)
 		{
-			return Integer.ArcusSinus(this.Value);
+			return Integer.Convert(Double.ToDegrees(angle));
 		}
-		public override Integer ArcusCosinus()
+		/// <summary>
+		/// Convert arbitrary angle in radians to angle in interval [0, 2 * Pi] (i.e. calculate the remainder modulo 2 * Pi).  
+		/// </summary> 
+		/// <param name="value">Angle in radians.</param>
+		/// <returns>Angle <paramref name="radians"/>converted to remainder.</returns>
+		public static int ModuloTwoPi(int value)
 		{
-			return Integer.ArcusCosinus(this.Value);
+			return Integer.Modulo(value, 2 * Integer.Pi);
 		}
-		public override Integer ArcusTangens()
+		/// <summary>
+		/// Convert angle in the interval [0, 2 * Pi] to the interval [- Pi, Pi].
+		/// </summary>
+		/// <param name="value">Angle in radians</param>
+		/// <returns>Angle <paramref name="radians"/> converted to [- Pi, Pi].</returns>
+		public static int MinusPiToPi(int value)
 		{
-			return Integer.ArcusTangens(this.Value);
+			value = Integer.ModuloTwoPi(value);
+			return (value <= Integer.Pi) ? value : (value - 2 * Integer.Pi);
 		}
-		public override Integer ArcusTangensExtended(Integer x)
+		public static int Sine(int value)
 		{
-			return Integer.ArcusTangensExtended(this.Value, x);
+			return Integer.Convert(System.Math.Sin(value));
 		}
-		#endregion
-		#region Transcendental Functions
-		public override Integer Exponential()
+		public static int Cosine(int value)
 		{
-			return Integer.Exponential(this.Value);
+			return Integer.Convert(System.Math.Cos(value));
 		}
-		public override Integer Logarithm()
+		public static int Tangens(int value)
 		{
-			return Integer.Logarithm(this.Value);
+			return Integer.Convert(System.Math.Tan(value));
 		}
-		public override Integer Logarithm(Integer @base)
+		public static int SinusHyperbolicus(int value)
 		{
-			return Integer.Logarithm(this.Value, @base);
+			return Integer.Convert(System.Math.Sinh(value));
 		}
-		#endregion
-		#region Power Function
-		public override Integer Power(Integer exponent)
+		public static int CosinusHyperbolicus(int value)
 		{
-			return Integer.Power(this.Value, exponent);
+			return Integer.Convert(System.Math.Cosh(value));
 		}
-		public override Integer SquareRoot()
+		public static int TangensHyperbolicus(int value)
 		{
-			return Integer.SquareRoot(this.Value);
+			return Integer.Convert(System.Math.Tanh(value));
 		}
-		public override Integer Squared()
+		public static int ArcusSinus(int value)
 		{
-			return this.Value * this.Value;
+			return Integer.Convert(System.Math.Asin(value));
 		}
-		#endregion
-		#region Comparison Functions
-		public override bool LessThan(Integer other)
+		public static int ArcusCosinus(int value)
 		{
-			return this.Value < other.Value;
+			return Integer.Convert(System.Math.Acos(value));
 		}
-		public override bool GreaterThan(Integer other)
+		public static int ArcusTangens(int value)
 		{
-			return this.Value > other.Value;
+			return Integer.Convert(System.Math.Atan(value));
 		}
-		#endregion
-		#endregion
-		#region Cast Operators
-		public static implicit operator int(Integer value)
+		public static int ArcusTangensExtended(int y, int x)
 		{
-			return value.IsNull() ? 0 : value.Value;
-		}
-		public static implicit operator Integer(int value)
-		{
-			return new Integer(value);
-		}
-		public static implicit operator Single(Integer value)
-		{
-			return new Single(value.Value);
-		}
-		public static explicit operator Integer(Single value)
-		{
-			return new Integer(System.Convert.ToInt32(value.Value));
+			return Integer.Convert(System.Math.Atan2(y, x));
 		}
 		#endregion
-		#region Object overides
-		public override string ToString()
+		#region Transcendental and Power Functions
+		public static int Exponential(int value)
 		{
-			return this.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+			return Integer.Convert(System.Math.Exp(value));
+		}
+		public static int Logarithm(int value)
+		{
+			return Integer.Convert(System.Math.Log(value));
+		}
+		public static int Logarithm(int value, int @base)
+		{
+			return Integer.Convert(System.Math.Log(value, @base));
+		}
+		public static int Power(int @base, int exponent)
+		{
+			return Integer.Convert(System.Math.Pow(@base, exponent));
+		}
+		public static int SquareRoot(int value)
+		{
+			return Integer.Convert(System.Math.Sqrt(value));
+		}
+		public static int Squared(int value)
+		{
+			return value * value;
 		}
 		#endregion
 	}
 }
-
-

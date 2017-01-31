@@ -32,45 +32,30 @@ namespace Kean.Draw.Raster
 	public abstract class YuvPlanar :
 		Planar
 	{
-		public Color.Yuv this[Geometry2D.Integer.Point position]
-		{
-			get { return this[position.X, position.Y]; }
-			set { this[position.X, position.Y] = value; }
-		}
-		public abstract Color.Yuv this[int x, int y] { get; set; }
-		public Color.Yuv this[Geometry2D.Single.Point position]
-		{
-			get { return this[position.X, position.Y]; }
-		}
-		public Color.Yuv this[float x, float y]
-		{
-			get
-			{
-				float left = x - Integer.Floor(x);
-				float top = y - Integer.Floor(y);
-
-				Color.Yuv topLeft = this[Integer.Floor(x), Integer.Floor(y)];
-				Color.Yuv bottomLeft = this[Integer.Floor(x), Integer.Ceiling(y)];
-				Color.Yuv topRight = this[Integer.Ceiling(x), Integer.Floor(y)];
-				Color.Yuv bottomRight = this[Integer.Ceiling(x), Integer.Ceiling(y)];
-
-				return new Color.Yuv(
-					(byte)(top * (left * topLeft.Y + (1 - left) * topRight.Y) + (1 - top) * (left * bottomLeft.Y + (1 - left) * bottomRight.Y)),
-					(byte)(top * (left * topLeft.U + (1 - left) * topRight.U) + (1 - top) * (left * bottomLeft.U + (1 - left) * bottomRight.U)),
-					(byte)(top * (left * topLeft.V + (1 - left) * topRight.V) + (1 - top) * (left * bottomLeft.V + (1 - left) * bottomRight.V)));
-			}
-		}
 
 		public Monochrome Y { get; private set; }
 		public Monochrome U { get; private set; }
 		public Monochrome V { get; private set; }
-
+		public override Geometry2D.Integer.Shell Crop
+		{
+			get { return base.Crop; }
+			set
+			{
+				base.Crop = value;
+				if (this.Y.NotNull() && this.U.NotNull() && this.V.NotNull())
+				{
+					this.Y.Crop = value;
+					this.U.Crop = this.V.Crop = value / 2;
+				}
+			}
+		}
 		protected YuvPlanar(Buffer.Sized buffer, Geometry2D.Integer.Size size, CoordinateSystem coordinateSystem, Geometry2D.Integer.Shell crop) :
 			base(buffer, size, coordinateSystem, crop)
 		{
 			this.Y = this.CreateY();
 			this.U = this.CreateU();
 			this.V = this.CreateV();
+			this.Crop = this.Crop; // set crop on YUV images
 		}
 		protected YuvPlanar(YuvPlanar original) :
 			base(original)
@@ -78,6 +63,7 @@ namespace Kean.Draw.Raster
 			this.Y = this.CreateY();
 			this.U = this.CreateU();
 			this.V = this.CreateV();
+			this.Crop = this.Crop; // set crop on YUV images
 		}
 		protected abstract Monochrome CreateY();
 		protected abstract Monochrome CreateU();
@@ -107,8 +93,8 @@ namespace Kean.Draw.Raster
 				for (int y = 0; y < this.Size.Height; y++)
 					for (int x = 0; x < this.Size.Width; x++)
 					{
-						Color.Yuv c = this[x, y];
-						Color.Yuv o = (other as YuvPlanar)[x, y];
+						Color.Yuv c = (Color.Yuv)this[x, y];
+						Color.Yuv o = (Color.Yuv)other[x, y];
 						if (c.Distance(o) > 0)
 						{
 							Color.Yuv maximum = o;
@@ -117,7 +103,7 @@ namespace Kean.Draw.Raster
 								for (int otherX = Integer.Maximum(0, x - this.DistanceRadius); otherX < Integer.Minimum(x + 1 + this.DistanceRadius, this.Size.Width); otherX++)
 									if (otherX != x || otherY != y)
 									{
-										Color.Yuv pixel = (other as YuvPlanar)[otherX, otherY];
+										Color.Yuv pixel = (Color.Yuv)other[otherX, otherY];
 										if (maximum.Y < pixel.Y)
 											maximum.Y = pixel.Y;
 										else if (minimum.Y > pixel.Y)

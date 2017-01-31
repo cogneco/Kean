@@ -41,6 +41,13 @@ namespace Kean.IO.Extension
 			while ((result = me.ReadLine()).NotNull())
 				yield return result;
 		}
+		public static string ReadFromCurrentUntil(this ICharacterReader me, Func<char, bool> predicate)
+		{
+			Text.Builder result = !me.Empty ? (Text.Builder)me.Last : null;
+			while (!me.Empty && me.Next() && !predicate(me.Last))
+				result += me.Last;
+			return result;
+		}
 	}
 }
 

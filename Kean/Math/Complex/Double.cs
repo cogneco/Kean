@@ -132,7 +132,7 @@ namespace Kean.Math.Complex
         #region Static Functions
         public static Double Exponential(Double value)
         {
-            return Kean.Math.Double.Exponential(value.Real) * new Double(Kean.Math.Double.Cosinus(value.Imaginary), Kean.Math.Double.Sinus(value.Imaginary));
+            return Kean.Math.Double.Exponential(value.Real) * new Double(Kean.Math.Double.Cosine(value.Imaginary), Kean.Math.Double.Sine(value.Imaginary));
         }
         public static Double Logarithm( Double value)
         {

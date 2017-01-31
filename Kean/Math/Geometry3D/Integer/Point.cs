@@ -80,7 +80,7 @@ namespace Kean.Math.Geometry3D.Integer
 		#region Static Creators
 		public static Point Spherical(int radius, int azimuth, int elevation)
 		{
-			return new Point(radius * Math.Integer.Cosinus(azimuth) * Math.Integer.Sinus(elevation), radius * Math.Integer.Sinus(azimuth) * Math.Integer.Sinus(elevation), radius * Math.Integer.Cosinus(elevation));
+			return new Point(radius * Math.Integer.Cosine(azimuth) * Math.Integer.Sine(elevation), radius * Math.Integer.Sine(azimuth) * Math.Integer.Sine(elevation), radius * Math.Integer.Cosine(elevation));
 		}
 		#endregion
 		#region Arithmetic Vector - Vector Operators

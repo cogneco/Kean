@@ -1,0 +1,124 @@
+﻿<#@ template language="C#" hostspecific="True" #>
+<#
+	GenerateStart("Single", "float");
+	SaveOutput("Single/Rotation.cs");
+	
+	GenerateStart("Double", "double");
+	SaveOutput("Double/Rotation.cs");
+#>
+<#+
+void SaveOutput(string outputFileName)
+{
+	string templateDirectory = System.IO.Path.GetDirectoryName(Host.TemplateFile);
+	string outputFilePath = System.IO.Path.Combine(templateDirectory, outputFileName);
+	System.IO.File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+#>
+<#+
+	void GenerateStart(string @namespace, string @type)
+	{
+#>
+using System;
+using Geometry3D = Kean.Math.Geometry3D;
+using Kean.Extension;
+
+namespace Kean.Math.Geometry3D.<#= @namespace #>
+{
+	public struct Rotation :
+		IEquatable<Rotation>
+	{
+        public <#= @type #> RotationX { get; private set; }
+        public <#= @type #> RotationY { get; private set; }
+        public <#= @type #> RotationZ { get; private set; }
+		public Rotation Inverse { get { return new Rotation(this.quaternion.Inverse); } }
+		Geometry3D.<#= @namespace #>.Quaternion quaternion;
+		public Rotation(<#= @type #> rotationX, <#= @type #> rotationY, <#= @type #> rotationZ) :
+			this(rotationX, rotationY, rotationZ,  Geometry3D.<#= @namespace #>.Quaternion.CreateRotationZ(rotationZ) * Geometry3D.<#= @namespace #>.Quaternion.CreateRotationY(rotationY) * Geometry3D.<#= @namespace #>.Quaternion.CreateRotationX(rotationX))
+		{ }
+		Rotation(Geometry3D.<#= @namespace #>.Quaternion value) :
+			this(value.RotationX, value.RotationY, value.RotationZ, value)
+		{ }
+        Rotation(<#= @type #> rotationX, <#= @type #> rotationY, <#= @type #> rotationZ, Geometry3D.<#= @namespace #>.Quaternion value) :
+            this()
+		{
+			this.RotationX = rotationX;
+			this.RotationY = rotationY;
+			this.RotationZ = rotationZ;
+			this.quaternion = value;
+		}
+
+		public Rotation Rotate(<#= @type #> rotationX, <#= @type #> rotationY, <#= @type #> rotationZ)
+		{
+			return new Rotation(rotationX, rotationY, rotationZ) * this;
+		}
+		#region Object overrides
+		public override bool Equals(object other)
+		{
+            return (other is Rotation) ? this.Equals(other) : false;
+		}
+		public override int GetHashCode()
+		{
+			return this.quaternion.GetHashCode();
+		}
+		public override string ToString()
+		{
+			return this.RotationX + " " + this.RotationY + " " + this.RotationZ;
+		}
+		#endregion
+		#region IEquatable<Rotation> Members
+		public bool Equals(Rotation other)
+		{
+			return other.NotNull() && this.quaternion == other.quaternion;
+		}
+		#endregion
+		#region Binary Operators
+        public static Geometry3D.<#= @namespace #>.Rotation operator +(Rotation left, Rotation right)
+		{
+            return new Rotation(left.RotationX + right.RotationX, left.RotationY + right.RotationY, left.RotationZ + right.RotationZ);
+		}
+		public static Geometry3D.<#= @namespace #>.Rotation operator /(Rotation left, <#= @type #> right)
+		{
+            return new Rotation(left.RotationX / right, left.RotationY / right, left.RotationZ / right);
+		}
+		public static Geometry3D.<#= @namespace #>.Point operator *(Rotation left, Geometry3D.<#= @namespace #>.Point right)
+		{
+			return (left.NotNull() && right.NotNull()) ? left.quaternion * right : null;
+		}
+		public static Rotation operator *(Rotation left, Rotation right)
+		{
+            return new Rotation(left.quaternion * right.quaternion);
+		}
+		public static bool operator ==(Rotation left, Rotation right)
+		{
+			return left.NotNull() ? left.Equals(right) : right.IsNull();
+		}
+		public static bool operator !=(Rotation left, Rotation right)
+		{
+			return !(left == right);
+		}
+		#endregion
+		#region Casts
+		public static implicit operator string(Rotation value)
+		{
+			return value.NotNull() ? value.ToString() : null;
+		}
+		public static explicit operator Geometry3D.<#= @namespace #>.Quaternion(Rotation value)
+		{
+			return value.NotNull() ? value.quaternion : null;
+		}
+		public static explicit operator Rotation(Geometry3D.<#= @namespace #>.Quaternion value)
+		{
+			return new Rotation(value = Geometry3D.<#= @namespace #>.Quaternion.BasisReal);
+		}
+		#endregion
+		#region Static
+		public static Rotation Identity { get { return new Rotation(); } }
+		#endregion
+
+
+	}
+}
+<#+
+	}
+#>

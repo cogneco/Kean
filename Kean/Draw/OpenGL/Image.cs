@@ -23,6 +23,7 @@ using System;
 using Kean;
 using Kean.Extension;
 using Geometry2D = Kean.Math.Geometry2D;
+using Geometry3D = Kean.Math.Geometry3D;
 
 namespace Kean.Draw.OpenGL
 {
@@ -33,6 +34,11 @@ namespace Kean.Draw.OpenGL
 		Geometry2D.Single.Point RightTop { get; set; }
 		Geometry2D.Single.Point LeftBottom { get; set; }
 		Geometry2D.Single.Point RightBottom { get; set; }
+		public override IColor this[int x, int y]
+		{
+			get { throw new NotImplementedException(); }
+			set { }
+		}
 		#region Constructors
 		protected Image(Image original) :
 			base(original) 
@@ -74,6 +80,19 @@ namespace Kean.Draw.OpenGL
 		}
 		internal abstract void Render(Map map, Geometry2D.Single.Point leftTop, Geometry2D.Single.Point rightTop, Geometry2D.Single.Point leftBottom, Geometry2D.Single.Point rightBottom, Geometry2D.Single.Box destination);
 		#region Draw.Image Overrides
+		protected override void Project(Draw.Image source, Geometry3D.Single.Transform pointTransform, Geometry3D.Single.Point cam)
+		{
+			using (var map = new Map(Backend.Programs.Projection))
+			{
+				source.Wrap = false;
+				map.Add("cam", cam);
+				//pointTransform = Geometry3D.Single.Transform.Identity;
+				map.Add("transform", pointTransform);
+				map.Add("sourceSize", source.Size);
+				map.Add("destinationSize", this.Size);
+				this.Canvas.Draw(map, source, new Geometry2D.Single.Box(source.Size), new Geometry2D.Single.Box(this.Size));
+			}
+		}
 		#endregion
 		#region Static Creators
 		public static Image Create(Draw.Image image)

@@ -132,7 +132,7 @@ namespace Kean.Math.Complex
         #region Static Functions
         public static Single Exponential(Single value)
         {
-            return Kean.Math.Single.Exponential(value.Real) * new Single(Kean.Math.Single.Cosinus(value.Imaginary), Kean.Math.Single.Sinus(value.Imaginary));
+            return Kean.Math.Single.Exponential(value.Real) * new Single(Kean.Math.Single.Cosine(value.Imaginary), Kean.Math.Single.Sine(value.Imaginary));
         }
         public static Single Logarithm( Single value)
         {
@@ -144,7 +144,7 @@ namespace Kean.Math.Complex
         }
         public static Single RootOfUnity(int n, int k)
         {
-            return Single.Exponential(new Single(0, 2 * k * Kean.Math.Single.PI / n));
+            return Single.Exponential(new Single(0, 2 * k * Kean.Math.Single.Pi / n));
         }
         #endregion
         #region Object overides and IEquatable<Single>

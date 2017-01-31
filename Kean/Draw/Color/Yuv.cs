@@ -76,7 +76,7 @@ namespace Kean.Draw.Color
 			return Single.SquareRoot((Math.Single.Squared(this.Y - c.Y) + Single.Squared(this.U - c.U) + Single.Squared(this.V - c.V)) / 3);
 		}
 		#endregion
-		#region Object Overides
+		#region Object Overrides
 		public override string ToString()
 		{
 			return this.Y + " " + this.U + " " + this.V;

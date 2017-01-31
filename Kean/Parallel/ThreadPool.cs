@@ -166,6 +166,23 @@ namespace Kean.Parallel
 				throw new Exception.ThreadPoolDisposed(e);
 			}
 		}
+		#region For
+		public void For(Action<int> action, int count)
+		{
+			int remaining = count;
+			object @lock = new object();
+			System.Threading.AutoResetEvent wait = new System.Threading.AutoResetEvent(false);
+			for (int i = 0; i < count; i++)
+				this.Enqueue(c =>
+				{
+					action(c);
+					lock (@lock)
+						if (--remaining == 0)
+							wait.Set();
+				}, i);
+			wait.WaitOne();
+		}
+		#endregion
 		#region Process
 		public T Process<T>(Func<T> process)
 		{

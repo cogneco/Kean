@@ -36,6 +36,12 @@ namespace Kean.Math.Regression.Ransac
         bool[] mask;
         double confidence;
         public Estimator(Model<Domain, Range, Transform> model, int maximumIterations) : this(model, maximumIterations, 0.99) { }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="model">The model used for movement approximation.</param>
+        /// <param name="maximumIterations">Maximum number of iterations.</param>
+        /// <param name="confidence">Result confidence.</param>
         public Estimator(Model<Domain, Range, Transform> model, int maximumIterations, double confidence)
         {
             this.model = model;
@@ -59,6 +65,12 @@ namespace Kean.Math.Regression.Ransac
         {
             this.Load(domain, range, null);
         }
+        /// <summary>
+        /// Load the point ranges used when computing the estimation.
+        /// </summary>
+        /// <param name="domain">The domain values.</param>
+        /// <param name="range">The range values.</param>
+        /// <param name="mask">The mask values. Points will not be considered if their corresponding mask value is false. </param>
         public void Load(Domain[] domain, Range[] range, bool[] mask)
         {
             this.mask = mask;
@@ -91,6 +103,11 @@ namespace Kean.Math.Regression.Ransac
             this.range = null;
             this.mask = null;
         }
+
+        /// <summary>
+        /// Compute the estimation. Points must first be loaded using load().  
+        /// </summary>
+        /// <returns>Computed estimation. Returns null if no estimation is found.</returns>
         public Estimation<Domain, Range, Transform> Compute()
         {
             Estimation<Domain, Range, Transform> result = null;
@@ -120,7 +137,7 @@ namespace Kean.Math.Regression.Ransac
                         bool[] maybeMask = new bool[this.domain.Length];
                         int currentInliers = 0;
                         for (int i = 0; i < this.domain.Length; i++)
-                            currentInliers += (maybeMask[i] = this.model.FitModel(maybeModel, this.domain[i], this.range[i])) ? 1 : 0;
+                            currentInliers += (maybeMask[i] = this.model.Fits(maybeModel, this.domain[i], this.range[i])) ? 1 : 0;
                         if (currentInliers > Kean.Math.Integer.Maximum(neededMeasures - 1, maximumInliers))
                         {
                             maximumInliers = currentInliers;

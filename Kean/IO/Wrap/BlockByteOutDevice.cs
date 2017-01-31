@@ -76,9 +76,9 @@ namespace Kean.IO.Wrap
 		#region IDevice implementation
 		public bool Close()
 		{
-			bool result;
 			this.Flush();
-			if (result = (this.backend.NotNull() && (this.Wrapped || this.backend.Close())))
+			bool result = (this.backend.NotNull() && (this.Wrapped || this.backend.Close()));
+			if (result)
 				this.backend = null;
 			return result;
 		}

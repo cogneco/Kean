@@ -39,7 +39,7 @@ namespace Kean.Math.Random.Single
 			do
 				x2 = this.Next();
 			while (x2 == 0);
-			return this.Mean + this.Deviation * Kean.Math.Single.SquareRoot(-2 * Kean.Math.Single.Logarithm((float) x1 / ulong.MaxValue)) * Kean.Math.Single.Cosinus(2 * Kean.Math.Single.Pi * (float) x2 / ulong.MaxValue);
+			return this.Mean + this.Deviation * Kean.Math.Single.SquareRoot(-2 * Kean.Math.Single.Logarithm((float) x1 / ulong.MaxValue)) * Kean.Math.Single.Cosine(2 * Kean.Math.Single.Pi * (float) x2 / ulong.MaxValue);
 		}
 	}
 }

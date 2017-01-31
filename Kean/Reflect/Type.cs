@@ -355,6 +355,22 @@ namespace Kean.Reflect
 			System.Reflection.ConstructorInfo constructor = ((System.Type)this).GetConstructor(parameters.Map(parameter => parameter.GetType()));
 			return constructor.NotNull() ? constructor.Invoke(parameters) : null;
 		}
+        public object CreateDefault()
+        {
+            object result;
+            switch (this.Category)
+            {
+                case TypeCategory.Primitive:
+                case TypeCategory.Structure:
+                case TypeCategory.Enumeration:
+                    result = this.Create();
+                    break;
+                default:
+                    result = null;
+                    break;
+            }
+            return result;
+        }
 		#region Implemented Interfaces
 		public bool Implements(Type type)
 		{
@@ -587,5 +603,5 @@ namespace Kean.Reflect
 			return result;
 		}
 		#endregion
-	}
+    }
 }

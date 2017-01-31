@@ -251,71 +251,79 @@ namespace Kean.Extension
 			if (current.Length > 0)
 				yield return current.ToString();
 		}
-		public static T Parse<T>(this string me)
+        public static T Parse<T>(this string me)
+        {
+            return me.Parse(default(T));
+        }
+        public static T Parse<T>(this string me, T @default)
 		{
-			return (me is T ? me : me.Parse(typeof(T))).ConvertType<T>();
+			return (me is T ? me : me.Parse(typeof(T), @default)).ConvertType<T>();
 		}
-		public static object Parse(this string me, Reflect.Type type)
+        public static object Parse(this string me, Reflect.Type type)
+        {
+            return me.Parse(type, type.CreateDefault());
+        }
+		public static object Parse(this string me, Reflect.Type type, object @default)
 		{
 			object result;
-			if (type.Implements(me.Type()))
+			if (me.NotNull() && type.Implements(me.Type()))
 				result = me;
 			else if (type == typeof(char))
 				result = me.ToString();
 			else if (type == typeof(bool))
 			{
 				bool value;
-				result = (bool.TryParse(me, out value) && value);
+				result = bool.TryParse(me, out value) ? value : @default.As(false);
 			}
 			else if (type == typeof(byte))
 			{
 				byte value;
-				result = (byte.TryParse(me, out value) ? value : (byte)0);
+				result = byte.TryParse(me, out value) ? value : @default.As<byte>(0);
 			}
 			else if (type == typeof(sbyte))
 			{
 				sbyte value;
-				result = (sbyte.TryParse(me, out value) ? value : (sbyte)0);
+                result = sbyte.TryParse(me, out value) ? value : @default.As<sbyte>(0);
 			}
 			else if (type == typeof(short))
 			{
 				short value;
-				result = (short.TryParse(me, out value) ? value : (short)0);
+				result = short.TryParse(me, out value) ? value : @default.As<short>(0);
 			}
 			else if (type == typeof(int))
 			{
 				int value;
-				result = (int.TryParse(me, out value) ? value : 0);
+				result = int.TryParse(me, out value) ? value : @default.As<int>(0);
 			}
 			else if (type == typeof(uint))
 			{
 				uint value;
-				result = (uint.TryParse(me, out value) ? value : 0);
+                result = uint.TryParse(me, out value) ? value : @default.As<uint>(0);
 			}
 			else if (type == typeof(long))
 			{
 				long value;
-				result = (long.TryParse(me, out value) ? value : 0);
+                result = long.TryParse(me, out value) ? value : @default.As<long>(0);
 			}
 			else if (type == typeof(ulong))
 			{
 				ulong value;
-				result = (ulong.TryParse(me, out value) ? value : 0);
+                result = ulong.TryParse(me, out value) ? value : @default.As<ulong>(0);
 			}
 			else if (type == typeof(float))
 			{
 				float value;
-				result = (float.TryParse(me, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out value) ? value : 0);
+				result = float.TryParse(me, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out value) ? value  : @default.As<float>(0);
 			}
 			else if (type == typeof(double))
 			{
 				double value;
-				result = (double.TryParse(me, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out value) ? value : 0);
+				result = double.TryParse(me, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out value) ? value  : @default.As<double>(0);
 			}
 			else if (type == typeof(decimal))
 			{
 				decimal value;
-				result = (decimal.TryParse(me, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out value) ? value : 0);
+				result = decimal.TryParse(me, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out value) ? value : @default.As<decimal>(0);
 			}
 			else if (type == typeof(DateTime))
 			{

@@ -23,7 +23,9 @@ using System;
 using Kean;
 using Kean.Extension;
 using Geometry2D = Kean.Math.Geometry2D;
+using Geometry3D = Kean.Math.Geometry3D;
 using Error = Kean.Error;
+using Integer = Kean.Math.Integer;
 
 namespace Kean.Draw
 {
@@ -34,6 +36,10 @@ namespace Kean.Draw
 	{
 		public abstract Canvas Canvas { get; }
 
+		public bool IsValidIn(int x, int y)
+		{
+			return (x >= 0 && x < this.Size.Width && y >= 0 && y < this.Size.Height);
+		}
 		public Geometry2D.Integer.Size Size { get; private set; }
 		Geometry2D.Integer.Transform transform = Geometry2D.Integer.Transform.Identity;
 		protected Geometry2D.Integer.Transform Transform { get { return this.transform; } }
@@ -60,7 +66,7 @@ namespace Kean.Draw
 		#region Crop
 		Geometry2D.Integer.Shell crop;
 		[Notify("CropChanged")]
-		public Geometry2D.Integer.Shell Crop 
+		public virtual Geometry2D.Integer.Shell Crop 
 		{
 			get { return this.crop; }
 			set
@@ -91,8 +97,31 @@ namespace Kean.Draw
 		}
 		public event Action<bool> WrapChanged;
 		#endregion
-		//public abstract IColor this[int x, int y] { get; }
-		//public abstract IColor this[float x, float y] { get; }
+		#region Peek & Poke
+		public abstract IColor this[int x, int y] { get; set; }
+		public IColor this[float x, float y]
+		{
+			get
+			{
+				var topLeft = this[Integer.Floor(x), Integer.Floor(y)];
+				var bottomLeft = this[Integer.Floor(x), Integer.Ceiling(y)];
+				var topRight = this[Integer.Ceiling(x), Integer.Floor(y)];
+				var bottomRight = this[Integer.Ceiling(x), Integer.Ceiling(y)];
+				var deltaX = x - Integer.Floor(x);
+				var deltaY = y - Integer.Floor(y);
+				return topLeft.Blend(deltaX, topRight).Blend(deltaY, bottomLeft.Blend(deltaX, bottomRight));
+			}
+		}
+		public IColor this[Geometry2D.Integer.Point position]
+		{
+			get { return this[position.X, position.Y]; }
+			set { this[position.X, position.Y] = value; }
+		}
+		public IColor this[Geometry2D.Single.Point position]
+		{
+			get { return this[position.X, position.Y]; }
+		}
+		#endregion
 		protected Image()
 		{ }
 		protected Image(Image original) :
@@ -117,6 +146,41 @@ namespace Kean.Draw
 				this.Dispose();
 			}
 			return result;
+		}
+
+		public void ProjectPointWise(Draw.Image source, Geometry3D.Single.Transform transform, Geometry2D.Single.Size fieldOfView)
+		{
+			float zPlane = (float)this.Size.Width / (Math.Single.Tangens(fieldOfView.Width / 2f) * 2f);
+			var cam = Geometry2D.Single.Transform.CreateTranslation(-(source.Size.Width) / 2f, -(source.Size.Height) / 2f);
+			for (int y = 0; y < this.Size.Height; y++)
+				for (int x = 0; x < this.Size.Width; x++)
+				{
+					var p = cam * new Geometry2D.Single.Point(x, y);
+					var t = p.Project(transform, zPlane);
+					var d = cam.Inverse * t;
+					this[x, y] = source[d.X, d.Y]; 
+				}
+		}
+
+		public void Project(Draw.Image source, Geometry3D.Single.Transform camera, Geometry2D.Single.Size fieldOfView)
+		{
+			float focalLengthX = (float)this.Size.Width / (Math.Single.Tangens(fieldOfView.Width / 2f) * 2f);
+			float height = 2 * focalLengthX * Math.Single.Tangens(fieldOfView.Height / 2f);
+			var transform = Geometry3D.Single.Transform.CreateRotation(camera, new Geometry3D.Single.Point(source.Size.Width / 2f, source.Size.Height / 2f, focalLengthX));
+			var pointTransform = transform * Geometry3D.Single.Transform.CreateTranslation((source.Size.Width - this.Size.Width) / 2f, (source.Size.Height - this.Size.Height) / 2f, 0);
+			var cam = transform * new Geometry3D.Single.Point((source.Size.Width) / 2f, (source.Size.Height) / 2f, focalLengthX);
+			Project(source, pointTransform, cam); 
+		}
+
+		protected virtual void Project(Draw.Image source, Geometry3D.Single.Transform pointTransform, Geometry3D.Single.Point cam)
+		{
+			for (int y = 0; y < this.Size.Height; y++)
+				for (int x = 0; x < this.Size.Width; x++)
+				{
+					var p = pointTransform * new Geometry3D.Single.Point(x, y, 0);
+					var d = cam + (Geometry3D.Single.Point)(p - cam) * (cam.Z / (cam.Z - p.Z));
+					this[x, y] = source[d.X, d.Y];
+				}
 		}
 		public Draw.Image ResizeWithin(Geometry2D.Integer.Size restriction)
 		{

@@ -32,34 +32,10 @@ namespace Kean.Draw.Raster
 	public class Monochrome :
 		Packed
 	{
-		public Color.Monochrome this[Geometry2D.Integer.Point position]
-		{
-			get { return this[position.X, position.Y]; }
-			set { this[position.X, position.Y] = value; }
-		}
-		public Color.Monochrome this[int x, int y]
+		public override IColor this[int x, int y]
 		{
 			get { unsafe { return *((Color.Monochrome*)((byte*)this.Buffer + y * this.Stride) + x); } }
-			set { unsafe { *((Color.Monochrome*)((byte*)this.Buffer + y * this.Stride) + x) = value; } }
-		}
-		public Color.Monochrome this[Geometry2D.Single.Point position]
-		{
-			get { return this[position.X, position.Y]; }
-		}
-		public Color.Monochrome this[float x, float y]
-		{
-			get
-			{
-				float left = x - Integer.Floor(x);
-				float top = y - Integer.Floor(y);
-
-				Color.Monochrome topLeft = this[Integer.Floor(x), Integer.Floor(y)];
-				Color.Monochrome bottomLeft = this[Integer.Floor(x), Integer.Ceiling(y)];
-				Color.Monochrome topRight = this[Integer.Ceiling(x), Integer.Floor(y)];
-				Color.Monochrome bottomRight = this[Integer.Ceiling(x), Integer.Ceiling(y)];
-
-				return new Color.Monochrome(top * (left * topLeft.Y + (1 - left) * topRight.Y) + (1 - top) * (left * bottomLeft.Y + (1 - left) * bottomRight.Y));
-			}
+			set { unsafe { *((Color.Monochrome*)((byte*)this.Buffer + y * this.Stride) + x) = value.Convert<Color.Monochrome>(); } }
 		}
 
 		protected override int BytesPerPixel { get { return 1; } }
@@ -145,8 +121,8 @@ namespace Kean.Draw.Raster
 				for (int y = 0; y < this.Size.Height; y++)
 					for (int x = 0; x < this.Size.Width; x++)
 					{
-						Color.Monochrome c = this[x, y];
-						Color.Monochrome o = (other as Monochrome)[x, y];
+						Color.Monochrome c = (Color.Monochrome)this[x, y];
+						Color.Monochrome o = (Color.Monochrome)other[x, y];
 						if (c.Distance(o) > 0)
 						{
 							Color.Monochrome maximum = o;
@@ -155,7 +131,7 @@ namespace Kean.Draw.Raster
 								for (int otherX = Integer.Maximum(0, x - 2); otherX < Integer.Minimum(x + 3, this.Size.Width); otherX++)
 									if (otherX != x || otherY != y)
 									{
-										Color.Monochrome pixel = (other as Monochrome)[otherX, otherY];
+										Color.Monochrome pixel = (Color.Monochrome)other[otherX, otherY];
 										if (maximum.Y < pixel.Y)
 											maximum.Y = pixel.Y;
 										else if (minimum.Y > pixel.Y)
