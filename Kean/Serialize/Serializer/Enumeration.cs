@@ -41,7 +41,7 @@ namespace Kean.Serialize.Serializer
 		{
 			return data is Data.Enumeration ? (data as Data.Enumeration).Value :
 				data is Data.Binary ? this.Create((data as Data.Binary).Value, data.Type) :
-				data is Data.String ? Enum.Parse(data.Type, (data as Data.String).Value) :
+				data is Data.String ? Enum.Parse(data.Type, (data as Data.String).Value.Replace('|', ',')) :
 				Enum.ToObject(data.Type, 0);
 		}
 		object Create(byte[] value, Reflect.Type type)

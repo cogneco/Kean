@@ -71,6 +71,7 @@ namespace Kean.Draw.OpenGL
 			if (type.Inherits<Raster.Image>())
 			{
 				Raster.Image backend = this.Backend.Read();
+				backend.CoordinateSystem = this.CoordinateSystem;
 				if (backend.Type().Inherits<T>())
 					result = backend as T;
 				else if (type == typeof(Raster.Bgr) || type == typeof(Raster.Monochrome))
