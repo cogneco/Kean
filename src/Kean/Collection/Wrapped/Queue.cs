@@ -16,6 +16,7 @@
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Kean.Extension;
 using Kean.Collection.Extension;
 
 namespace Kean.Collection.Wrapped

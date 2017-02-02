@@ -125,7 +125,7 @@ namespace Kean.Collection.Array
 		#endregion
 		#region IAsArray
 		public override T[] AsArray() {
-			return this.Count == this.backend.Length ? this.backend : this.ToArray();
+			return this.Count == this.backend.Length ? this.backend : (this as IArrayCopyable<T>).ToArray();
 		}
 		#endregion
 	}

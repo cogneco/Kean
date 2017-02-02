@@ -48,7 +48,7 @@ namespace Kean.Collection.Abstract
 		}
 		public virtual T[] AsArray()
 		{
-			return this.ToArray();
+			return (this as IArrayCopyable<T>).ToArray();
 		}
 		#region IEnumerator<T>
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

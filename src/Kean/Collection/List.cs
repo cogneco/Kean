@@ -28,8 +28,8 @@ namespace Kean.Collection
 		public List(int count) : this(0, new Block<T>(count)) { }
 		public List(params T[] backend) : this(backend.Length, new Block<T>(backend)) { }
 		public List(int count, params T[] backend) : this(count, new Block<T>(backend)) { }
-		public List(IBlock<T> backend) :	this(new Wrap.List<T>(backend))	{ }
-		public List(int count, IBlock<T> backend) :	this(new Wrap.List<T>(count, backend)) { }
+		public List(IBlock<T> backend) :	this(new Wrapped.List<T>(backend))	{ }
+		public List(int count, IBlock<T> backend) :	this(new Wrapped.List<T>(count, backend)) { }
 		public List(IList<T> backend)
 		{
 			this.backend = backend;

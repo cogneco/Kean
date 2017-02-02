@@ -19,7 +19,7 @@
 namespace Kean.Collection.Array
 {
 	public class Queue<T> :
-		Wrap.Queue<T>
+		Wrapped.Queue<T>
 	{
 		public Queue() : this(0) { }
 		public Queue(int capacity) : base(new List<T>(capacity)) { }
