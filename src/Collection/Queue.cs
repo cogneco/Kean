@@ -16,19 +16,23 @@
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Generic = System.Collections.Generic;
+
 namespace Kean.Collection
 {
 	public class Queue<T> :
 		IQueue<T>
 	{
-		IQueue<T> backend;
+		readonly IQueue<T> backend;
 		#region Constructors
-		public Queue() : this(new Wrapped.Queue<T>(new List<T>())) { }
-		public Queue(int capacity) : this(new List<T>(capacity)) { }
+		public Queue() : this(new List<T>()) { }
+		public Queue(int initialCapacity) : this(new List<T>(initialCapacity)) { }
 		public Queue(params T[] backend) : this(new List<T>(backend)) { }
-		public Queue(int count, params T[] backend) : this(new List<T>(count, backend)) { }
+		public Queue(int initialCapacity, params T[] backend) : this(new List<T>(initialCapacity, backend)) { }
 		public Queue(IBlock<T> backend) : this(new List<T>(backend)) { }
-		public Queue(int count, IBlock<T> backend) : this(new List<T>(count, backend)) { }
+		public Queue(int initialCapacity, IBlock<T> backend) : this(new List<T>(initialCapacity, backend)) { }
+		public Queue(Generic.IEnumerable<T> backend) : this(new List<T>(backend)) { }
+		public Queue(int initialCapacity, Generic.IEnumerable<T> backend) : this(new List<T>(initialCapacity, backend)) { }
 		public Queue(IList<T> backend) : this(new Wrapped.Queue<T>(backend)) { }
 		public Queue(IQueue<T> backend)
 		{

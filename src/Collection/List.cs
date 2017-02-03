@@ -16,21 +16,30 @@
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Generic = System.Collections.Generic;
+
 namespace Kean.Collection
 {
 	public class List<T> :
 		Block<T>,
 		IList<T>
 	{
-		IList<T> backend;
+		readonly IList<T> backend;
 		#region Constructors
 		public List() :	this(0) { }
-		public List(int count) : this(0, new Block<T>(count)) { }
+		public List(int initialCapacity) : this(0, new Block<T>(initialCapacity)) { }
 		public List(params T[] backend) : this(backend.Length, new Block<T>(backend)) { }
-		public List(int count, params T[] backend) : this(count, new Block<T>(backend)) { }
+		public List(int initialCapacity, params T[] backend) : this(initialCapacity, new Block<T>(backend)) { }
 		public List(IBlock<T> backend) :	this(new Wrapped.List<T>(backend))	{ }
-		public List(int count, IBlock<T> backend) :	this(new Wrapped.List<T>(count, backend)) { }
-		public List(IList<T> backend)
+		public List(int initialCapacity, IBlock<T> backend) :	this(new Wrapped.List<T>(initialCapacity, backend)) { }
+		public List(Generic.IEnumerable<T> backend) :	this(0, backend)	{ }
+		public List(int initialCapacity, Generic.IEnumerable<T> backend) :	this(initialCapacity)
+		{
+			foreach (var item in backend)
+				this.Add(item);
+		}
+		public List(IList<T> backend) :
+			base(backend)
 		{
 			this.backend = backend;
 		}

@@ -22,7 +22,7 @@ namespace Kean.Collection.Array
 		Abstract.ImmutableBlock<T>,
 		IImmutableBlock<T>
 	{
-		T[] backend;
+		readonly T[] backend;
 		#region Constructor
 		public ImmutableBlock(params T[] backend)
 		{

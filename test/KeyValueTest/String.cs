@@ -1,4 +1,4 @@
-// Copyright (C) 2010  Simon Mika <simon@mika.se>
+// Copyright (C) 2017  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -19,25 +19,22 @@
 using Xunit;
 using Generic = System.Collections.Generic;
 
-namespace Kean.Extension.StringTest
+namespace Kean.KeyValueTest
 {
-	public class PercentEncoding
+	public class String
 	{
 		public static Generic.IEnumerable<object[]> Data {
 			get {
-				yield return new object[] { "string with spaces", "string%20with%20spaces" };
-				yield return new object[] { "string\"with\"", "string%22with%22" };
+				yield return new object[] { KeyValue.Create("key", "value"), "(key = value)" };
+				yield return new object[] { KeyValue.Create("key", 42), "(key = 42)" };
+				yield return new object[] { KeyValue.Create(42, "value"), "(42 = value)" };
+				yield return new object[] { KeyValue.Create(42, 1337), "(42 = 1337)" };
 			}
 		}
 		[Theory, MemberData("Data")]
-		public void Encode(string decoded, string encoded)
+		public void To(object keyValue, string correct)
 		{
-			Assert.Equal(decoded.PercentEncode(), encoded);
-		}
-		[Theory, MemberData("Data")]
-		public void Decode(string decoded, string encoded)
-		{
-			Assert.Equal(encoded.PercentDecode(), decoded);
+			Assert.Equal(keyValue.ToString(), correct);
 		}
 	}
 }

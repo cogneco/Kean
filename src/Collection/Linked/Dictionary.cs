@@ -16,6 +16,7 @@
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Generic = System.Collections.Generic;
 using Kean.Extension;
 using Kean.Collection.Linked.Extension;
 
@@ -25,6 +26,13 @@ namespace Kean.Collection.Linked
 		Dictionary<Link<KeyValue<TKey, TValue>>, TKey, TValue>
 	{
 		public Dictionary() { }
+		public Dictionary(params KeyValue<TKey, TValue>[] data): this((Generic.IEnumerable<KeyValue<TKey, TValue>>) data) {}
+		public Dictionary(Generic.IEnumerable<KeyValue<TKey, TValue>> data):
+			this()
+		{
+			foreach (var item in data)
+				this[item.Key] = item.Value;
+		}
 	}
 	public class Dictionary<L, TKey, TValue> :
 		IDictionary<TKey, TValue>

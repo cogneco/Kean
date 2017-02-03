@@ -417,5 +417,18 @@ namespace Kean.Extension
 			}
 			return result;
 		}
+		public static Generic.IEnumerable<TResult> Zip<TLeft, TRight, TResult>(this Generic.IEnumerable<TLeft> me, Generic.IEnumerable<TRight> other, Func<TLeft, TRight, TResult> combine)
+		{
+			return me.NotNull() && other.NotNull() && combine.NotNull() ?
+				new Collection.Enumerable<TResult>(() => me.GetEnumerator().Zip(other.GetEnumerator(), combine)) :
+				Collection.Enumerable.Empty<TResult>();
+		}
+		public static Generic.IEnumerable<TResult> AllPermutations<TLeft, TRight, TResult>(this Generic.IEnumerable<TLeft> me, Generic.IEnumerable<TRight> other, Func<TLeft, TRight, TResult> combine)
+		{
+			if (me.NotNull() && other.NotNull() && combine.NotNull())
+				foreach (var meItem in me)
+					foreach (var otherItem in other)
+						yield return combine(meItem, otherItem);
+		}
 	}
 }

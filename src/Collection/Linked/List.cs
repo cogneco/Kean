@@ -26,6 +26,13 @@ namespace Kean.Collection.Linked
 		List<Link<T>, T>
 	{
 		public List() { }
+		public List(params T[] data): this((Generic.IEnumerable<T>) data) {}
+		public List(Generic.IEnumerable<T> data):
+			this()
+		{
+			foreach (var item in data)
+				this.Add(item);
+		}
 	}
 	public class List<L, T> :
 		Abstract.List<T>

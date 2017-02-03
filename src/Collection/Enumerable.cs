@@ -1,4 +1,4 @@
-// Copyright (C) 2011  Simon Mika <simon@mika.se>
+// Copyright (C) 2011, 2017  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -18,13 +18,18 @@
 
 using System;
 using Generic = System.Collections.Generic;
+using Kean.Extension;
 
 namespace Kean.Collection
 {
+	public static class Enumerable
+	{
+		public static Generic.IEnumerable<T> Empty<T>() { return System.Linq.Enumerable.Empty<T>(); }
+	}
 	public class Enumerable<T> :
 		Generic.IEnumerable<T>
 	{
-		Func<Generic.IEnumerator<T>> getEnumerator;
+		readonly Func<Generic.IEnumerator<T>> getEnumerator;
 		#region Constructors
 		public Enumerable(Func<Generic.IEnumerator<T>> getEnumerator)
 		{
@@ -34,7 +39,7 @@ namespace Kean.Collection
 		#region IEnumerable<T> Members
 		public Generic.IEnumerator<T> GetEnumerator()
 		{
-			return this.getEnumerator();
+			return this.getEnumerator.NotNull() ? this.getEnumerator() : Enumerator.Empty<T>();
 		}
 		#endregion
 		#region IEnumerable Members

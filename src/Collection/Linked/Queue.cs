@@ -16,6 +16,7 @@
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Generic = System.Collections.Generic;
 using Kean.Extension;
 using Kean.Collection.Linked.Extension;
 
@@ -25,6 +26,13 @@ namespace Kean.Collection.Linked
 		Queue<Link<T>, T>
 	{
 		public Queue() { }
+		public Queue(params T[] data): this((Generic.IEnumerable<T>) data) {}
+		public Queue(Generic.IEnumerable<T> data):
+			this()
+		{
+			foreach (var item in data)
+				this.Enqueue(item);
+		}
 	}
 	public class Queue<L, T> :
 		IQueue<T>

@@ -6,7 +6,7 @@
 	"tasks": [
 		{
 			"taskName": "build",
-			"args": [ "src/" ],
+			"args": [ "src/", "test/" ],
 			"isBuildCommand": true,
 			"showOutput": "silent",
 			"problemMatcher": "$msCompile"

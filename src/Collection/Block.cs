@@ -24,7 +24,7 @@ namespace Kean.Collection
 		Abstract.Block<T>,
 		IArrayCopyable<T>
 	{
-		IBlock<T> backend;
+		readonly IBlock<T> backend;
 		public override int Count { get { return this.backend.Count; } }
 		public override T this[int index]
 		{

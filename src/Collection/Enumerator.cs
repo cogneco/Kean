@@ -1,4 +1,4 @@
-// Copyright (C) 2010  Simon Mika <simon@mika.se>
+// Copyright (C) 2012  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -16,28 +16,12 @@
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Xunit;
 using Generic = System.Collections.Generic;
 
-namespace Kean.Extension.StringTest
+namespace Kean.Collection
 {
-	public class PercentEncoding
+	public static class Enumerator
 	{
-		public static Generic.IEnumerable<object[]> Data {
-			get {
-				yield return new object[] { "string with spaces", "string%20with%20spaces" };
-				yield return new object[] { "string\"with\"", "string%22with%22" };
-			}
-		}
-		[Theory, MemberData("Data")]
-		public void Encode(string decoded, string encoded)
-		{
-			Assert.Equal(decoded.PercentEncode(), encoded);
-		}
-		[Theory, MemberData("Data")]
-		public void Decode(string decoded, string encoded)
-		{
-			Assert.Equal(encoded.PercentDecode(), decoded);
-		}
+		public static Generic.IEnumerator<T> Empty<T>() { return Enumerable.Empty<T>().GetEnumerator(); }
 	}
 }

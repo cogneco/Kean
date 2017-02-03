@@ -23,9 +23,9 @@ namespace Kean.Collection
 	public class Slice<T> :
 		Abstract.Block<T>
 	{
-		int offset;
-		int count;
-		IBlock<T> backend;
+		readonly int offset;
+		readonly int count;
+		readonly IBlock<T> backend;
 		public override int Count { get { return this.count; } }
 		public override T this [int index]
 		{

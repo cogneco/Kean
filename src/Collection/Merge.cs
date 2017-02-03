@@ -23,8 +23,8 @@ namespace Kean.Collection
 	public class Merge<T> :
 		Abstract.Block<T>
 	{
-		IBlock<T> left;
-		IBlock<T> right;
+		readonly IBlock<T> left;
+		readonly IBlock<T> right;
 		public override int Count { get { return this.left.Count + this.right.Count; } }
 		public override T this[int index]
 		{

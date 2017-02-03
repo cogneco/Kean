@@ -21,7 +21,7 @@ namespace Kean.Collection.Array
 	public class Block<T> :
 		Abstract.Block<T>
 	{
-		T[] backend;
+		readonly T[] backend;
 		public override int Count { get { return this.backend.Length; } }
 		public override T this[int index]
 		{

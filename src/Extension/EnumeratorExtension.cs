@@ -253,5 +253,11 @@ namespace Kean.Extension
 		{
 			return me.ToArray(0);
 		}
+		public static Generic.IEnumerator<TResult> Zip<TLeft, TRight, TResult>(this Generic.IEnumerator<TLeft> me, Generic.IEnumerator<TRight> other, Func<TLeft, TRight, TResult> combine)
+		{
+			if (me.NotNull() && other.NotNull() && combine.NotNull())
+				while (me.MoveNext() && other.MoveNext())
+					yield return combine(me.Current, other.Current);
+		}
 	}
 }

@@ -26,7 +26,7 @@ namespace Kean.Collection.Wrapped
 		IArrayCopyable<T>,
 		IAsArray<T>
 	{
-		IList<T> backend;
+		readonly IList<T> backend;
 		int head;
 		int tail;
 		int count;
