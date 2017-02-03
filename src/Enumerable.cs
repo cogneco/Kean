@@ -20,7 +20,7 @@ using System;
 using Generic = System.Collections.Generic;
 using Kean.Extension;
 
-namespace Kean.Collection
+namespace Kean
 {
 	public static class Enumerable
 	{

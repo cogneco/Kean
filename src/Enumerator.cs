@@ -18,7 +18,7 @@
 
 using Generic = System.Collections.Generic;
 
-namespace Kean.Collection
+namespace Kean
 {
 	public static class Enumerator
 	{

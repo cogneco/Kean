@@ -420,8 +420,8 @@ namespace Kean.Extension
 		public static Generic.IEnumerable<TResult> Zip<TLeft, TRight, TResult>(this Generic.IEnumerable<TLeft> me, Generic.IEnumerable<TRight> other, Func<TLeft, TRight, TResult> combine)
 		{
 			return me.NotNull() && other.NotNull() && combine.NotNull() ?
-				new Collection.Enumerable<TResult>(() => me.GetEnumerator().Zip(other.GetEnumerator(), combine)) :
-				Collection.Enumerable.Empty<TResult>();
+				new Enumerable<TResult>(() => me.GetEnumerator().Zip(other.GetEnumerator(), combine)) :
+				Enumerable.Empty<TResult>();
 		}
 		public static Generic.IEnumerable<TResult> AllPermutations<TLeft, TRight, TResult>(this Generic.IEnumerable<TLeft> me, Generic.IEnumerable<TRight> other, Func<TLeft, TRight, TResult> combine)
 		{
