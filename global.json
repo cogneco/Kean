@@ -1,6 +1,6 @@
 {
 	"Projects": [
-		"./src/Kean",
-		"./src/Kean.Tests"
+		"./src",
+		"./test"
 	]
 }

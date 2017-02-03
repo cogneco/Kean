@@ -1,5 +1,8 @@
 {
+	"name": "Kean",
 	"version": "3.0.0-*",
+	"description": ".NET library complementing the standard system libraries.",
+	"copyright": "Simon Mika",
 	"buildOptions": {
 		"debugType": "portable"
 	},
