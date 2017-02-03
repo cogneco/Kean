@@ -18,11 +18,10 @@
 
 using Xunit;
 using Generic = System.Collections.Generic;
-using Kean.Extension;
 
-namespace Kean.Tests.Extension
+namespace Kean.Extension.EnumerableTest
 {
-		public class EnumerableExtension
+		public class Equality
 		{
 			public static Generic.IEnumerable<object[]> SameOrEqualsData
 			{
