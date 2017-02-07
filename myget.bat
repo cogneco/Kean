@@ -18,7 +18,7 @@ call dotnet build src\ --configuration %config%
 if not "%errorlevel%"=="0" goto failure
 
 REM Unit tests
-call dotnet test tests\ --configuration %config%
+call dotnet test test\ --configuration %config%
 if not "%errorlevel%"=="0" goto failure
 
 REM Package
