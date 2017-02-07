@@ -259,5 +259,33 @@ namespace Kean.Extension
 				while (me.MoveNext() && other.MoveNext())
 					yield return combine(me.Current, other.Current);
 		}
+		#region Prepend, Append
+		public static Generic.IEnumerator<T> Prepend<T>(this Generic.IEnumerator<T> me, params T[] other)
+		{
+			return me.Prepend(((Generic.IEnumerable<T>)other).GetEnumerator());
+		}
+		public static Generic.IEnumerator<T> Prepend<T>(this Generic.IEnumerator<T> me, Generic.IEnumerator<T> other)
+		{
+			if (other.NotNull())
+				while (other.MoveNext())
+					yield return other.Current;
+			if (me.NotNull())
+				while (me.MoveNext())
+					yield return me.Current;
+		}
+		public static Generic.IEnumerator<T> Append<T>(this Generic.IEnumerator<T> me, params T[] other)
+		{
+			return me.Append(((Generic.IEnumerable<T>)other).GetEnumerator());
+		}
+		public static Generic.IEnumerator<T> Append<T>(this Generic.IEnumerator<T> me, Generic.IEnumerator<T> other)
+		{
+			if (me.NotNull())
+				while (me.MoveNext())
+					yield return me.Current;
+			if (other.NotNull())
+				while (other.MoveNext())
+					yield return other.Current;
+		}
+		#endregion
 	}
 }

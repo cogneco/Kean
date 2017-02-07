@@ -287,5 +287,19 @@ namespace Kean.Extension
 			result[me.Length] = value;
 			return result;
 		}
+		public static bool StartsWith<T>(this T[] me, params T[] needle) {
+			bool result = true;
+			if (needle.NotNull())
+				for (var i = 0; result && i < needle.Length; i++)
+					result = me[i].Equals(needle[i]);
+			return result;
+		}
+		public static bool EndsWith<T>(this T[] me, params T[] needle) {
+			bool result = true;
+			if (needle.NotNull())
+				for (var i = needle.Length; result && i > 0 ; i--)
+					result = me[i].Equals(needle[i]);
+			return result;
+		}
 	}
 }
