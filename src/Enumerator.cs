@@ -29,15 +29,20 @@ namespace Kean
 	public class Enumerator<T> :
 		Generic.IEnumerator<T>
 	{
-		Func<T> next;
-		Action reset;
-		Action dispose;
+		readonly Func<T> next;
+		readonly Action reset;
+		readonly Action dispose;
 		T current;
 		public T Current { get { return this.current; } }
 		object System.Collections.IEnumerator.Current { get { return this.current; } }
+		public Enumerator(Generic.IEnumerator<T> enumerator):
+			this(enumerator.Next, enumerator.Reset, enumerator.Dispose)
+		{}
 		public Enumerator(Func<T> next, Action reset = null, Action dispose = null)
 		{
 			this.next = next;
+			this.reset = reset;
+			this.dispose = dispose;
 		}
 		public bool MoveNext()
 		{
