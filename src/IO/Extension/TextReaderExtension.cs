@@ -1,4 +1,4 @@
-// Copyright (C) 2017  Simon Mika <simon@mika.se>
+// Copyright (C) 2014, 2017  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -15,8 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
 using Generic = System.Collections.Generic;
+using Tasks = System.Threading.Tasks;
+using Kean.Extension;
 
 namespace Kean.IO.Extension
 {
@@ -26,5 +29,24 @@ namespace Kean.IO.Extension
 		{
 			return new TextMark(me);
 		}
-	}
+		public static async Tasks.Task<string> ReadLine(this ITextReader me)
+		{
+			Text.Builder result = null;
+			while (!(await me.Empty) && (await me.Next()) && me.Last != '\n')
+				result += me.Last;
+			return result;
+		}
+		public static Generic.IEnumerable<Tasks.Task<string>> ReadAllLines(this ITextReader me)
+		{
+			Tasks.Task<string> result;
+			while ((result = me.ReadLine()).NotNull())
+				yield return result;
+		}
+		public static async Tasks.Task<string> ReadFromCurrentUntil(this ITextReader me, Func<char, bool> predicate)
+		{
+			Text.Builder result = !(await me.Empty) ? (Text.Builder)me.Last : null;
+			while (!(await me.Empty) && (await me.Next()) && !predicate(me.Last))
+				result += me.Last;
+			return result;
+}	}
 }
