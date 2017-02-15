@@ -1,4 +1,4 @@
-// Copyright (C) 2011  Simon Mika <simon@mika.se>
+// Copyright (C) 2011, 2017  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -16,17 +16,29 @@
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using Tasks = System.Threading.Tasks;
+using Kean.Extension;
 
 namespace Kean.IO
 {
-	public interface ITextReader :
-		IInDevice
+	public class TextMark
 	{
-		Text.Position Position { get; }
-		char Last { get; }
-		event Action<char> OnNext;
-		Tasks.Task<bool> Next();
+		string content;
+		ITextReader reader;
+		Text.Position start;
+		Text.Position? end;
+		public TextMark(ITextReader reader)
+		{
+			this.reader = reader;
+			this.start = reader.Position;
+			reader.OnNext += character => this.content += character;
+		}
+		public void End()
+		{
+			this.end = reader.Position;
+		}
+		public static implicit operator Text.Fragment(TextMark mark)
+		{
+			return mark.IsNull() ? new Text.Fragment() : new Text.Fragment(mark.content, mark.start, mark.end ?? mark.reader.Position, mark.reader.Resource);
+		}
 	}
 }

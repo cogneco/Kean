@@ -27,16 +27,16 @@ namespace Kean.IO
 	{
 		ICharacterInDevice backend;
 		public Uri.Locator Resource { get { return this.backend?.Resource; } }
-		public int Row { get; private set; }
-		public int Column { get; private set; }
+		public Text.Position Position { get; private set; }
 		public bool Opened { get { return this.backend?.Opened ?? false; } }
 		public Tasks.Task<bool> Empty { get { return this.backend?.Empty; } }
 		public bool Readable { get { return this.backend.NotNull() && this.backend.Readable; } }
 		public char Last { get; private set; }
+		public event Action<char> OnNext;
 		protected TextReader(ICharacterInDevice backend)
 		{
 			this.backend = backend;
-			this.Row = 1;
+			this.Position = new Text.Position(1, 0);
 		}
 		~TextReader()
 		{
@@ -44,13 +44,7 @@ namespace Kean.IO
 		}
 		public async Tasks.Task<bool> Next()
 		{
-			if (this.Last == '\n')
-			{
-				this.Row++;
-				this.Column = 1;
-			}
-			else
-				this.Column++;
+			this.Position += this.Last;
 			char? next = await this.backend.Read();
 			if (!next.HasValue)
 				this.Last = '\0';
@@ -66,6 +60,8 @@ namespace Kean.IO
 			}*/
 			else
 				this.Last = (char)next;
+			if (next.HasValue)
+				this.OnNext.Call(this.Last);
 			return next.HasValue;
 		}
 		public async Tasks.Task<bool> Close()

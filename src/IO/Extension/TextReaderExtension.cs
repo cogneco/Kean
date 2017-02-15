@@ -1,4 +1,4 @@
-// Copyright (C) 2011  Simon Mika <simon@mika.se>
+// Copyright (C) 2017  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -15,18 +15,16 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Kean.  If not, see <http://www.gnu.org/licenses/>.
 //
-
 using System;
-using Tasks = System.Threading.Tasks;
+using Generic = System.Collections.Generic;
 
-namespace Kean.IO
+namespace Kean.IO.Extension
 {
-	public interface ITextReader :
-		IInDevice
+	public static class TextReaderExtenion
 	{
-		Text.Position Position { get; }
-		char Last { get; }
-		event Action<char> OnNext;
-		Tasks.Task<bool> Next();
+		public static TextMark Mark(this ITextReader me)
+		{
+			return new TextMark(me);
+		}
 	}
 }
