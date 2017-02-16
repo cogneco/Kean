@@ -38,7 +38,7 @@ namespace Kean.IO
 		}
 		public static implicit operator Text.Fragment(TextMark mark)
 		{
-			return mark.IsNull() ? new Text.Fragment() : new Text.Fragment(mark.content, mark.start, mark.end ?? mark.reader.Position, mark.reader.Resource);
+			return mark.IsNull() ? null : new Text.Fragment(mark.content, mark.start, mark.end ?? mark.reader.Position, mark.reader.Resource);
 		}
 	}
 }
