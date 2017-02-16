@@ -21,7 +21,7 @@ using Kean.Extension;
 
 namespace Kean.Text
 {
-	public struct Fragment :
+	public class Fragment :
 		IEquatable<Fragment>
 	{
 		public string Content { get; }
@@ -52,7 +52,7 @@ namespace Kean.Text
 		#region IEquatable<Fragment> Members
 		public bool Equals(Fragment other)
 		{
-			return this.Content == other.Content && this.Start == other.Start && this.End == other.End && this.Resource == other.Resource;
+			return this.Same(other) || other.NotNull() && this.Content == other.Content && this.Start == other.Start && this.End == other.End && this.Resource == other.Resource;
 		}
 		#endregion
 		#region Operators
@@ -66,7 +66,9 @@ namespace Kean.Text
 		}
 		public static Fragment operator +(Fragment left, Fragment right)
 		{
-			return new Fragment(left.Content + right.Content, left.Start < right.Start ? left.Start : right.Start, left.End > right.End ? left.End : right.End, left.Resource);
+			return left.IsNull() ? right :
+				right.IsNull() ? left :
+				new Fragment(left.Content + right.Content, left.Start < right.Start ? left.Start : right.Start, left.End > right.End ? left.End : right.End, left.Resource);
 		}
 		#endregion
 	}
