@@ -54,6 +54,12 @@ namespace Kean.Extension
 			while (me.MoveNext())
 				yield return function(me.Current);
 		}
+		public static Generic.IEnumerator<T> Filter<T>(this Generic.IEnumerator<T> me, Func<T, bool> predicate)
+		{
+			while (me.MoveNext())
+				if (predicate(me.Current))
+					yield return me.Current;
+		}
 		public static int Index<T>(this Generic.IEnumerator<T> me, Func<T, bool> function)
 		{
 			int result = -1;

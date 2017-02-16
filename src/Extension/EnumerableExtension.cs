@@ -58,6 +58,12 @@ namespace Kean.Extension
 			foreach (T element in me)
 				yield return function(element);
 		}
+		public static Generic.IEnumerable<T> Filter<T>(this Generic.IEnumerable<T> me, Func<T, bool> predicate)
+		{
+			foreach (T element in me)
+				if (predicate(element))
+					yield return element;
+		}
 		public static int Index<T>(this Generic.IEnumerable<T> me, Func<T, bool> function)
 		{
 			int result = -1;
