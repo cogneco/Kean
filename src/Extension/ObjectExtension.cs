@@ -56,6 +56,10 @@ namespace Kean.Extension
 		{
 			return (T)Convert.ChangeType(me, typeof(T));
 		}
+		public static bool Is<T>(this object me, Func<T, bool> predicate)
+		{
+			return me is T && predicate((T)me);
+		}
 		public static T As<T>(this object me, T @default)
 		{
 			return me is T ? (T)me : @default;
