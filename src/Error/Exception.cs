@@ -52,5 +52,10 @@ namespace Kean.Error
 			if (this.Level >= Exception.Threshold)
 				throw this;
 		}
+		public T Throw<T>(T value)
+		{
+			this.Throw();
+			return value;
+		}
 	}
 }
