@@ -62,7 +62,7 @@ namespace Kean.Extension
 			me.Then(r => result = r).Wait(timeout);
 			return result;
 		}
-		public static async Tasks.Task<Generic.IEnumerable<T>> WaitAll<T>(this Generic.IEnumerable<Tasks.Task<T>> me) {
+		public static async Tasks.Task<Generic.IEnumerable<T>> WhenAll<T>(this Generic.IEnumerable<Tasks.Task<T>> me) {
 			return await Tasks.Task.WhenAll(me);
 		}
 	}
