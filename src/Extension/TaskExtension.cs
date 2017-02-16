@@ -17,6 +17,7 @@
 //
 
 using System;
+using Generic = System.Collections.Generic;
 using Tasks = System.Threading.Tasks;
 
 namespace Kean.Extension
@@ -51,7 +52,6 @@ namespace Kean.Extension
 				onError.Call(e);
 			}
 		}
-
 		public static T WaitFor<T>(this Tasks.Task<T> me, T @default = default(T)) {
 			T result = @default;
 			me.Then(r => result = r).Wait();
@@ -61,6 +61,9 @@ namespace Kean.Extension
 			T result = @default;
 			me.Then(r => result = r).Wait(timeout);
 			return result;
+		}
+		public static async Tasks.Task<Generic.IEnumerable<T>> WaitAll<T>(this Generic.IEnumerable<Tasks.Task<T>> me) {
+			return await Tasks.Task.WhenAll(me);
 		}
 	}
 }
