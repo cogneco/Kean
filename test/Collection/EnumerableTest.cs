@@ -28,7 +28,7 @@ namespace Kean.Collection
 		static Generic.IEnumerable<Func<string[], Generic.IEnumerable<string>>> Create {
 			get {
 				yield return data => data;
-				yield return data => new Enumerable<string>(() => ((Generic.IEnumerable<string>)data).GetEnumerator());
+				yield return data => Enumerable.Create((Generic.IEnumerable<string>)data);
 				foreach (var item in BlockTest.Create)
 					yield return item;
 

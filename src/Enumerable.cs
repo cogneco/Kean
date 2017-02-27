@@ -25,13 +25,26 @@ namespace Kean
 	public static class Enumerable
 	{
 		public static Generic.IEnumerable<T> Empty<T>() { return System.Linq.Enumerable.Empty<T>(); }
+		public static Generic.IEnumerable<T> Create<T>(Func<Generic.IEnumerator<T>> getEnumerator)
+		{
+			return new Enumerable<T>(getEnumerator);
+		}
+		public static Generic.IEnumerable<T> Create<T>(Generic.IEnumerable<T> enumerator)
+		{
+			return Enumerable.Create(enumerator.GetEnumerator);
+		}
+
+		public static Generic.IEnumerable<T> Create<T>(params T[] items)
+		{
+			return Enumerable.Create((Generic.IEnumerable<T>)items);
+		}
 	}
 	public class Enumerable<T> :
 		Generic.IEnumerable<T>
 	{
 		readonly Func<Generic.IEnumerator<T>> getEnumerator;
 		#region Constructors
-		public Enumerable(Func<Generic.IEnumerator<T>> getEnumerator)
+		internal Enumerable(Func<Generic.IEnumerator<T>> getEnumerator)
 		{
 			this.getEnumerator = getEnumerator;
 		}

@@ -25,6 +25,18 @@ namespace Kean
 	public static class Enumerator
 	{
 		public static Generic.IEnumerator<T> Empty<T>() { return Enumerable.Empty<T>().GetEnumerator(); }
+		public static Generic.IEnumerator<T> Create<T>(Func<T> next, Action reset = null, Action dispose = null)
+		{
+			return next.NotNull() ? new Enumerator<T>(next, reset, dispose) : Enumerator.Empty<T>();
+		}
+		public static Generic.IEnumerator<T> Create<T>(Generic.IEnumerator<T> enumerator)
+		{
+			return enumerator.NotNull() ? Enumerator.Create(enumerator.Next, enumerator.Reset, enumerator.Dispose) : Enumerator.Empty<T>();
+		}
+		public static Generic.IEnumerator<T> Create<T>(params T[] items)
+		{
+			return Enumerator.Create(items as Generic.IEnumerator<T>);
+		}
 	}
 	public class Enumerator<T> :
 		Generic.IEnumerator<T>
@@ -35,10 +47,10 @@ namespace Kean
 		T current;
 		public T Current { get { return this.current; } }
 		object System.Collections.IEnumerator.Current { get { return this.current; } }
-		public Enumerator(Generic.IEnumerator<T> enumerator):
+		internal Enumerator(Generic.IEnumerator<T> enumerator):
 			this(enumerator.Next, enumerator.Reset, enumerator.Dispose)
 		{}
-		public Enumerator(Func<T> next, Action reset = null, Action dispose = null)
+		internal Enumerator(Func<T> next, Action reset = null, Action dispose = null)
 		{
 			this.next = next;
 			this.reset = reset;
