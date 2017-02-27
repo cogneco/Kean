@@ -279,6 +279,17 @@ namespace Kean.Extension
 			return last;
 		}
 		#endregion
+		#region While
+		public static Generic.IEnumerable<T> While<T>(this Generic.IEnumerable<T> me, Func<T, bool> predicate)
+		{
+			foreach (var item in me)
+			{
+				if (!predicate(item))
+					yield break;
+				yield return item;
+			}
+		}
+		#endregion
 		#region Skip
 		public static Generic.IEnumerable<T> Skip<T>(this Generic.IEnumerable<T> me, int count)
 		{

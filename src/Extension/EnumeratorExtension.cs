@@ -159,6 +159,13 @@ namespace Kean.Extension
 			while (me.MoveNext())
 				yield return cast(me.Current);
 		}
+		#region While
+		public static Generic.IEnumerator<T> While<T>(this Generic.IEnumerator<T> me, Func<T, bool> predicate)
+		{
+			while (me.MoveNext() && predicate(me.Current))
+				yield return me.Current;
+		}
+		#endregion
 		#region Skip
 		/// <summary>
 		/// Skip the next <paramref name="count"/> elements in <paramref name="me"/>.
