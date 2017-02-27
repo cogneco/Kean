@@ -72,7 +72,7 @@ namespace Kean.Extension
 					result = await me.FilterNext(predicate);
 				return result;
 		}
-		public static Generic.IEnumerator<Tasks.Task<T>> Filter<T>(this Generic.IEnumerator<Tasks.Task<T>> me, Func<T, bool> predicate) {
+		public static Generic.IEnumerator<Tasks.Task<T>> FilterTasks<T>(this Generic.IEnumerator<Tasks.Task<T>> me, Func<T, bool> predicate) {
 			return Enumerator.Create(() => me.FilterNext(predicate), me.Reset, me.Dispose);
 		}
 	}
