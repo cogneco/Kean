@@ -65,5 +65,15 @@ namespace Kean.Extension
 		public static async Tasks.Task<Generic.IEnumerable<T>> WhenAll<T>(this Generic.IEnumerable<Tasks.Task<T>> me) {
 			return await Tasks.Task.WhenAll(me);
 		}
+		static async Tasks.Task<T> FilterNext<T>(this Generic.IEnumerator<Tasks.Task<T>> me, Func<T, bool> predicate)
+		{
+				var result = await me.Next();
+				if (!predicate(result))
+					result = await me.FilterNext(predicate);
+				return result;
+		}
+		public static Generic.IEnumerator<Tasks.Task<T>> Filter<T>(this Generic.IEnumerator<Tasks.Task<T>> me, Func<T, bool> predicate) {
+			return Enumerator.Create(() => me.FilterNext(predicate), me.Reset, me.Dispose);
+		}
 	}
 }
