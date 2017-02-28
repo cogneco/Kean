@@ -85,12 +85,13 @@ namespace Kean.Collection
 			var actual = create(expected);
 			Assert.False(actual.SameOrEquals(expected.Append("Missing")));
 			Assert.False(actual.SameOrEquals(expected.Prepend("Missing")));
-			if (expected.Length > 3)
-			{
-				var changed = expected.Copy();
-				changed[2] = "Changed";
-				Assert.False(actual.SameOrEquals(changed));
-			}
+			foreach (var index in new[] { 2, 0, expected.Length - 1 })
+				if (expected.Length > index + 1)
+				{
+					var changed = expected.Copy();
+					changed[index] = "Changed";
+					Assert.False(actual.SameOrEquals(changed));
+				}
 		}
 	}
 }
