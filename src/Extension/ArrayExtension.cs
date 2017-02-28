@@ -223,9 +223,7 @@ namespace Kean.Extension
 		}
 		public static T[] Copy<T>(this T[] me)
 		{
-			T[] result = new T[me.Length];
-			System.Buffer.BlockCopy(me, 0, result, 0, me.Length);
-			return result;
+			return (T[])me.Clone();
 		}
 		public static T[] Sort<T>(this T[] me, Comparison<T> comparison)
 		{

@@ -38,6 +38,10 @@ namespace Kean.Collection
 			get {
 				yield return new string[] { };
 				yield return new string[] { "42" };
+				var @short = new string[10];
+				for (var i = 0; i < @short.Length; i++)
+					@short[i] = i.ToString();
+				yield return @short;
 				var @long = new string[10000];
 				for (var i = 0; i < @long.Length; i++)
 					@long[i] = i.ToString();
@@ -52,6 +56,41 @@ namespace Kean.Collection
 		{
 			var actual = create(expected);
 			Assert.Equal(expected, actual);
+		}
+		[Theory, MemberData("All")]
+		public void NotEqual(Func<string[], Generic.IEnumerable<string>> create, string[] expected)
+		{
+			var actual = create(expected);
+			Assert.NotEqual(expected.Append("Missing"), actual);
+			Assert.NotEqual(expected.Prepend("Missing"), actual);
+			if (expected.Length > 3)
+			{
+				var changed = expected.Copy();
+				changed[2] = "Changed";
+				Assert.NotEqual(changed, actual);
+			}
+		}
+		[Theory, MemberData("All")]
+		public void SameOrEquals(Func<string[], Generic.IEnumerable<string>> create, string[] expected)
+		{
+			var actual = create(expected);
+			// Same
+			Assert.True(actual.SameOrEquals(actual));
+			// Equals
+			Assert.True(actual.SameOrEquals(expected));
+		}
+		[Theory, MemberData("All")]
+		public void NotSameOrEquals(Func<string[], Generic.IEnumerable<string>> create, string[] expected)
+		{
+			var actual = create(expected);
+			Assert.False(actual.SameOrEquals(expected.Append("Missing")));
+			Assert.False(actual.SameOrEquals(expected.Prepend("Missing")));
+			if (expected.Length > 3)
+			{
+				var changed = expected.Copy();
+				changed[2] = "Changed";
+				Assert.False(actual.SameOrEquals(changed));
+			}
 		}
 	}
 }
