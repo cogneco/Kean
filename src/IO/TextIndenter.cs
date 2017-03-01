@@ -69,13 +69,13 @@ namespace Kean.IO
 		{
 			return (this.currentIndention = this.currentIndention.Substring(this.Indention.Length)).NotNull();
 		}
-		bool WriteIndent()
+		async Tasks.Task<bool> WriteIndent()
 		{
-			return !this.Format || this.lineIndented || (this.lineIndented = this.backend.Write(this.currentIndention));
+			return !this.Format || this.lineIndented || (this.lineIndented = await this.backend.Write(this.currentIndention));
 		}
-		public bool Write(Generic.IEnumerator<char> buffer)
+		public async Tasks.Task<bool> Write(Generic.IEnumerator<char> buffer)
 		{
-			return this.WriteIndent() && this.backend.Write(buffer);
+			return await this.WriteIndent() && await this.backend.Write(buffer);
 		}
 		public async Tasks.Task<bool> Flush()
 		{

@@ -18,58 +18,59 @@
 
 using System;
 using Generic = System.Collections.Generic;
+using Tasks = System.Threading.Tasks;
 
 namespace Kean.IO.Extension
 {
 	public static class TextWriterExtenion
 	{
-		public static bool Write(this ITextWriter me, Generic.IEnumerable<char> buffer)
+		public static Tasks.Task<bool> Write(this ITextWriter me, Generic.IEnumerable<char> buffer)
 		{
 			return me.Write(buffer.GetEnumerator());
 		}
-		public static bool Write(this ITextWriter me, params char[] buffer)
+		public static Tasks.Task<bool> Write(this ITextWriter me, params char[] buffer)
 		{
 			return me.Write((Generic.IEnumerable<char>)buffer);
 		}
-		public static bool Write(this ITextWriter me, string value)
+		public static Tasks.Task<bool> Write(this ITextWriter me, string value)
 		{
 			return me.Write((Generic.IEnumerable<char>)value);
 		}
-		public static bool Write<T>(this ITextWriter me, T value) where T : IConvertible
+		public static Tasks.Task<bool> Write<T>(this ITextWriter me, T value) where T : IConvertible
 		{
 			return me.Write(value.ToString((IFormatProvider)System.Globalization.CultureInfo.InvariantCulture.GetFormat(typeof(T))));
 		}
-		public static bool Write(this ITextWriter me, string format, params object[] arguments)
+		public static Tasks.Task<bool> Write(this ITextWriter me, string format, params object[] arguments)
 		{
 			return me.Write(string.Format(format, arguments));
 		}
-		public static bool WriteLine(this ITextWriter me)
+		public static Tasks.Task<bool> WriteLine(this ITextWriter me)
 		{
 			return me.Write('\n'); // The newline characters are converted by bool Write(this ITextWriter me, Generic.IEnumerable<char> buffer)
 		}
-		public static bool WriteLine(this ITextWriter me, params char[] buffer)
+		public static Tasks.Task<bool> WriteLine(this ITextWriter me, params char[] buffer)
 		{
 			return me.WriteLine((Generic.IEnumerable<char>)buffer);
 		}
-		public static bool WriteLine(this ITextWriter me, string value)
+		public static Tasks.Task<bool> WriteLine(this ITextWriter me, string value)
 		{
 			return me.WriteLine((Generic.IEnumerable<char>)value);
 		}
-		public static bool WriteLine<T>(this ITextWriter me, T value) where T : IConvertible
+		public static Tasks.Task<bool> WriteLine<T>(this ITextWriter me, T value) where T : IConvertible
 		{
 			return me.WriteLine(value.ToString((IFormatProvider)System.Globalization.CultureInfo.InvariantCulture.GetFormat(typeof(T))));
 		}
-		public static bool WriteLine(this ITextWriter me, string format, params object[] arguments)
+		public static Tasks.Task<bool> WriteLine(this ITextWriter me, string format, params object[] arguments)
 		{
 			return me.WriteLine(string.Format(format, arguments));
 		}
-		public static bool WriteLine(this ITextWriter me, Generic.IEnumerable<char> value)
+		public static Tasks.Task<bool> WriteLine(this ITextWriter me, Generic.IEnumerable<char> value)
 		{
 			return me.WriteLine(value.GetEnumerator());
 		}
-		public static bool WriteLine(this ITextWriter me, Generic.IEnumerator<char> value)
+		public static async Tasks.Task<bool> WriteLine(this ITextWriter me, Generic.IEnumerator<char> value)
 		{
-			return me.Write(value) && me.WriteLine();
+			return await me.Write(value) && await me.WriteLine();
 		}
 	}
 }

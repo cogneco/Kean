@@ -1,4 +1,4 @@
-// Copyright (C) 2011	Simon Mika <simon@mika.se>
+// Copyright (C) 2011, 2017	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -58,12 +58,10 @@ namespace Kean.IO
 			return result;
 		}
 		#region implemented abstract and virtual members of Kean.IO.Abstract.CharacterWriter
-		public bool Write(Generic.IEnumerator<char> buffer)
+		public async Tasks.Task<bool> Write(Generic.IEnumerator<char> buffer)
 		{
 			this.buffer = this.buffer.Append(new NewLineConverter(buffer, this.NewLine));
-			if (this.AutoFlush)
-				this.Flush().Start(); // Perform writing and flushing in the background. TODO: Is start needed?
-			return this.Writable;
+			return (!this.AutoFlush || await this.Flush()) && this.Writable;
 		}
 		public async Tasks.Task<bool> Flush()
 		{

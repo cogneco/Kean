@@ -1,4 +1,4 @@
-// Copyright (C) 2011  Simon Mika <simon@mika.se>
+// Copyright (C) 2011, 2017  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -17,6 +17,7 @@
 //
 
 using Generic = System.Collections.Generic;
+using Tasks = System.Threading.Tasks;
 
 namespace Kean.IO
 {
@@ -24,6 +25,6 @@ namespace Kean.IO
 		IOutDevice
 	{
 		char[] NewLine { get; set; }
-		bool Write(Generic.IEnumerator<char> data);
+		Tasks.Task<bool> Write(Generic.IEnumerator<char> data);
 	}
 }
