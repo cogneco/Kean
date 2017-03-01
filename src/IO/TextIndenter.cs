@@ -94,6 +94,23 @@ namespace Kean.IO
 		{
 			return writer.NotNull() ? new TextIndenter(writer) : null;
 		}
+		public static ITextIndenter Open(Action<char> next)
+		{
+			return TextIndenter.Open(TextWriter.Open(next));
+		}
+		public static ITextIndenter Open(Action<string> done)
+		{
+			return TextIndenter.Open(TextWriter.Open(done));
+		}
+		public static Tuple<ITextIndenter, Tasks.Task<string>> Open()
+		{
+			var r = TextWriter.Open();
+			return Tuple.Create(TextIndenter.Open(r.Item1), r.Item2);
+		}
+		public static ITextIndenter Open(out Tasks.Task<string> output)
+		{
+			return TextIndenter.Open(TextWriter.Open(out output));
+		}
 		#endregion
 	}
 }

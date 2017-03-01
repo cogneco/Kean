@@ -108,7 +108,7 @@ namespace Kean.IO
 			this.Close().Wait();
 		}
 		#endregion
-		#region Static Open, Wrap, Create & FromString
+		#region Static Open, Wrap, Create & From
 		public static ICharacterDevice Open(System.IO.Stream stream)
 		{
 			return CharacterDevice.Open(ByteDevice.Open(stream));
@@ -137,15 +137,31 @@ namespace Kean.IO
 		{
 			return CharacterDevice.Open(ByteDevice.Create(resource));
 		}
-		public static ICharacterInDevice FromString(string content)
+		public static ICharacterOutDevice Open(Action<char> next)
+		{
+			return TextCharacterOutDevice.Open(next);
+		}
+		public static ICharacterOutDevice Open(Action<string> done)
+		{
+			return TextCharacterOutDevice.Open(done);
+		}
+		public static Tuple<ICharacterOutDevice, Tasks.Task<string>> Open()
+		{
+			return TextCharacterOutDevice.Open();
+		}
+		public static ICharacterOutDevice Open(out Tasks.Task<string> output)
+		{
+			return TextCharacterOutDevice.Open(out output);
+		}
+		public static ICharacterInDevice From(string content)
 		{
 			return TextCharacterInDevice.Open(content);
 		}
-		public static ICharacterInDevice FromString(Generic.IEnumerable<char> content)
+		public static ICharacterInDevice From(Generic.IEnumerable<char> content)
 		{
 			return TextCharacterInDevice.Open(content);
 		}
-		public static ICharacterInDevice FromString(Generic.IEnumerator<char> content)
+		public static ICharacterInDevice From(Generic.IEnumerator<char> content)
 		{
 			return TextCharacterInDevice.Open(content);
 		}

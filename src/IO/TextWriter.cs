@@ -143,6 +143,23 @@ namespace Kean.IO
 		{
 			return backend.NotNull() ? new TextWriter(backend) : null;
 		}
+		public static ITextWriter Open(Action<char> next)
+		{
+			return TextWriter.Open(CharacterDevice.Open(next));
+		}
+		public static ITextWriter Open(Action<string> done)
+		{
+			return TextWriter.Open(CharacterDevice.Open(done));
+		}
+		public static Tuple<ITextWriter, Tasks.Task<string>> Open()
+		{
+			var r = CharacterDevice.Open();
+			return Tuple.Create(TextWriter.Open(r.Item1), r.Item2);
+		}
+		public static ITextWriter Open(out Tasks.Task<string> output)
+		{
+			return TextWriter.Open(CharacterDevice.Open(out output));
+		}
 		#endregion
 	}
 }
