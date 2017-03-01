@@ -23,9 +23,9 @@ namespace Kean.Extension
 {
 	public static class EnumeratorExtension
 	{
-				public static T Next<T>(this Generic.IEnumerator<T> me)
+		public static T Next<T>(this Generic.IEnumerator<T> me, T @default = default(T))
 		{
-			return me.NotNull() && me.MoveNext() ? me.Current : default(T);
+			return me.NotNull() && me.MoveNext() ? me.Current : @default;
 		}
 		public static T First<T>(this Generic.IEnumerator<T> me)
 		{

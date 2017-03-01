@@ -31,7 +31,7 @@ namespace Kean
 		}
 		public static Generic.IEnumerator<T> Create<T>(Generic.IEnumerator<T> enumerator)
 		{
-			return enumerator.NotNull() ? Enumerator.Create(enumerator.Next, enumerator.Reset, enumerator.Dispose) : Enumerator.Empty<T>();
+			return enumerator.NotNull() ? Enumerator.Create(() => enumerator.Next(), enumerator.Reset, enumerator.Dispose) : Enumerator.Empty<T>();
 		}
 		public static Generic.IEnumerator<T> Create<T>(params T[] items)
 		{
@@ -48,7 +48,7 @@ namespace Kean
 		public T Current { get { return this.current; } }
 		object System.Collections.IEnumerator.Current { get { return this.current; } }
 		internal Enumerator(Generic.IEnumerator<T> enumerator):
-			this(enumerator.Next, enumerator.Reset, enumerator.Dispose)
+			this(() => enumerator.Next(), enumerator.Reset, enumerator.Dispose)
 		{}
 		internal Enumerator(Func<T> next, Action reset = null, Action dispose = null)
 		{
