@@ -19,6 +19,7 @@
 using System;
 using Generic = System.Collections.Generic;
 using Tasks = System.Threading.Tasks;
+using Kean.Extension;
 
 namespace Kean.IO.Extension
 {
@@ -71,6 +72,32 @@ namespace Kean.IO.Extension
 		public static async Tasks.Task<bool> WriteLine(this ITextWriter me, Generic.IEnumerator<char> value)
 		{
 			return await me.Write(value) && await me.WriteLine();
+		}
+		public static async Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerator<Func<ITextWriter, Tasks.Task<bool>>> items, Func<ITextWriter, Tasks.Task<bool>> separator = null)
+		{
+			bool result = items.MoveNext() && await items.Current(me);
+			while (result && items.MoveNext())
+			{
+				if (separator.NotNull())
+					result &= await separator(me);
+				result &= await items.Current(me);
+			}
+			return result;
+		}
+		public static Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerator<Func<ITextWriter, Tasks.Task<bool>>> items, string separator = null)
+		{
+			return me.Join(items, separator.NotNull() ? (Func<ITextWriter, Tasks.Task<bool>>)(writer => writer.Write(separator)) : null);
+		}
+		public static async Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerator<string> items, string separator = null)
+		{
+			bool result = items.MoveNext() && await me.Write(items.Current);
+			while (result && items.MoveNext())
+			{
+				if (separator.NotNull())
+					result &= await me.Write(separator);
+				result &= await me.Write(items.Current);
+			}
+			return result;
 		}
 	}
 }
