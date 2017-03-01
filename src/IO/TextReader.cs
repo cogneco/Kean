@@ -17,6 +17,7 @@
 //
 
 using System;
+using Generic = System.Collections.Generic;
 using Tasks = System.Threading.Tasks;
 using Kean.Extension;
 
@@ -86,9 +87,17 @@ namespace Kean.IO
 		{
 			return TextReader.Open(CharacterDevice.Open(resource));
 		}
-		public static ITextReader FromString(string content)
+		public static ITextReader From(string content)
 		{
-			return TextReader.Open(new StringCharacterInDevice(content));
+			return TextReader.Open(TextCharacterInDevice.Open(content));
+		}
+		public static ITextReader From(Generic.IEnumerable<char> content)
+		{
+			return TextReader.Open(TextCharacterInDevice.Open(content));
+		}
+		public static ITextReader From(Generic.IEnumerator<char> content)
+		{
+			return TextReader.Open(TextCharacterInDevice.Open(content));
 		}
 		#endregion
 	}

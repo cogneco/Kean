@@ -41,7 +41,7 @@ namespace Kean.IO
 		}
 		public char[] NewLine { get; set; } = new char[] { '\n' };
 		public char[] Indention { get; set; } = new char[] { '\t' };
-		public TextIndenter(ITextWriter backend)
+		protected TextIndenter(ITextWriter backend)
 		{
 			this.backend = backend;
 			this.Format = true;
@@ -81,5 +81,19 @@ namespace Kean.IO
 		{
 			return this.backend.NotNull() && await this.backend.Flush();
 		}
+		#region Static Open, Create & ToString
+		public static ITextIndenter Open(Uri.Locator resource)
+		{
+			return TextIndenter.Open(TextWriter.Open(resource));
+		}
+		public static ITextIndenter Create(Uri.Locator resource)
+		{
+			return TextIndenter.Open(TextWriter.Create(resource));
+		}
+		public static ITextIndenter Open(ITextWriter writer)
+		{
+			return writer.NotNull() ? new TextIndenter(writer) : null;
+		}
+		#endregion
 	}
 }

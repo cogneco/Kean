@@ -18,40 +18,40 @@
 
 using System;
 using Tasks = System.Threading.Tasks;
+using Generic = System.Collections.Generic;
 using Kean.Extension;
-using Collection = Kean.Collection;
-using Kean.Collection.Extension;
-using Uri = Kean.Uri;
 
 namespace Kean.IO
 {
-	public class StringCharacterInDevice :
+	public class TextCharacterInDevice :
 		ICharacterInDevice
 	{
-		int next = 0;
-		string backend;
-		internal StringCharacterInDevice(string value)
+		Generic.IEnumerator<char?> backend;
+		private TextCharacterInDevice(Generic.IEnumerator<char> value)
 		{
-			this.backend = value;
+			this.backend = value.Map(c => (char?)c);
+			this.backend.MoveNext();
 		}
 		#region ICharacterInDevice Members
 		public Tasks.Task<char?> Peek()
 		{
-			return Tasks.Task.FromResult(this.next < this.backend.Length ? (char?)this.backend[this.next] : null);
+			return Tasks.Task.FromResult(this.backend.Current);
 		}
 		public Tasks.Task<char?> Read()
 		{
-			return Tasks.Task.FromResult(this.next < this.backend.Length ? (char?)this.backend[this.next++] : null);
+			var result = this.Peek();
+			this.backend.MoveNext();
+			return result;
 		}
 		#endregion
 		#region IInDevice Members
 		public Tasks.Task<bool> Empty { get { return Tasks.Task.FromResult(this.Readable); } }
-		public bool Readable { get { return !(this.next >= this.backend.Length); } }
+		public bool Readable { get { return this.backend.Current.NotNull(); } }
 		#endregion
 		#region IDevice Members
 		public Uri.Locator Resource
 		{
-			get { return "string://"; }
+			get { return "text://"; }
 		}
 		public bool Opened
 		{
@@ -71,13 +71,19 @@ namespace Kean.IO
 				this.backend = null;
 		}
 		#endregion
-		public override string ToString()
+		#region Static Open
+		internal static ICharacterInDevice Open(string content)
 		{
-			return this.backend.ToString();
+			return TextCharacterInDevice.Open((Generic.IEnumerable<char>)content);
 		}
-		public static explicit operator string(StringCharacterInDevice device)
+		internal static ICharacterInDevice Open(Generic.IEnumerable<char> content)
 		{
-			return device.ToString();
+			return TextCharacterInDevice.Open(content.GetEnumerator());
 		}
+		internal static ICharacterInDevice Open(Generic.IEnumerator<char> content)
+		{
+			return new TextCharacterInDevice(content);
+		}
+		#endregion
 	}
 }

@@ -139,7 +139,15 @@ namespace Kean.IO
 		}
 		public static ICharacterInDevice FromString(string content)
 		{
-			return new StringCharacterInDevice(content);
+			return TextCharacterInDevice.Open(content);
+		}
+		public static ICharacterInDevice FromString(Generic.IEnumerable<char> content)
+		{
+			return TextCharacterInDevice.Open(content);
+		}
+		public static ICharacterInDevice FromString(Generic.IEnumerator<char> content)
+		{
+			return TextCharacterInDevice.Open(content);
 		}
 		#endregion
 		class PeekBuffer
