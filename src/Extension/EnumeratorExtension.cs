@@ -237,6 +237,13 @@ namespace Kean.Extension
 			}
 		}
 		#endregion
+		public static int Count<T>(this Generic.IEnumerator<T> me)
+		{
+			int result = 0;
+			while (me.MoveNext())
+				result++;
+			return result;
+		}
 		public static string Join(this Generic.IEnumerator<string> me, string separator)
 		{
 			System.Text.StringBuilder result = new System.Text.StringBuilder();

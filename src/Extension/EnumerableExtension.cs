@@ -345,6 +345,10 @@ namespace Kean.Extension
 			}
 		}
 		#endregion
+		public static int Count<T>(this Generic.IEnumerable<T> me)
+		{
+			return me.NotNull() ? me.GetEnumerator().Count() : 0;
+		}
 		public static string Join(this Generic.IEnumerable<string> me)
 		{
 			System.Text.StringBuilder result = new System.Text.StringBuilder();
