@@ -84,9 +84,17 @@ namespace Kean.IO.Extension
 			}
 			return result;
 		}
+		public static Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerable<Func<ITextWriter, Tasks.Task<bool>>> items, Func<ITextWriter, Tasks.Task<bool>> separator = null)
+		{
+			return me.Join(items?.GetEnumerator(), separator);
+		}
 		public static Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerator<Func<ITextWriter, Tasks.Task<bool>>> items, string separator = null)
 		{
 			return me.Join(items, separator.NotNull() ? (Func<ITextWriter, Tasks.Task<bool>>)(writer => writer.Write(separator)) : null);
+		}
+		public static Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerable<Func<ITextWriter, Tasks.Task<bool>>> items, string separator = null)
+		{
+			return me.Join(items?.GetEnumerator(), separator);
 		}
 		public static async Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerator<string> items, string separator = null)
 		{
@@ -98,6 +106,10 @@ namespace Kean.IO.Extension
 				result &= await me.Write(items.Current);
 			}
 			return result;
+		}
+		public static Tasks.Task<bool> Join(this ITextWriter me, Generic.IEnumerable<string> items, string separator = null)
+		{
+			return me.Join(items?.GetEnumerator(), separator);
 		}
 	}
 }
