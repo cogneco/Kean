@@ -26,7 +26,7 @@ namespace Kean.Text.BuilderTest
 		public static Generic.IEnumerable<object[]> Data {
 			get {
 				yield return new object[] { 0, new Builder() };
-				yield return new object[] { 0, new Builder(null) };
+				yield return new object[] { 0, new Builder((string)null) };
 				yield return new object[] { 0, new Builder("") };
 				yield return new object[] { 1, new Builder("\0") };
 				yield return new object[] { 6, new Builder("string") };

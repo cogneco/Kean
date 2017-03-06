@@ -53,5 +53,21 @@ namespace Kean.Text.BuilderTest
 				@base += a;
 			Assert.Equal(expected, @base);
 		}
+		[Theory, MemberData("Data")]
+		public void EnumeratorMethod(string expected, Builder @base, Generic.IEnumerable<char>[] append)
+		{
+			if (@base.IsNull())
+				@base = new Builder();
+			foreach (var a in append)
+				@base = @base.Append(a?.GetEnumerator());
+			Assert.Equal(expected, @base);
+		}
+		[Theory, MemberData("Data")]
+		public void EnumeratorOperator(string expected, Builder @base, Generic.IEnumerable<char>[] append)
+		{
+			foreach (var a in append)
+				@base += a?.GetEnumerator();
+			Assert.Equal(expected, @base);
+		}
 	}
 }

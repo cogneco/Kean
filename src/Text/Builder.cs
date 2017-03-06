@@ -44,6 +44,11 @@ namespace Kean.Text
 		{
 			this.Append(value);
 		}
+		public Builder(Generic.IEnumerator<char> value) :
+			this()
+		{
+			this.Append(value);
+		}
 		protected Builder(Builder original) :
 			this()
 		{
@@ -80,6 +85,11 @@ namespace Kean.Text
 			this.data.Add(value);
 			return this;
 		}
+		public Builder Append(Generic.IEnumerator<char> value)
+		{
+			this.data.Add(value.ToArray());
+			return this;
+		}
 		#endregion
 		#region Prepend
 		public Builder Prepend(Builder value)
@@ -102,6 +112,11 @@ namespace Kean.Text
 		public Builder Prepend(Generic.IEnumerable<char> value)
 		{
 			this.data.Insert(0, value);
+			return this;
+		}
+		public Builder Prepend(Generic.IEnumerator<char> value)
+		{
+			this.data.Add(value.ToArray());
 			return this;
 		}
 		#endregion
@@ -185,6 +200,16 @@ namespace Kean.Text
 			return left.NotNull() ? left.Copy().Append(right) : new Builder(right);
 		}
 		public static Builder operator +(Generic.IEnumerable<char> left, Builder right)
+		{
+			return right.NotNull() ? right.Copy().Prepend(left) : new Builder(left);
+		}
+		#endregion
+		#region IEnumerator<char>
+		public static Builder operator +(Builder left, Generic.IEnumerator<char> right)
+		{
+			return left.NotNull() ? left.Copy().Append(right) : new Builder(right);
+		}
+		public static Builder operator +(Generic.IEnumerator<char> left, Builder right)
 		{
 			return right.NotNull() ? right.Copy().Prepend(left) : new Builder(left);
 		}
