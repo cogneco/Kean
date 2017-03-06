@@ -1,4 +1,4 @@
-// Copyright (C) 2012  Simon Mika <simon@mika.se>
+// Copyright (C) 2012	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,11 +9,11 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
 using System;
@@ -30,13 +30,16 @@ namespace Kean.Text
 	IEquatable<char[]>,
 	IEquatable<Builder>
 	{
-		Collection.IList<string> data;
-		public int Length { get { return this.data.Fold((item, result) => result + item.Length, 0); } }
+		Collection.IList<Generic.IEnumerable<char>> data;
+		public int Length { get { return this.data.Fold((item, result) => result + item.Count(), 0); } }
 		public Builder()
 		{
-			this.data = new Collection.List<string>();
+			this.data = new Collection.List<Generic.IEnumerable<char>>();
 		}
 		public Builder(string value) :
+			this((Generic.IEnumerable<char>)value)
+		{ }
+		public Builder(Generic.IEnumerable<char> value) :
 			this()
 		{
 			this.Append(value);
@@ -58,7 +61,7 @@ namespace Kean.Text
 		}
 		public Builder Append(char value)
 		{
-			return this.Append(new string(value, 1));
+			return this.Append(Enumerable.Create(value));
 		}
 		public Builder Append(params char[] value)
 		{
@@ -69,6 +72,10 @@ namespace Kean.Text
 			return this.Append(string.Format(format, arguments));
 		}
 		public Builder Append(string value)
+		{
+			return this.Append((Generic.IEnumerable<char>)value);
+		}
+		public Builder Append(Generic.IEnumerable<char> value)
 		{
 			this.data.Add(value);
 			return this;
@@ -82,13 +89,17 @@ namespace Kean.Text
 		}
 		public Builder Prepend(char value)
 		{
-			return this.Prepend(new string(value, 1));
+			return this.Prepend(Enumerable.Create(value));
 		}
 		public Builder Prepend(string format, params object[] arguments)
 		{
 			return this.Prepend(string.Format(format, arguments));
 		}
 		public Builder Prepend(string value)
+		{
+			return this.Prepend((Generic.IEnumerable<char>)value);
+		}
+		public Builder Prepend(Generic.IEnumerable<char> value)
 		{
 			this.data.Insert(0, value);
 			return this;
@@ -101,8 +112,8 @@ namespace Kean.Text
 			string result;
 			if (builder.NotNull())
 			{
-				result = builder.data.Fold((item, accumulation) => accumulation + item, "");
-				builder.data = new Collection.List<string>();
+				result = builder.Join();
+				builder.data = new Collection.List<Generic.IEnumerable<char>>();
 				builder.Append(result);
 			}
 			else
@@ -168,6 +179,16 @@ namespace Kean.Text
 			return right.NotNull() ? right.Copy().Prepend(left) : new Builder(left);
 		}
 		#endregion
+		#region IEnumerable<char>
+		public static Builder operator +(Builder left, Generic.IEnumerable<char> right)
+		{
+			return left.NotNull() ? left.Copy().Append(right) : new Builder(right);
+		}
+		public static Builder operator +(Generic.IEnumerable<char> left, Builder right)
+		{
+			return right.NotNull() ? right.Copy().Prepend(left) : new Builder(left);
+		}
+		#endregion
 		#endregion
 		#region Object Overrides
 		public override int GetHashCode()
@@ -186,17 +207,7 @@ namespace Kean.Text
 		#region IEquatable implementation
 		public bool Equals(Generic.IEnumerable<char> other)
 		{
-			bool result = other.NotNull();
-			if (result)
-			{
-				Generic.IEnumerator<char> thisEnumerator = this.GetEnumerator();
-				Generic.IEnumerator<char> otherEnumerator = other.GetEnumerator();
-				while (thisEnumerator.Next() == otherEnumerator.Next())
-				{
-				}
-				result = !thisEnumerator.MoveNext() && !otherEnumerator.MoveNext();
-			}
-			return result;
+			return ((Generic.IEnumerable<char>)this).SameOrEquals(other);
 		}
 		public bool Equals(Builder other)
 		{
@@ -215,8 +226,9 @@ namespace Kean.Text
 		public Generic.IEnumerator<char> GetEnumerator()
 		{
 			foreach (var part in this.data)
-				foreach (var c in part)
-					yield return c;
+				if (part.NotNull())
+					foreach (var c in part)
+						yield return c;
 		}
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
