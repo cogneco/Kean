@@ -19,9 +19,9 @@
 using Xunit;
 using Generic = System.Collections.Generic;
 
-namespace Kean.Text
+namespace Kean.Text.BuilderTest
 {
-	public class BuilderTest
+	public class Equal
 	{
 		public static Generic.IEnumerable<object[]> Data {
 			get {
@@ -30,29 +30,9 @@ namespace Kean.Text
 			}
 		}
 		[Theory, MemberData("Data")]
-		public void Count(string expected, Builder actual)
-		{
-			Assert.Equal(expected.Length, actual.Length);
-		}
-		[Theory, MemberData("Data")]
-		public void Enumerate(string expected, Builder actual)
-		{
-			Assert.Equal(Enumerable.Create((Generic.IEnumerable<char>)expected), Enumerable.Create((Generic.IEnumerable<char>)actual));
-		}
-		[Theory, MemberData("Data")]
-		public void Equal(string expected, Builder actual)
+		public void IsEqual(string expected, Builder actual)
 		{
 			Assert.Equal(new Builder(expected), actual);
-		}
-		[Theory, MemberData("Data")]
-		public void ToStringCast(string expected, Builder actual)
-		{
-			Assert.Equal(expected, (string)actual);
-		}
-		[Theory, MemberData("Data")]
-		public void ToStringMethod(string expected, Builder actual)
-		{
-			Assert.Equal(expected, actual.ToString());
 		}
 	}
 }
