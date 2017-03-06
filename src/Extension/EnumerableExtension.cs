@@ -1,4 +1,4 @@
-// Copyright (C) 2011  Simon Mika <simon@mika.se>
+// Copyright (C) 2011	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,11 +9,11 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
 using System;
@@ -351,11 +351,15 @@ namespace Kean.Extension
 		}
 		public static string Join(this Generic.IEnumerable<string> me)
 		{
-			System.Text.StringBuilder result = new System.Text.StringBuilder();
-			Generic.IEnumerator<string> enumerator = me.GetEnumerator();
-			while (enumerator.MoveNext())
-				result.Append(enumerator.Current);
-			return result.ToString();
+			System.Text.StringBuilder result = null;
+			if (me.NotNull())
+			{
+				result = new System.Text.StringBuilder();
+				Generic.IEnumerator<string> enumerator = me.GetEnumerator();
+				while (enumerator.MoveNext())
+					result.Append(enumerator.Current);
+			}
+			return result?.ToString();
 		}
 		public static string Join(this Generic.IEnumerable<string> me, string separator)
 		{
