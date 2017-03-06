@@ -239,13 +239,13 @@ namespace Kean.Extension
 		{
 			return (me as IAsArray<T>)?.AsArray() ?? me.ToArray();
 		}
-		static T[] ToArrayHelper<T>(this Generic.IEnumerator<T> me, int count)
+		static T[] ToArray<T>(this Generic.IEnumerator<T> me, int count)
 		{
 			T[] result;
 			if (me.MoveNext())
 			{
 				T element = me.Current;
-				result = me.ToArrayHelper(count + 1);
+				result = me.ToArray(count + 1);
 				result[count] = element;
 			}
 			else
@@ -259,7 +259,7 @@ namespace Kean.Extension
 		/// <returns>A new array containing the data from <paramref>me</paramref>.</returns>
 		public static T[] ToArray<T>(this Generic.IEnumerable<T> me)
 		{
-			return me.GetEnumerator().ToArrayHelper(0);
+			return me.NotNull() ? me.GetEnumerator().ToArray(0) : null;
 		}
 		public static Generic.IEnumerable<S> Cast<T, S>(this Generic.IEnumerable<T> me, Func<T, S> cast)
 		{

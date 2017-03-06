@@ -1,4 +1,4 @@
-// Copyright (C) 2012  Simon Mika <simon@mika.se>
+// Copyright (C) 2012	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,11 +9,11 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
 using System;
@@ -266,12 +266,12 @@ namespace Kean.Extension
 				result[count] = head;
 			}
 			else
-				result = new T[count + 1];
+				result = new T[count];
 			return result;
 		}
 		public static T[] ToArray<T>(this Generic.IEnumerator<T> me)
 		{
-			return me.ToArray(0);
+			return me.NotNull() ? me.ToArray(0) : null;
 		}
 		public static Generic.IEnumerator<TResult> Zip<TLeft, TRight, TResult>(this Generic.IEnumerator<TLeft> me, Generic.IEnumerator<TRight> other, Func<TLeft, TRight, TResult> combine)
 		{
