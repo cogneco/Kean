@@ -23,22 +23,25 @@ using Kean.Extension;
 
 namespace Kean.IO
 {
-	public class TextCharacterOutDevice :
+	public class CharacterOutDevice :
 		ICharacterOutDevice
 	{
-		Action<Generic.IEnumerator<char>> next;
+		Func<Generic.IEnumerator<char>, Tasks.Task<bool>> write;
 		event Action OnClose;
-		TextCharacterOutDevice(Action<Generic.IEnumerator<char>> next)
+		CharacterOutDevice(Action<Generic.IEnumerator<char>> write) :
+			this(buffer => { write.Call(buffer); return Tasks.Task.FromResult(write.NotNull()); })
+		{ }
+		CharacterOutDevice(Func<Generic.IEnumerator<char>, Tasks.Task<bool>> write)
 		{
-			this.next = next;
+			this.write = write;
+		}
+		~CharacterOutDevice() {
+			this.Close().Wait();
 		}
 		#region ICharacterOutDevice Members
-		public Tasks.Task<bool> Write(Generic.IEnumerator<char> buffer)
+		public async Tasks.Task<bool> Write(Generic.IEnumerator<char> buffer)
 		{
-			var result = this.Opened;
-			if (result)
-				this.next(buffer);
-			return Tasks.Task.FromResult(result);
+			return this.Opened && await this.write(buffer);
 		}
 		#endregion
 		#region IOutDevice Members
@@ -60,7 +63,7 @@ namespace Kean.IO
 		}
 		public bool Opened
 		{
-			get { return this.next.NotNull(); }
+			get { return this.write.NotNull(); }
 		}
 		public Tasks.Task<bool> Close()
 		{
@@ -68,7 +71,7 @@ namespace Kean.IO
 			if (result)
 			{
 				this.OnClose.Call();
-				this.next = null;
+				this.write = null;
 			}
 			return Tasks.Task.FromResult(result);
 		}
@@ -76,17 +79,13 @@ namespace Kean.IO
 		#region IDisposable Members
 		void IDisposable.Dispose()
 		{
-			if (this.Opened)
-			{
-				this.OnClose.Call();
-				this.next = null;
-			}
+			this.Close().Wait();
 		}
 		#endregion
 		#region Static Open
 		public static ICharacterOutDevice Open(Action<char> next)
 		{
-			return new TextCharacterOutDevice(content => {
+			return new CharacterOutDevice(content => {
 				while (content.MoveNext())
 					next(content.Current);
 			});
@@ -94,20 +93,26 @@ namespace Kean.IO
 		public static ICharacterOutDevice Open(Action<string> done)
 		{
 			Text.Builder output = null;
-			var result = new TextCharacterOutDevice(content => output += content);
-			result.OnClose += () => done(output);
+			var result = new CharacterOutDevice(content =>
+			{
+				output += content;
+			});
+			result.OnClose += () =>
+			{
+				done(output);
+			};
 			return result;
 		}
 		public static Tuple<ICharacterOutDevice, Tasks.Task<string>> Open()
 		{
 			Tasks.Task<string> output;
-			return Tuple.Create(TextCharacterOutDevice.Open(out output), output);
+			return Tuple.Create(CharacterOutDevice.Open(out output), output);
 		}
 		public static ICharacterOutDevice Open(out Tasks.Task<string> output)
 		{
 			var outputSource = new Tasks.TaskCompletionSource<string>();
 			output = outputSource.Task;
-			return TextCharacterOutDevice.Open(content => outputSource.SetResult(content));
+			return CharacterOutDevice.Open(content => outputSource.SetResult(content));
 		}
 		#endregion
 	}

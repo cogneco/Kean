@@ -139,31 +139,31 @@ namespace Kean.IO
 		}
 		public static ICharacterOutDevice Open(Action<char> next)
 		{
-			return TextCharacterOutDevice.Open(next);
+			return CharacterOutDevice.Open(next);
 		}
 		public static ICharacterOutDevice Open(Action<string> done)
 		{
-			return TextCharacterOutDevice.Open(done);
+			return CharacterOutDevice.Open(done);
 		}
 		public static Tuple<ICharacterOutDevice, Tasks.Task<string>> Open()
 		{
-			return TextCharacterOutDevice.Open();
+			return CharacterOutDevice.Open();
 		}
 		public static ICharacterOutDevice Open(out Tasks.Task<string> output)
 		{
-			return TextCharacterOutDevice.Open(out output);
+			return CharacterOutDevice.Open(out output);
 		}
 		public static ICharacterInDevice From(string content)
 		{
-			return TextCharacterInDevice.Open(content);
+			return CharacterInDevice.Open(content);
 		}
 		public static ICharacterInDevice From(Generic.IEnumerable<char> content)
 		{
-			return TextCharacterInDevice.Open(content);
+			return CharacterInDevice.Open(content);
 		}
 		public static ICharacterInDevice From(Generic.IEnumerator<char> content)
 		{
-			return TextCharacterInDevice.Open(content);
+			return CharacterInDevice.Open(content);
 		}
 		#endregion
 		class PeekBuffer

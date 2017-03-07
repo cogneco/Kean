@@ -1,4 +1,4 @@
-// Copyright (C) 2012, 2016  Simon Mika <simon@mika.se>
+// Copyright (C) 2012, 2016	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,11 +9,11 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
 using System;
@@ -27,15 +27,15 @@ namespace Kean.IO.Extension
 	{
 		public static Tasks.Task<bool> Write(this ITextWriter me, Generic.IEnumerable<char> buffer)
 		{
-			return me.Write(buffer.GetEnumerator());
+			return me.Write(buffer?.GetEnumerator());
 		}
 		public static Tasks.Task<bool> Write(this ITextWriter me, params char[] buffer)
 		{
 			return me.Write((Generic.IEnumerable<char>)buffer);
 		}
-		public static Tasks.Task<bool> Write(this ITextWriter me, string value)
+		public static async Tasks.Task<bool> Write(this ITextWriter me, string value)
 		{
-			return me.Write((Generic.IEnumerable<char>)value);
+			return value.IsEmpty() || await me.Write((Generic.IEnumerable<char>)value);
 		}
 		public static Tasks.Task<bool> Write<T>(this ITextWriter me, T value) where T : IConvertible
 		{

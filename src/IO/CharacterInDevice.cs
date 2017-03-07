@@ -23,11 +23,11 @@ using Kean.Extension;
 
 namespace Kean.IO
 {
-	public class TextCharacterInDevice :
+	public class CharacterInDevice :
 		ICharacterInDevice
 	{
 		Generic.IEnumerator<char?> backend;
-		private TextCharacterInDevice(Generic.IEnumerator<char> value)
+		private CharacterInDevice(Generic.IEnumerator<char> value)
 		{
 			this.backend = value.Map(c => (char?)c);
 			this.backend.MoveNext();
@@ -74,15 +74,15 @@ namespace Kean.IO
 		#region Static Open
 		internal static ICharacterInDevice Open(string content)
 		{
-			return TextCharacterInDevice.Open((Generic.IEnumerable<char>)content);
+			return CharacterInDevice.Open((Generic.IEnumerable<char>)content);
 		}
 		internal static ICharacterInDevice Open(Generic.IEnumerable<char> content)
 		{
-			return TextCharacterInDevice.Open(content.GetEnumerator());
+			return CharacterInDevice.Open(content.GetEnumerator());
 		}
 		internal static ICharacterInDevice Open(Generic.IEnumerator<char> content)
 		{
-			return new TextCharacterInDevice(content);
+			return new CharacterInDevice(content);
 		}
 		#endregion
 	}

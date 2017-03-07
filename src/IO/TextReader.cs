@@ -89,15 +89,15 @@ namespace Kean.IO
 		}
 		public static ITextReader From(string content)
 		{
-			return TextReader.Open(TextCharacterInDevice.Open(content));
+			return TextReader.Open(CharacterInDevice.Open(content));
 		}
 		public static ITextReader From(Generic.IEnumerable<char> content)
 		{
-			return TextReader.Open(TextCharacterInDevice.Open(content));
+			return TextReader.Open(CharacterInDevice.Open(content));
 		}
 		public static ITextReader From(Generic.IEnumerator<char> content)
 		{
-			return TextReader.Open(TextCharacterInDevice.Open(content));
+			return TextReader.Open(CharacterInDevice.Open(content));
 		}
 		#endregion
 	}

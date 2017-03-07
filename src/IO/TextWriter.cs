@@ -48,12 +48,13 @@ namespace Kean.IO
 		}
 		void IDisposable.Dispose()
 		{
-			this.Close().Wait();
+			var t = this.Close();
+			t.Wait();
 		}
 		public async Tasks.Task<bool> Close()
 		{
 			bool result;
-			if (result = this.backend.NotNull() && await this.backend.Close())
+			if (result = this.backend.NotNull() && await this.Flush() && await this.backend.Close())
 				this.backend = null;
 			return result;
 		}
@@ -66,8 +67,8 @@ namespace Kean.IO
 		public async Tasks.Task<bool> Flush()
 		{
 			return this.backend.NotNull() &&
-				await this.backend.Write(this.buffer) &&
-				(this.buffer = null).NotNull() &&
+				(this.buffer.IsNull() || await this.backend.Write(this.buffer) &&
+				(this.buffer = null).IsNull()) &&
 				await this.backend.Flush();
 		}
 		#endregion
