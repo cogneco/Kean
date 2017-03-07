@@ -21,23 +21,24 @@ using Generic = System.Collections.Generic;
 using Kean.Extension;
 using Kean.IO.Extension;
 
-namespace Kean.IO.CharacterOutDeviceTest
+namespace Kean.IO.TextIndenterTest
 {
 	public class Write
 	{
-		public static Generic.IEnumerable<object[]> Data {
+		public static Generic.IEnumerable<object[]> Data
+		{
 			get
 			{
-				yield return new object[] { null,	new string[] { }};
-				yield return new object[] { "",	new string[] { "" }};
-				yield return new object[] { "",	new string[] { "", "" }};
-				yield return new object[] { "42",	new string[] { "42" }};
+				yield return new object[] { null, new string[] { } };
+				yield return new object[] { "", new string[] { "" } };
+				yield return new object[] { "", new string[] { "", "" } };
+				yield return new object[] { "42", new string[] { "42" } };
 			}
 		}
 		[Theory, MemberData("Data")]
 		public void Task(string expect, string[] append)
 		{
-			var	result = CharacterDevice.Open();
+			var result = TextIndenter.Open();
 			foreach (var a in append)
 				result.Item1.Write(a.GetEnumerator());
 			result.Item1.Close();
@@ -47,25 +48,25 @@ namespace Kean.IO.CharacterOutDeviceTest
 		public void String(string expect, string[] append)
 		{
 			string result = null;
-			using (var	device = CharacterDevice.Open(r => result = r))
-			foreach (var a in append)
-				device.Write(a.GetEnumerator());
+			using (var indenter = TextIndenter.Open(r => result = r))
+				foreach (var a in append)
+					indenter.Write(a.GetEnumerator());
 			Assert.Equal(expect, result);
 		}
 		[Fact]
 		public void String()
 		{
 			string result = null;
-			using (var device = CharacterDevice.Open(r => result = r))
-				device.Write("1337".GetEnumerator()).Wait();
+			using (var writer = TextIndenter.Open(r => result = r))
+				writer.Write("1337").Wait();
 			Assert.Equal("1337", result);
 		}
 		[Fact]
 		public void Character()
 		{
 			string result = null;
-			using (var device = CharacterDevice.Open((char r) => result += r))
-				device.Write("1337".GetEnumerator()).Wait();
+			using (var writer = TextIndenter.Open((char r) => result += r))
+				writer.Write("1337").Wait();
 			Assert.Equal("1337", result);
 		}
 	}
