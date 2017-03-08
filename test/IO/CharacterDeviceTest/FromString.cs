@@ -28,9 +28,8 @@ namespace Kean.IO.CharacterDeviceTest
 		public static Generic.IEnumerable<object[]> Data {
 			get
 			{
-				//yield return new object[] { null,	new string[] { }};
-				//yield return new object[] { "",	new string[] { "" }};
-				//yield return new object[] { "",	new string[] { "", "" }};
+				yield return new object[] { "",	null };
+				yield return new object[] { "",	"" };
 				yield return new object[] { "42", "42"};
 			}
 		}
@@ -40,7 +39,10 @@ namespace Kean.IO.CharacterDeviceTest
 			using (var device = CharacterDevice.From(actual))
 			{
 				var a = device.Peek().WaitFor();
-				Assert.Equal(expect[0], a);
+				if (expect.Length > 0)
+					Assert.Equal(expect[0], a);
+				else
+					Assert.Null(a);
 				foreach (var c in expect)
 				{
 					a = device.Read().WaitFor();

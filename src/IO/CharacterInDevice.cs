@@ -30,9 +30,16 @@ namespace Kean.IO
 		private CharacterInDevice(Generic.IEnumerator<char> value)
 		{
 			this.backend = value;
-			this.backend.MoveNext();
+			this.Move();
 		}
 		#region ICharacterInDevice Members
+		bool Move()
+		{
+			bool result;
+			if (!(result = this.backend?.MoveNext() ?? false))
+				this.backend = null;
+			return result;
+		}
 		public Tasks.Task<char?> Peek()
 		{
 			return Tasks.Task.FromResult(this.backend?.Current);
@@ -40,8 +47,7 @@ namespace Kean.IO
 		public Tasks.Task<char?> Read()
 		{
 			var result = this.Peek();
-			if (!(this.backend?.MoveNext() ?? false))
-				this.backend = null;
+			this.Move();
 			return result;
 		}
 		#endregion
@@ -79,7 +85,7 @@ namespace Kean.IO
 		}
 		internal static ICharacterInDevice Open(Generic.IEnumerable<char> content)
 		{
-			return CharacterInDevice.Open(content.GetEnumerator());
+			return CharacterInDevice.Open(content?.GetEnumerator());
 		}
 		internal static ICharacterInDevice Open(Generic.IEnumerator<char> content)
 		{
