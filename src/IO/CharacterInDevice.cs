@@ -26,27 +26,28 @@ namespace Kean.IO
 	public class CharacterInDevice :
 		ICharacterInDevice
 	{
-		Generic.IEnumerator<char?> backend;
+		Generic.IEnumerator<char> backend;
 		private CharacterInDevice(Generic.IEnumerator<char> value)
 		{
-			this.backend = value.Map(c => (char?)c);
+			this.backend = value;
 			this.backend.MoveNext();
 		}
 		#region ICharacterInDevice Members
 		public Tasks.Task<char?> Peek()
 		{
-			return Tasks.Task.FromResult(this.backend.Current);
+			return Tasks.Task.FromResult(this.backend?.Current);
 		}
 		public Tasks.Task<char?> Read()
 		{
 			var result = this.Peek();
-			this.backend.MoveNext();
+			if (!(this.backend?.MoveNext() ?? false))
+				this.backend = null;
 			return result;
 		}
 		#endregion
 		#region IInDevice Members
-		public Tasks.Task<bool> Empty { get { return Tasks.Task.FromResult(this.Readable); } }
-		public bool Readable { get { return this.backend.Current.NotNull(); } }
+		public Tasks.Task<bool> Empty { get { return Tasks.Task.FromResult(!this.Readable); } }
+		public bool Readable { get { return this.backend.NotNull(); } }
 		#endregion
 		#region IDevice Members
 		public Uri.Locator Resource

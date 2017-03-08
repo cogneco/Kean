@@ -21,9 +21,9 @@ using Generic = System.Collections.Generic;
 using Kean.Extension;
 using Kean.IO.Extension;
 
-namespace Kean.IO.CharacterOutDeviceTest
+namespace Kean.IO.CharacterDeviceTest
 {
-	public class Write
+	public class ToString
 	{
 		public static Generic.IEnumerable<object[]> Data {
 			get
