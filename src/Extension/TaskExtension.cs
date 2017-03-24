@@ -1,4 +1,4 @@
-// Copyright (C) 2017  Simon Mika <simon@mika.se>
+// Copyright (C) 2017	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,11 +9,11 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
 using System;
@@ -24,6 +24,12 @@ namespace Kean.Extension
 {
 	public static class TaskExtension
 	{
+		public static void Forget<T>(this Tasks.Task<T> me)
+		{
+			me.ContinueWith(
+				t => { ; },
+				Tasks.TaskContinuationOptions.OnlyOnFaulted);
+		}
 		public async static Tasks.Task<TResult> Then<T, TResult>(this Tasks.Task<T> me, Func<T, TResult> map) {
 			return map(await me);
 		}
