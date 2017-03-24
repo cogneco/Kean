@@ -400,5 +400,75 @@ namespace Kean.Extension
 			return result;
 		}
 		#endregion
+		#region Negate
+		public static Func<bool> Negate(this Func<bool> me)
+		{
+			return () => !me();
+		}
+		public static Func<T, bool> Negate<T>(this Func<T, bool> me)
+		{
+			return argument => !me(argument);
+		}
+		public static Func<T1, T2, bool> Negate<T1, T2>(this Func<T1, T2, bool> me)
+		{
+			return (argument1, argument2) => !me(argument1, argument2);
+		}
+		public static Func<T1, T2, T3, bool> Negate<T1, T2, T3>(this Func<T1, T2, T3, bool> me)
+		{
+			return (argument1, argument2, argument3) => !me(argument1, argument2, argument3);
+		}
+		public static Func<T1, T2, T3, T4, bool> Negate<T1, T2, T3, T4>(this Func<T1, T2, T3, T4, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4) => !me(argument1, argument2, argument3, argument4);
+		}
+		public static Func<T1, T2, T3, T4, T5, bool> Negate<T1, T2, T3, T4, T5>(this Func<T1, T2, T3, T4, T5, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5) => !me(argument1, argument2, argument3, argument4, argument5);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, bool> Negate<T1, T2, T3, T4, T5, T6>(this Func<T1, T2, T3, T4, T5, T6, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6) => !me(argument1, argument2, argument3, argument4, argument5, argument6);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, bool> Negate<T1, T2, T3, T4, T5, T6, T7>(this Func<T1, T2, T3, T4, T5, T6, T7, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13, argument14) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13, argument14);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13, argument14, argument15) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13, argument14, argument15);
+		}
+		public static Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, bool> Negate<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(this Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, bool> me)
+		{
+			return (argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13, argument14, argument15, argument16) => !me(argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12, argument13, argument14, argument15, argument16);
+		}
+		#endregion
 	}
 }
