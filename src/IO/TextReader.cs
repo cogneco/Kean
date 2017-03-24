@@ -27,43 +27,50 @@ namespace Kean.IO
 		ITextReader
 	{
 		ICharacterInDevice backend;
+		Tasks.Task<char?> peeked;
 		public Uri.Locator Resource { get { return this.backend?.Resource; } }
-		public Text.Position Position { get; private set; }
+		public Tasks.Task<Text.Position> Position { get; private set; }
 		public bool Opened { get { return this.backend?.Opened ?? false; } }
-		public Tasks.Task<bool> Empty { get { return this.backend?.Empty; } }
-		public bool Readable { get { return this.backend.NotNull() && this.backend.Readable; } }
-		public char Last { get; private set; }
-		public event Action<char> OnNext;
+		async Tasks.Task<bool> EmptyHelper() {
+			return !((this.peeked.NotNull() && (await this.peeked).HasValue) || (this.backend.NotNull() && !await this.backend.Empty));
+		}
+		public Tasks.Task<bool> Empty { get { return this.EmptyHelper(); } }
+		public bool Readable { get { return this.backend?.Readable ?? false; } }
+		public event Action<char> OnRead;
 		protected TextReader(ICharacterInDevice backend)
 		{
 			this.backend = backend;
-			this.Position = new Text.Position(1, 0);
+			this.Position = Tasks.Task.FromResult(new Text.Position(0, 0));
 		}
 		~TextReader()
 		{
 			this.Close().Wait();
 		}
-		public async Tasks.Task<bool> Next()
+		async Tasks.Task<char?> ReadBackend()
 		{
-			this.Position += this.Last;
-			char? next = await this.backend.Read();
-			if (!next.HasValue)
-				this.Last = '\0';
-			else if (next == '\r' && (await this.backend.Peek()).HasValue && await this.backend.Peek() == '\n')
-			{
-				await this.backend.Read();
-				this.Last = '\n';
-			}
-			/*
-			else if (next == '\r')
-			{
-				this.Last = '\n';
-			}*/
-			else
-				this.Last = (char)next;
-			if (next.HasValue)
-				this.OnNext.Call(this.Last);
-			return next.HasValue;
+			char? result = await this.backend.Read();
+			if (result.HasValue && result == '\r' && (await this.backend.Peek()).HasValue && await this.backend.Peek() == '\n')
+				result = await this.backend.Read();
+			return result;
+		}
+		async Tasks.Task<Text.Position> GetPosition(Tasks.Task<char?> next)
+		{
+			var c = await next;
+			return c.HasValue ? await this.Position + c.Value : await this.Position;
+		}
+		public async Tasks.Task<char?> Peek() {
+			return (this.peeked.NotNull() ? await this.peeked : null) ?? await (this.peeked = this.ReadBackend());
+		}
+		public async Tasks.Task<char?> Read()
+		{
+			var next = this.Peek();
+			this.peeked = null;
+			this.Position = this.GetPosition(next);
+			var onRead = this.OnRead; // Save OnRead so that it reflects the state when the read command was issued not when the result arrives.
+			var result = await next;
+			if (result.HasValue && onRead.NotNull())
+				onRead(result.Value);
+			return result;
 		}
 		public async Tasks.Task<bool> Close()
 		{

@@ -18,37 +18,37 @@
 
 using Xunit;
 using Generic = System.Collections.Generic;
-using Kean.Extension;
+using Kean.IO.Extension;
 
-namespace Kean.IO.CharacterDeviceTest
+namespace Kean.IO.TextReaderTest
 {
-	public class FromString
+	public class ReadLine
 	{
 		public static Generic.IEnumerable<object[]> Data {
 			get
 			{
-				yield return new object[] { "",	null };
-				yield return new object[] { "",	"" };
-				yield return new object[] { "42", "42"};
+				yield return new object[] { new string[] { }, null};
+				yield return new object[] { new string[] { }, ""};
+				yield return new object[] { new [] { "0" }, "0"};
+				yield return new object[] { new string[] { "" }, "\n"};
+				yield return new object[] { new [] { "42" }, "42\n"};
+				yield return new object[] { new [] { "42", "1337", "The power of Attraction" }, "42\n1337\nThe power of Attraction\n"};
 			}
 		}
 		[Theory, MemberData("Data")]
-		public void String(string expect, string actual)
+		public async void Test(string[] expect, string actual)
 		{
-			using (var device = CharacterDevice.From(actual))
+			int i = 0;
+			using (var device = TextReader.From(actual))
 			{
-				var a = device.Peek().WaitFor();
-				if (expect.Length > 0)
-					Assert.Equal(expect[0], a);
-				else
-					Assert.Null(a);
-				foreach (var c in expect)
+				while (!await device.Empty)
 				{
-					a = device.Read().WaitFor();
-					Assert.Equal(c, a);
+					var line = await device.ReadLine();
+					Assert.InRange(i, 0, expect.Length - 1);
+					Assert.Equal(expect[i++], line);
 				}
-				Assert.True(device.Empty.WaitFor());
-				Assert.Null(device.Read().WaitFor());
+				Assert.Equal(expect.Length, i);
+				Assert.Null(await device.ReadLine());
 			}
 		}
 	}

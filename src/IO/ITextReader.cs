@@ -1,4 +1,4 @@
-// Copyright (C) 2011  Simon Mika <simon@mika.se>
+// Copyright (C) 2011	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,11 +9,11 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
 using System;
@@ -22,11 +22,9 @@ using Tasks = System.Threading.Tasks;
 namespace Kean.IO
 {
 	public interface ITextReader :
-		IInDevice
+		ICharacterInDevice
 	{
-		Text.Position Position { get; }
-		char Last { get; }
-		event Action<char> OnNext;
-		Tasks.Task<bool> Next();
+		Tasks.Task<Text.Position> Position { get; }
+		event Action<char> OnRead;
 	}
 }

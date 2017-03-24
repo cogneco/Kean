@@ -1,4 +1,4 @@
-// Copyright (C) 2011, 2017  Simon Mika <simon@mika.se>
+// Copyright (C) 2011, 2017	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,36 +9,49 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Tasks = System.Threading.Tasks;
 using Kean.Extension;
 
 namespace Kean.IO
 {
 	public class TextMark
 	{
-		string content;
+		Text.Builder content;
 		ITextReader reader;
-		Text.Position start;
-		Text.Position? end;
+		Tasks.Task<Text.Position> start;
+		Tasks.Task<Text.Position> end;
 		public TextMark(ITextReader reader)
 		{
 			this.reader = reader;
 			this.start = reader.Position;
-			reader.OnNext += character => this.content += character;
+			reader.OnRead += this.Read;
+		}
+		void Read(char character)
+		{
+			this.content += character;
 		}
 		public void End()
 		{
+			this.reader.OnRead -= this.Read; // Stop receiving new Read events, already started once will styll arrive.
 			this.end = reader.Position;
 		}
-		public static implicit operator Text.Fragment(TextMark mark)
+		async Tasks.Task<Text.Fragment> ToFragment()
 		{
-			return mark.IsNull() ? null : new Text.Fragment(mark.content, mark.start, mark.end ?? mark.reader.Position, mark.reader.Resource);
+			this.End();
+			var start = await this.start;
+			var end = await (this.end	?? this.reader.Position);
+			return new Text.Fragment(this.content, start, end, this.reader.Resource);
+		}
+		public static implicit operator Tasks.Task<Text.Fragment>(TextMark mark)
+		{
+			return mark.IsNull() ? null : mark.ToFragment();
 		}
 	}
 }
