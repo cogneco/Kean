@@ -5,6 +5,8 @@ mono: none
 dotnet: 1.0.0-preview2-1-003155
 before_script:
   - chmod a+x ./tools/build.sh
+  - chmod a+x ./tools/test.sh
+  - chmod a+x ./tools/pack.sh
 script:
   - ./tool/build.sh
   - ./tool/test.sh
