@@ -38,6 +38,13 @@ namespace Kean.Collection.Extension
 					me.Add(item);
 			return me;
 		}
+		public static IList<T> Add<T>(this IList<T> me, Generic.IEnumerator<T> items)
+		{
+			if (items.NotNull())
+				while (items.MoveNext())
+					me.Add(items.Current);
+			return me;
+		}
 		public static bool Remove<T>(this IList<T> me, Func<T, bool> predicate)
 		{
 			bool result = false;
