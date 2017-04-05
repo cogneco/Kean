@@ -2,7 +2,7 @@ language: csharp
 dist: xenial
 sudo: required
 mono: none
-dotnet: 1.0.0-preview2-1-003155
+dotnet: 1.0.0-preview2.1-003155
 before_script:
   - chmod a+x ./tools/build.sh
   - chmod a+x ./tools/test.sh
