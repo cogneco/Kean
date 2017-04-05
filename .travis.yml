@@ -8,10 +8,10 @@ before_script:
   - chmod a+x ./tools/test.sh
   - chmod a+x ./tools/pack.sh
 script:
-  - ./tool/build.sh
-  - ./tool/test.sh
+  - ./tools/build.sh
+  - ./tools/test.sh
 after_success:
-  - ./tool/pack.sh
+  - ./tools/pack.sh
 notifications:
   email:
     on_success: never
