@@ -3,15 +3,16 @@ dist: xenial
 sudo: required
 mono: none
 dotnet: 1.0.0-preview2.1-003155
+nuget: 3.5
 before_script:
   - curl -L -o nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 script:
   - dotnet restore
-  - dotnet build **/project.json
-  - dotnet test test/
+  - dotnet build **/project.json --configuration Release
+  - dotnet test test/ --configuration Release
 after_success:
-  - dotnet pack src/ --version-suffix $TRAVIS_BUILD_NUMBER -o .
-  - mono nuget.exe push *.nupkg $NUGET_API_KEY -Source https://www.myget.org/F/kean/api/v2/package
+  - dotnet pack src/ --configuration Release --version-suffix $TRAVIS_BUILD_NUMBER -o .
+  - nuget push *.nupkg $NUGET_API_KEY -Source https://www.myget.org/F/kean/api/v2/package
 notifications:
   email:
     on_success: never
