@@ -1,4 +1,4 @@
-// Copyright (C) 2016  Simon Mika <simon@mika.se>
+// Copyright (C) 2016	Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -9,15 +9,16 @@
 //
 // Kean is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with Kean.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kean.	If not, see <http://www.gnu.org/licenses/>.
 //
 
 using System;
 using Generic = System.Collections.Generic;
+using Tasks = System.Threading.Tasks;
 using Kean.Extension;
 
 namespace Kean.Text
@@ -41,18 +42,22 @@ namespace Kean.Text
 		}
 		public char? Decode(Func<byte?> next)
 		{
+			return this.Decode(() => Tasks.Task.FromResult(next())).WaitFor();
+		}
+		public async Tasks.Task<char?> Decode(Func<Tasks.Task<byte?>> next)
+		{
 			char? result = null;
 			byte[] buffer = new byte[this.MaximumSymbolLength];
 			int length = 0;
 			byte? current;
-			if ((current = next()).HasValue)
+			if ((current = await next()).HasValue)
 			{
 				buffer[0] = current.Value;
 				length = this.getSymbolLength(buffer[0]);
 				if (length > 0)
 				{
 					int i = 1;
-					for (; i < length && (current = next()).HasValue; i++)
+					for (; i < length && (current = await next()).HasValue; i++)
 						buffer[i] = current.Value;
 					foreach (var filter in this.filters)
 						if (buffer.StartsWith(filter)) {
@@ -70,6 +75,16 @@ namespace Kean.Text
 			return this.Decode(() =>
 			{
 				byte? result = null;
+				if (data.MoveNext())
+					result = data.Current;
+				return result;
+			});
+		}
+		public Tasks.Task<char?> Decode(Generic.IEnumerator<Tasks.Task<byte?>> data)
+		{
+			return this.Decode(() =>
+			{
+				Tasks.Task<byte?> result = null;
 				if (data.MoveNext())
 					result = data.Current;
 				return result;

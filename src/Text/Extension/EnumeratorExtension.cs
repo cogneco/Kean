@@ -17,6 +17,7 @@
 //
 
 using Generic = System.Collections.Generic;
+using Tasks = System.Threading.Tasks;
 
 namespace Kean.Text.Extension
 {
@@ -43,9 +44,13 @@ namespace Kean.Text.Extension
 		public static Generic.IEnumerator<char> Decode(this Generic.IEnumerator<byte> me, Encoding encoding)
 		{
 			char? result;
-			while ((result = encoding.Decode(me)).HasValue) {
+			while ((result = encoding.Decode(me)).HasValue)
 				yield return result.Value;
-			}
+		}
+		public static Generic.IEnumerator<Tasks.Task<char?>> Decode(this Generic.IEnumerator<Tasks.Task<byte?>> me, Encoding encoding)
+		{
+			while (true)
+				yield return encoding.Decode(me);
 		}
 		public static Generic.IEnumerator<byte> Encode(this Generic.IEnumerator<char> me)
 		{
