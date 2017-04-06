@@ -1,6 +1,6 @@
 {
 	"name": "Kean",
-	"version": "3.0.0-*",
+	"version": "3.0.2-*",
 	"description": ".NET library complementing the standard system libraries.",
 	"copyright": "Simon Mika",
 	"buildOptions": {
