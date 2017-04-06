@@ -10,7 +10,7 @@ script:
   - dotnet test test/ --configuration Release
 after_success:
   - dotnet pack src/ --configuration Release --version-suffix $TRAVIS_BUILD_NUMBER -o .
-  - mono nuget.exe push *.nupkg $NUGET_API_KEY -Source https://www.myget.org/F/kean/api/v2/package
+  - mono nuget.exe push Kean.3.0.0-$TRAVIS_BUILD_NUMBER.nupkg $NUGET_API_KEY -Source https://www.myget.org/F/kean/api/v2/package
 notifications:
   email:
     on_success: never
