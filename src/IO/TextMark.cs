@@ -42,7 +42,7 @@ namespace Kean.IO
 			this.reader.OnRead -= this.Read; // Stop receiving new Read events, already started once will styll arrive.
 			this.end = reader.Position;
 		}
-		async Tasks.Task<Text.Fragment> ToFragment()
+		public async Tasks.Task<Text.Fragment> ToFragment()
 		{
 			this.End();
 			var start = await this.start;
