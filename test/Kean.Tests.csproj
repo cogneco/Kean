@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>.NET library complementing the standard system libraries.</Description>
     <Copyright>Simon Mika</Copyright>
-    <VersionPrefix>3.0.2</VersionPrefix>
+    <VersionPrefix>3.0</VersionPrefix>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kean.Tests</AssemblyName>
