@@ -6,29 +6,24 @@
 	"tasks": [
 		{
 			"taskName": "build",
-			"args": [ "src/", "test/" ],
 			"isBuildCommand": true,
 			"showOutput": "silent",
 			"problemMatcher": "$msCompile"
 		},
 		{
 			"taskName": "test",
-			"args": [ "test/" ],
+			"args": [ "test/Kean.Tests.csproj" ],
 			"isTestCommand": true,
 			"showOutput": "silent",
 			"problemMatcher": [
 				"$msCompile",
 				{
-					"owner": "xunit",
+					"owner": "xunit runtime",
 					"fileLocation": "absolute",
 					"pattern": [
 						{
-							"regexp": "\\s*(.*)\\((\\d+),(\\d+)\\): at (.*)",
-							"file": 1,
-							"line": 2,
-							"column": 3,
-							"message": 4,
-							"severity": "warning"
+							"regexp": "([\\w\\.]*)\\s*\\[FAIL\\]",
+							"message": 1
 						}
 					]
 				}
