@@ -23,7 +23,7 @@ using Kean.Extension;
 
 namespace Kean.IO.Extension
 {
-	public static class TextReaderExtenion
+	public static class TextReaderExtension
 	{
 		public static TextMark Mark(this ITextReader me)
 		{
