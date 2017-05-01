@@ -54,14 +54,6 @@ namespace Kean.IO.TextWriterTest
 			Assert.Equal(expect, result);
 		}
 		[Fact]
-		public void String()
-		{
-			string result = null;
-			using (var writer = TextWriter.Open(r => result = r))
-				writer.Write("1337").Wait();
-			Assert.Equal("1337", result);
-		}
-		[Fact]
 		public void Character()
 		{
 			string result = null;

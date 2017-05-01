@@ -53,14 +53,6 @@ namespace Kean.IO.CharacterDeviceTest
 			Assert.Equal(expect, result);
 		}
 		[Fact]
-		public void String()
-		{
-			string result = null;
-			using (var device = CharacterDevice.Open(r => result = r))
-				device.Write("1337".GetEnumerator()).Wait();
-			Assert.Equal("1337", result);
-		}
-		[Fact]
 		public void Character()
 		{
 			string result = null;
