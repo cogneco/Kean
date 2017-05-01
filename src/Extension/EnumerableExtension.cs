@@ -261,11 +261,6 @@ namespace Kean.Extension
 		{
 			return me.NotNull() ? me.GetEnumerator().ToArray(0) : null;
 		}
-		public static Generic.IEnumerable<S> Cast<T, S>(this Generic.IEnumerable<T> me, Func<T, S> cast)
-		{
-			foreach (T element in me)
-				yield return cast(element);
-		}
 		public static T Get<T>(this Generic.IEnumerable<T> me, int index)
 		{
 			return me.GetEnumerator().Skip(index).Next();

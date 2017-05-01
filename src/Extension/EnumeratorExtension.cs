@@ -154,11 +154,6 @@ namespace Kean.Extension
 				initial = function(me.Current, initial);
 			return initial;
 		}
-		public static Generic.IEnumerator<S> Cast<T, S>(this Generic.IEnumerator<T> me, Func<T, S> cast)
-		{
-			while (me.MoveNext())
-				yield return cast(me.Current);
-		}
 		#region While
 		public static Generic.IEnumerator<T> While<T>(this Generic.IEnumerator<T> me, Func<T, bool> predicate)
 		{
