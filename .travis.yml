@@ -8,8 +8,8 @@ script:
   - dotnet build --configuration Release
   - dotnet test test/Kean.Tests.csproj --configuration Release
 after_success:
-  - dotnet pack src/ --configuration Release --version-suffix $(printf "CI%05d" $TRAVIS_BUILD_NUMBER) -o .
-  - dotnet nuget push src/*.*.*.*-CI?????.nupkg $NUGET_API_KEY -Source https://www.myget.org/F/kean/api/v2/package
+  - dotnet pack src/ --configuration Release -o .
+  - dotnet nuget push src/*.nupkg $NUGET_API_KEY -Source https://www.myget.org/F/kean/api/v2/package
 notifications:
   email:
     on_success: never
