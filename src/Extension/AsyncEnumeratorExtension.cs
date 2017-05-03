@@ -286,5 +286,9 @@ namespace Kean.Extension
 			});
 		}
 		#endregion
+		public static async Tasks.Task<Generic.IEnumerator<T>> WhenAll<T>(this IAsyncEnumerator<T> me) {
+			var current = await me.Next();
+			return current.IsNull() ? Enumerator.Create(current) : (await me.WhenAll()).Prepend(current);
+		}
 	}
 }
