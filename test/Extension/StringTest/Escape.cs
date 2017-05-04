@@ -21,23 +21,22 @@ using Generic = System.Collections.Generic;
 
 namespace Kean.Extension.StringTest
 {
-	public class PercentEncoding
+	public class Escape
 	{
 		public static Generic.IEnumerable<object[]> Data {
 			get {
-				yield return new object[] { "string with spaces", "string%20with%20spaces" };
-				yield return new object[] { "string\"with\"", "string%22with%22" };
+				yield return new object[] { "string\nwithout\nescape\\ characters", "string\\nwithout\\nescape\\\\ characters" };
 			}
 		}
 		[Theory, MemberData("Data")]
 		public void Encode(string decoded, string encoded)
 		{
-			Assert.Equal(encoded, decoded.PercentEncode());
+			Assert.Equal(encoded, decoded.Escape());
 		}
 		[Theory, MemberData("Data")]
 		public void Decode(string decoded, string encoded)
 		{
-			Assert.Equal(decoded, encoded.PercentDecode());
+			Assert.Equal(decoded, encoded.Unescape());
 		}
 	}
 }

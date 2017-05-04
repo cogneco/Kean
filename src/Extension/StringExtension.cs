@@ -198,6 +198,147 @@ namespace Kean.Extension
 			}
 			return result;
 		}
+		public static string Escape(this string me)
+		{
+			Generic.IEnumerator<char> escape(Generic.IEnumerator<char> data)
+			{
+				if (data.NotNull())
+					while (data.MoveNext())
+					{
+						switch (data.Current)
+						{
+							case '\a':
+								yield return '\\';
+								yield return 'a';
+								break;
+							case '\b':
+								yield return '\\';
+								yield return 'b';
+								break;
+							case '\f':
+								yield return '\\';
+								yield return 'f';
+								break;
+							case '\n':
+								yield return '\\';
+								yield return 'n';
+								break;
+							case '\r':
+								yield return '\\';
+								yield return 'r';
+								break;
+							case '\t':
+								yield return '\\';
+								yield return 't';
+								break;
+							case '\v':
+								yield return '\\';
+								yield return 'v';
+								break;
+							case '\'':
+								yield return '\\';
+								yield return '\'';
+								break;
+							case '"':
+								yield return '\\';
+								yield return '"';
+								break;
+							case '\\':
+								yield return '\\';
+								yield return '\\';
+								break;
+							case '\0':
+								yield return '\\';
+								yield return '0';
+								break;
+							default:
+								if (char.IsControl(data.Current))
+								{
+									yield return '\\';
+									yield return 'x';
+									foreach (var c in ((int)data.Current).ToString("X4"))
+										yield return c;
+								}
+								else
+									yield return data.Current;
+								break;
+						}
+					}
+			}
+			return new string(escape(me.GetEnumerator()).ToArray());
+		}
+		public static string Unescape(this string me)
+		{
+			Generic.IEnumerator<char> unescape(Generic.IEnumerator<char> data)
+			{
+				if (data.NotNull())
+					while (data.MoveNext())
+					{
+						if (data.Current == '\\' && data.MoveNext())
+						{
+							switch (data.Current)
+							{
+								case 'a':
+									yield return '\a';
+									break;
+								case 'b':
+									yield return '\b';
+									break;
+								case 'f':
+									yield return '\f';
+									break;
+								case 'n':
+									yield return '\n';
+									break;
+								case 'r':
+									yield return '\r';
+									break;
+								case 't':
+									yield return '\t';
+									break;
+								case 'v':
+									yield return '\v';
+									break;
+								case '\'':
+									yield return '\'';
+									break;
+								case '"':
+									yield return '"';
+									break;
+								case '\\':
+									yield return '\\';
+									break;
+								case 'x':
+								{
+									char p(char c) => (char)(char.IsDigit(c) ? c - '0' : c >= 'a' && c <= 'f' ? c - 'a' + 10 : 0);
+									var r = 0;
+									var s = data.Read(2);
+									while (s.MoveNext())
+										r = r * 16 + p(char.ToLower(s.Current));
+									yield return (char)r;
+									break;
+								}
+								case 'o':
+								{
+									char p(char c) => (char)(c >= '0' && c <= '7' ? c - '7' + 10 : 0);
+									var r = 0;
+									var s = data.Read(3);
+									while (s.MoveNext())
+										r = r * 8 + p(char.ToLower(s.Current));
+									yield return (char)r;
+									break;
+								}
+								case '\n':
+								default:
+									break;
+							}
+						}
+						else
+							yield return data.Current;
+					}
+				}
+			return new string(unescape(me.GetEnumerator()).ToArray());
+		}
 		public static Generic.IEnumerator<char> GetEnumerator(this string me)
 		{
 			for (int i = 0; i < me.Length; i++)
