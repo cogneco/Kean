@@ -41,13 +41,13 @@ namespace Kean.Extension.EnumerableTest
 			}
 			[Theory]
 			[MemberData("SameOrEqualsData")]
-			public void SameOrEquals(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
+			public void ArrayEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 			{
-				Assert.True(left.SameOrEquals(right));
+				Assert.Equal(left.ToArray(), right.ToArray());
 			}
 			[Theory]
 			[MemberData("SameOrEqualsData")]
-			public void EnumeratorEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
+			public void EnumerableEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 			{
 				Assert.True(left.SameOrEquals(right));
 			}

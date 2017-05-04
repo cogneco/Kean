@@ -428,6 +428,6 @@ namespace Kean.Extension
 						yield return combine(meItem, otherItem);
 		}
 		public static bool SameOrEquals<T>(this Generic.IEnumerable<T> me, Generic.IEnumerable<T> other) =>
-		 me.IsNull() && other.IsNull() || me.GetEnumerator().Equals(other.GetEnumerator());
+		 me.IsNull() && other.IsNull() || me.GetEnumerator().SameOrEquals(other.GetEnumerator());
 	}
 }
