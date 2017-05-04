@@ -23,12 +23,28 @@ namespace Kean.Extension.EnumeratorTest
 {
 	public class Equality
 	{
+		static string[] Data => new string[] { "42", null, "1337", "There are 10 types of people, the ones that know binary and the ones don't.", "" };
 		public static Generic.IEnumerable<object[]> SameOrEqualsData
 		{
 			get
 			{
-				var data = ((Generic.IEnumerable<string>)new string[] { "42", null, "1337", "There are 10 types of people, the ones that know binary and the ones don't.", "" });
-				yield return new object[] { data.GetEnumerator(), data.GetEnumerator() };
+				yield return new object[] { Equality.Data.GetEnumerator(), Equality.Data.GetEnumerator() };
+			}
+		}
+		public static Generic.IEnumerable<object[]> NotEqualData {
+			get {
+				var expect = Equality.Data;
+				var actual = Equality.Data;
+				actual[0] = null;
+				yield return new object[] { expect.GetEnumerator(), actual.GetEnumerator() };
+				yield return new object[] { expect.GetEnumerator(), null };
+				yield return new object[] { null, actual.GetEnumerator() };
+				yield return new object[] { expect.GetEnumerator(), new string [0] };
+				yield return new object[] { new string[0], actual.GetEnumerator() };
+				yield return new object[] { expect.GetEnumerator(), new string [1] };
+				yield return new object[] { new string[1], actual.GetEnumerator() };
+				yield return new object[] { expect.GetEnumerator(), new string [] { "The power of attraction." } };
+				yield return new object[] { new string[] { "The power of attraction." }, actual.GetEnumerator() };
 			}
 		}
 		[Theory]
@@ -38,10 +54,22 @@ namespace Kean.Extension.EnumeratorTest
 			Assert.Equal(left.ToArray(), right.ToArray());
 		}
 		[Theory]
+		[MemberData("NotEqualsData")]
+		public void ArrayNotEqual(Generic.IEnumerator<string> left, Generic.IEnumerator<string> right)
+		{
+			Assert.NotEqual(left.ToArray(), right.ToArray());
+		}
+		[Theory]
 		[MemberData("SameOrEqualsData")]
 		public void EnumeratorEqual(Generic.IEnumerator<string> left, Generic.IEnumerator<string> right)
 		{
 			Assert.True(left.SameOrEquals(right));
+		}
+		[Theory]
+		[MemberData("NotEqualsData")]
+		public void EnumeratorNotEqual(Generic.IEnumerator<string> left, Generic.IEnumerator<string> right)
+		{
+			Assert.False(left.SameOrEquals(right));
 		}
 	}
 }
