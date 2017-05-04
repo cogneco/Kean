@@ -414,29 +414,6 @@ namespace Kean.Extension
 				result.Append(c);
 			return result.ToString();
 		}
-		public static bool SameOrEquals<T>(this Generic.IEnumerable<T> me, Generic.IEnumerable<T> other) where T : IEquatable<T>
-		{
-			bool result = me.NotNull() && other.NotNull() || me.IsNull() && me.NotNull();
-			if (result)
-			{
-				var meEnumerator = me.GetEnumerator();
-				var otherEnumerator = other.GetEnumerator();
-				do
-				{
-					var meMoved = meEnumerator.MoveNext();
-					var otherMoved = otherEnumerator.MoveNext();
-					if (meMoved && otherMoved)
-						result = meEnumerator.Current.IsNull() && otherEnumerator.Current.IsNull() || meEnumerator.Current.Equals(otherEnumerator.Current);
-					else
-					{
-						result = meMoved == otherMoved;
-						break;
-					}
-				}
-				while (result);
-			}
-			return result;
-		}
 		public static Generic.IEnumerable<TResult> Zip<TLeft, TRight, TResult>(this Generic.IEnumerable<TLeft> me, Generic.IEnumerable<TRight> other, Func<TLeft, TRight, TResult> combine)
 		{
 			return me.NotNull() && other.NotNull() && combine.NotNull() ?
@@ -450,5 +427,7 @@ namespace Kean.Extension
 					foreach (var otherItem in other)
 						yield return combine(meItem, otherItem);
 		}
+		public static bool SameOrEquals<T>(this Generic.IEnumerable<T> me, Generic.IEnumerable<T> other) =>
+		 me.IsNull() && other.IsNull() || me.GetEnumerator().Equals(other.GetEnumerator());
 	}
 }

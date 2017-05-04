@@ -45,5 +45,11 @@ namespace Kean.Extension.EnumerableTest
 			{
 				Assert.True(left.SameOrEquals(right));
 			}
+			[Theory]
+			[MemberData("SameOrEqualsData")]
+			public void EnumeratorEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
+			{
+				Assert.True(left.SameOrEquals(right));
+			}
 		}
 }

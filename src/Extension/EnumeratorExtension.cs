@@ -302,5 +302,14 @@ namespace Kean.Extension
 					yield return other.Current;
 		}
 		#endregion
+		public static bool SameOrEquals<T>(this Generic.IEnumerator<T> me, Generic.IEnumerator<T> other)
+		{
+			bool meNext, otherNext;
+			return
+				me.IsNull() && other.IsNull() ||
+				me.NotNull() && other.NotNull() ||
+				!(meNext = me.MoveNext()) & !(otherNext = other.MoveNext()) ||
+				meNext && otherNext && me.Current.SameOrEquals(other.Current) && me.Equals(other);
+		}
 	}
 }
