@@ -16,17 +16,7 @@
 			"isTestCommand": true,
 			"showOutput": "silent",
 			"problemMatcher": [
-				"$msCompile",
-				{
-					"owner": "xunit runtime",
-					"fileLocation": "absolute",
-					"pattern": [
-						{
-							"regexp": "([\\w\\.]*)\\s*\\[FAIL\\]",
-							"message": 1
-						}
-					]
-				}
+				"$msCompile"
 			]
 		}
 	]
