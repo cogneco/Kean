@@ -32,6 +32,7 @@ namespace Kean.IO.TextReaderTest
 				yield return new object[] { new string[] { " " }, " "};
 				yield return new object[] { new string[] { "0" }, "0"};
 				yield return new object[] { new [] { "42 " }, "42 "};
+				yield return new object[] { new [] { "42" }, "42"};
 				yield return new object[] { new [] { "42\n1337\nThe ", "power ", "of ", "Attraction\n" }, "42\n1337\nThe power of Attraction\n"};
 			}
 		}
