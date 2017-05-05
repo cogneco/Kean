@@ -28,48 +28,50 @@ namespace Kean.Extension.EnumeratorTest
 		{
 			get
 			{
-				yield return new object[] { Equality.Data.GetEnumerator(), Equality.Data.GetEnumerator() };
+				yield return new object[] { Equality.Data, Equality.Data };
 			}
 		}
-		public static Generic.IEnumerable<object[]> NotEqualData {
+		public static Generic.IEnumerable<object[]> NotEqualsData {
 			get {
-				var expect = Equality.Data;
+				var expect = (Generic.IEnumerable<string>)Equality.Data;
 				var actual = Equality.Data;
 				actual[0] = null;
-				yield return new object[] { expect.GetEnumerator(), actual.GetEnumerator() };
-				yield return new object[] { expect.GetEnumerator(), null };
-				yield return new object[] { null, actual.GetEnumerator() };
-				yield return new object[] { expect.GetEnumerator(), new string [0] };
-				yield return new object[] { new string[0], actual.GetEnumerator() };
-				yield return new object[] { expect.GetEnumerator(), new string [1] };
-				yield return new object[] { new string[1], actual.GetEnumerator() };
-				yield return new object[] { expect.GetEnumerator(), new string [] { "The power of attraction." } };
-				yield return new object[] { new string[] { "The power of attraction." }, actual.GetEnumerator() };
+				yield return new object[] { expect, actual };
+				actual = Equality.Data;
+				yield return new object[] { expect, null };
+				yield return new object[] { null, actual };
+				yield return new object[] { expect, new string [0] };
+				yield return new object[] { new string[0], actual };
+				yield return new object[] { expect, new string [1] };
+				yield return new object[] { new string[1], actual };
+				yield return new object[] { expect, new string [] { "The power of attraction." } };
+				yield return new object[] { new string[] { "The power of attraction." }, actual };
+
 			}
 		}
 		[Theory]
 		[MemberData("SameOrEqualsData")]
-		public void ArrayEqual(Generic.IEnumerator<string> left, Generic.IEnumerator<string> right)
+		public void ArrayEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
-			Assert.Equal(left.ToArray(), right.ToArray());
+			Assert.Equal(left?.GetEnumerator().ToArray(), right?.GetEnumerator().ToArray());
 		}
 		[Theory]
 		[MemberData("NotEqualsData")]
-		public void ArrayNotEqual(Generic.IEnumerator<string> left, Generic.IEnumerator<string> right)
+		public void ArrayNotEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
-			Assert.NotEqual(left.ToArray(), right.ToArray());
+			Assert.NotEqual(left?.GetEnumerator().ToArray(), right?.GetEnumerator().ToArray());
 		}
 		[Theory]
 		[MemberData("SameOrEqualsData")]
-		public void EnumeratorEqual(Generic.IEnumerator<string> left, Generic.IEnumerator<string> right)
+		public void EnumeratorEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
-			Assert.True(left.SameOrEquals(right));
+			Assert.True(left?.GetEnumerator().SameOrEquals(right?.GetEnumerator()));
 		}
 		[Theory]
 		[MemberData("NotEqualsData")]
-		public void EnumeratorNotEqual(Generic.IEnumerator<string> left, Generic.IEnumerator<string> right)
+		public void EnumeratorNotEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
-			Assert.False(left.SameOrEquals(right));
+			Assert.False(left?.GetEnumerator().SameOrEquals(right?.GetEnumerator()));
 		}
 	}
 }
