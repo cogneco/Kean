@@ -28,6 +28,8 @@ namespace Kean.Extension.EnumeratorTest
 		{
 			get
 			{
+				yield return new object[] { null, null };
+				yield return new object[] { new string[0], new string[0] };
 				yield return new object[] { Equality.Data, Equality.Data };
 			}
 		}
@@ -35,7 +37,7 @@ namespace Kean.Extension.EnumeratorTest
 			get {
 				var expect = (Generic.IEnumerable<string>)Equality.Data;
 				var actual = Equality.Data;
-				actual[0] = null;
+				actual[3] = null;
 				yield return new object[] { expect, actual };
 				actual = Equality.Data;
 				yield return new object[] { expect, null };
@@ -65,13 +67,13 @@ namespace Kean.Extension.EnumeratorTest
 		[MemberData("SameOrEqualsData")]
 		public void EnumeratorEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
-			Assert.True(left?.GetEnumerator().SameOrEquals(right?.GetEnumerator()));
+			Assert.True((left?.GetEnumerator()).SameOrEquals(right?.GetEnumerator()));
 		}
 		[Theory]
 		[MemberData("NotEqualsData")]
 		public void EnumeratorNotEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
-			Assert.False(left?.GetEnumerator().SameOrEquals(right?.GetEnumerator()));
+			Assert.False((left?.GetEnumerator()).SameOrEquals(right?.GetEnumerator()));
 		}
 	}
 }
