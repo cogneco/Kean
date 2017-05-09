@@ -39,7 +39,8 @@ namespace Kean
 		{
 			return enumerator.NotNull() ? AsyncEnumerator.Create(() => Tasks.Task.FromResult(enumerator.Next()), enumerator) : AsyncEnumerator.Empty<T>();
 		}
-		public static IAsyncEnumerator<T> Create<T>(params T[] items) => AsyncEnumerator.Create(items as Generic.IEnumerator<T>);
+		public static IAsyncEnumerator<T> Create<T>(Generic.IEnumerable<T> enumerable) => AsyncEnumerator.Create(enumerable?.GetEnumerator());
+		public static IAsyncEnumerator<T> Create<T>(params T[] items) => AsyncEnumerator.Create(items as Generic.IEnumerable<T>);
 	}
 	public class AsyncEnumerator<T> :
 		IAsyncEnumerator<T>,
