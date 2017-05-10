@@ -18,10 +18,10 @@
 
 namespace Kean.Collection
 {
-	public interface IQueue<T> :
-		IPeekDequeue<T>
+	public interface IPeekDequeue<T>
 	{
-		int Count { get; }
-		IQueue<T> Enqueue(T item);
+		bool Empty { get; }
+		T Peek();
+		T Dequeue();
 	}
 }

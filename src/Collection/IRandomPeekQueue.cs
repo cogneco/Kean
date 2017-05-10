@@ -1,4 +1,4 @@
-// Copyright (C) 2009  Simon Mika <simon@mika.se>
+// Copyright (C) 2017  Simon Mika <simon@mika.se>
 //
 // This file is part of Kean.
 //
@@ -18,10 +18,9 @@
 
 namespace Kean.Collection
 {
-	public interface IQueue<T> :
-		IPeekDequeue<T>
+	public interface IRandomPeekQueue<T> :
+		IQueue<T>,
+		IRandomPeekDequeue<T>
 	{
-		int Count { get; }
-		IQueue<T> Enqueue(T item);
 	}
 }

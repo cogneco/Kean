@@ -18,11 +18,13 @@
 
 using Kean.Extension;
 using Kean.Collection.Extension;
+using System;
 
 namespace Kean.Collection.Wrapped
 {
 	public class Queue<T> :
 		IQueue<T>,
+		IRandomPeekQueue<T>,
 		IArrayCopyable<T>,
 		IAsArray<T>
 	{
@@ -44,6 +46,11 @@ namespace Kean.Collection.Wrapped
 		#region IQueue<T>
 		public bool Empty { get { return this.count == 0; } }
 		public int Count { get { return this.count; } }
+
+		int IQueue<T>.Count => throw new NotImplementedException();
+
+		bool IPeekDequeue<T>.Empty => throw new NotImplementedException();
+
 		public IQueue<T> Enqueue(T item)
 		{
 			if (this.count == this.backend.Count)
@@ -64,6 +71,10 @@ namespace Kean.Collection.Wrapped
 		public T Peek()
 		{
 			return this.count == 0 ? default(T) : this.backend[this.tail];
+		}
+		public T Peek(int index)
+		{
+			return this.count <= index ? default(T) : this.backend[(this.tail - index + this.backend.Count) % this.backend.Count];
 		}
 		public T Dequeue()
 		{
