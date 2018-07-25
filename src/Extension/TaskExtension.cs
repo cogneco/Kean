@@ -68,6 +68,19 @@ namespace Kean.Extension
 			me.Then(r => result = r).Wait(timeout);
 			return result;
 		}
+		public static async Tasks.Task<Tuple<T1, T2>> And<T1, T2>(this Tasks.Task<T1> me, Tasks.Task<T2> other) => Tuple.Create(await me, await other);
+		public static async Tasks.Task<Tuple<T1, T2, T3>> And<T1, T2, T3>(this Tasks.Task<Tuple<T1, T2>> me, Tasks.Task<T3> other) {
+			var t = await me;
+			return Tuple.Create(t.Item1, t.Item2, await other);
+		}
+		public static async Tasks.Task<Tuple<T1, T2, T3, T4>> And<T1, T2, T3, T4>(this Tasks.Task<Tuple<T1, T2, T3>> me, Tasks.Task<T4> other) {
+			var t = await me;
+			return Tuple.Create(t.Item1, t.Item2, t.Item3, await other);
+		}
+		public static async Tasks.Task<Tuple<T1, T2, T3, T4, T5>> And<T1, T2, T3, T4, T5>(this Tasks.Task<Tuple<T1, T2, T3, T4>> me, Tasks.Task<T5> other) {
+			var t = await me;
+			return Tuple.Create(t.Item1, t.Item2, t.Item3, t.Item4, await other);
+		}
 		public static async Tasks.Task<Generic.IEnumerable<T>> WhenAll<T>(this Generic.IEnumerable<Tasks.Task<T>> me) {
 			return await Tasks.Task.WhenAll(me);
 		}
