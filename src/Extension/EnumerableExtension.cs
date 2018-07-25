@@ -414,6 +414,12 @@ namespace Kean.Extension
 				result.Append(c);
 			return result.ToString();
 		}
+		public static Generic.IEnumerable<T> Join<T>(this Generic.IEnumerable<Generic.IEnumerable<T>> me)
+		{
+			foreach (var enumerable in me)
+				foreach (var item in enumerable)
+					yield return item;
+		}
 		public static Generic.IEnumerable<TResult> Zip<TLeft, TRight, TResult>(this Generic.IEnumerable<TLeft> me, Generic.IEnumerable<TRight> other, Func<TLeft, TRight, TResult> combine)
 		{
 			return me.NotNull() && other.NotNull() && combine.NotNull() ?
