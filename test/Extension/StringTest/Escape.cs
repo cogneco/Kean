@@ -28,12 +28,12 @@ namespace Kean.Extension.StringTest
 				yield return new object[] { "string\nwithout\nescape\\ characters", "string\\nwithout\\nescape\\\\ characters" };
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Encode(string decoded, string encoded)
 		{
 			Assert.Equal(encoded, decoded.Escape());
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Decode(string decoded, string encoded)
 		{
 			Assert.Equal(decoded, encoded.Unescape());

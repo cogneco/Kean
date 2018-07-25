@@ -36,7 +36,7 @@ namespace Kean.IO.TextReaderTest
 				yield return new object[] { new [] { "42\n1337\nThe ", "power ", "of ", "Attraction\n" }, "42\n1337\nThe power of Attraction\n"};
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public async void Test(string[] expect, string actual)
 		{
 			int i = 0;

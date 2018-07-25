@@ -37,7 +37,7 @@ namespace Kean.Collection
 		public static Generic.IEnumerable<object[]> All {
 			get { return ListTest.Create.AllPermutations(EnumerableTest.Data, (create, expected) => new object[] { create, expected }); }
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void Add(Func<string[], IList<string>> create, string[] expected)
 		{
 			var actual = create(expected);

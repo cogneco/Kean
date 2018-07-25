@@ -37,7 +37,7 @@ namespace Kean.Text.BuilderTest
 				yield return new object[] { "1337", new Builder(), new Generic.IEnumerable<char>[] { new[] { '1', '3', '3', '7' } } };
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Method(string expected, Builder @base, Generic.IEnumerable<char>[] append)
 		{
 			if (@base.IsNull())
@@ -46,14 +46,14 @@ namespace Kean.Text.BuilderTest
 				@base = @base.Append(a);
 			Assert.Equal(expected, @base);
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Operator(string expected, Builder @base, Generic.IEnumerable<char>[] append)
 		{
 			foreach (var a in append)
 				@base += a;
 			Assert.Equal(expected, @base);
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void EnumeratorMethod(string expected, Builder @base, Generic.IEnumerable<char>[] append)
 		{
 			if (@base.IsNull())
@@ -62,7 +62,7 @@ namespace Kean.Text.BuilderTest
 				@base = @base.Append(a?.GetEnumerator());
 			Assert.Equal(expected, @base);
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void EnumeratorOperator(string expected, Builder @base, Generic.IEnumerable<char>[] append)
 		{
 			foreach (var a in append)

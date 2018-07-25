@@ -32,7 +32,7 @@ namespace Kean.IO.CharacterDeviceTest
 				yield return new object[] { "42", "42"};
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void String(string expect, string actual)
 		{
 			using (var device = CharacterDevice.From(actual))

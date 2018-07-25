@@ -52,25 +52,25 @@ namespace Kean.Extension.EnumeratorTest
 			}
 		}
 		[Theory]
-		[MemberData("SameOrEqualsData")]
+		[MemberData(nameof(SameOrEqualsData))]
 		public void ArrayEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
 			Assert.Equal(left?.GetEnumerator().ToArray(), right?.GetEnumerator().ToArray());
 		}
 		[Theory]
-		[MemberData("NotEqualsData")]
+		[MemberData(nameof(NotEqualsData))]
 		public void ArrayNotEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
 			Assert.NotEqual(left?.GetEnumerator().ToArray(), right?.GetEnumerator().ToArray());
 		}
 		[Theory]
-		[MemberData("SameOrEqualsData")]
+		[MemberData(nameof(SameOrEqualsData))]
 		public void EnumeratorEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
 			Assert.True((left?.GetEnumerator()).SameOrEquals(right?.GetEnumerator()));
 		}
 		[Theory]
-		[MemberData("NotEqualsData")]
+		[MemberData(nameof(NotEqualsData))]
 		public void EnumeratorNotEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 		{
 			Assert.False((left?.GetEnumerator()).SameOrEquals(right?.GetEnumerator()));

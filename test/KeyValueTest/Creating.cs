@@ -23,19 +23,19 @@ namespace Kean.KeyValueTest
 	public class Creating
 	{
 		[Theory, InlineData("key", "value")]
-		public void Create(string key, string value) {
+		public void CreateStringString(string key, string value) {
 			this.CreateHelper(key, value);
 		}
 		[Theory, InlineData("key", 42)]
-		public void Create(string key, int value) {
+		public void CreateStringInteger(string key, int value) {
 			this.CreateHelper(key, value);
 		}
 		[Theory, InlineData(42, "value")]
-		public void Create(int key, string value) {
+		public void CreateIntegerString(int key, string value) {
 			this.CreateHelper(key, value);
 		}
 		[Theory, InlineData(42, 1337)]
-		public void Create(int key, int value) {
+		public void CreateIntegerInteger(int key, int value) {
 			this.CreateHelper(key, value);
 		}
 		void CreateHelper<TKey, TValue>(TKey key, TValue value)

@@ -29,12 +29,12 @@ namespace Kean.Extension.StringTest
 				yield return new object[] { "string\"with\"", "string%22with%22" };
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Encode(string decoded, string encoded)
 		{
 			Assert.Equal(encoded, decoded.PercentEncode());
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Decode(string decoded, string encoded)
 		{
 			Assert.Equal(decoded, encoded.PercentDecode());

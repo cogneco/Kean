@@ -34,7 +34,7 @@ namespace Kean.IO.CharacterDeviceTest
 				yield return new object[] { "42",	new string[] { "42" }};
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Task(string expect, string[] append)
 		{
 			var	result = CharacterDevice.Open();
@@ -43,7 +43,7 @@ namespace Kean.IO.CharacterDeviceTest
 			result.Item1.Close();
 			Assert.Equal(expect, result.Item2.WaitFor());
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void String(string expect, string[] append)
 		{
 			string result = null;

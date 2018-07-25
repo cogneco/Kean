@@ -31,7 +31,7 @@ namespace Kean.KeyValueTest
 				yield return new object[] { KeyValue.Create(42, 1337), "(42 = 1337)" };
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void To(object keyValue, string correct)
 		{
 			Assert.Equal(keyValue.ToString(), correct);

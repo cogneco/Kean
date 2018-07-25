@@ -51,13 +51,13 @@ namespace Kean.Collection
 		public static Generic.IEnumerable<object[]> All {
 			get { return EnumerableTest.Create.AllPermutations(EnumerableTest.Data, (create, expected) => new object[] { create, expected }); }
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void Equal(Func<string[], Generic.IEnumerable<string>> create, string[] expected)
 		{
 			var actual = create(expected);
 			Assert.Equal(expected, actual);
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void NotEqual(Func<string[], Generic.IEnumerable<string>> create, string[] expected)
 		{
 			var actual = create(expected);
@@ -70,7 +70,7 @@ namespace Kean.Collection
 				Assert.NotEqual(changed, actual);
 			}
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void SameOrEquals(Func<string[], Generic.IEnumerable<string>> create, string[] expected)
 		{
 			var actual = create(expected);
@@ -79,7 +79,7 @@ namespace Kean.Collection
 			// Equals
 			Assert.True(actual.SameOrEquals(expected));
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void NotSameOrEquals(Func<string[], Generic.IEnumerable<string>> create, string[] expected)
 		{
 			var actual = create(expected);

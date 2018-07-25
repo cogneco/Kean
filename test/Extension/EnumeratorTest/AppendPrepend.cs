@@ -38,13 +38,13 @@ namespace Kean.Extension.EnumeratorTest
 			}
 		}
 		[Theory]
-		[MemberData("Data")]
+		[MemberData(nameof(Data))]
 		public void Append(Generic.IEnumerable<char> expect, Generic.IEnumerator<char> prefix, Generic.IEnumerator<char> postfix)
 		{
 			Assert.Equal(expect.ToArray(), prefix.Append(postfix).ToArray());
 		}
 		[Theory]
-		[MemberData("Data")]
+		[MemberData(nameof(Data))]
 		public void Prepend(Generic.IEnumerable<char> expect, Generic.IEnumerator<char> prefix, Generic.IEnumerator<char> postfix)
 		{
 			Assert.Equal(expect.ToArray(), postfix.Prepend(prefix).ToArray());

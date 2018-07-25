@@ -33,7 +33,7 @@ namespace Kean.Text.BuilderTest
 				yield return new object[] { 6, new Builder(new [] { 's', 't', 'r', 'i', 'n', 'g' }) };
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void Test(int expected, Builder actual)
 		{
 			Assert.Equal(expected, actual.Length);

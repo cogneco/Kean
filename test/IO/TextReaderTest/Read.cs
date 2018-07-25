@@ -35,7 +35,7 @@ namespace Kean.IO.TextReaderTest
 				yield return new object[] { "42\n1337\nThe power of Attraction\n".ToCharArray(), "42\n1337\nThe power of Attraction\n"};
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public async void UnconditionalRead(char[] expect, string actual)
 		{
 			int i = 0;
@@ -56,7 +56,7 @@ namespace Kean.IO.TextReaderTest
 				Assert.Null(await device.ReadLine());
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public async void ConditionalRead(char[] expect, string actual)
 		{
 			int i = 0;
@@ -77,7 +77,7 @@ namespace Kean.IO.TextReaderTest
 				Assert.Null(await device.ReadLine());
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public async void ConditionalArrayRead(char[] expect, string actual)
 		{
 			int i = 0;
@@ -98,7 +98,7 @@ namespace Kean.IO.TextReaderTest
 				Assert.Null(await device.ReadLine());
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public async void ConditionalFunctionRead(char[] expect, string actual)
 		{
 			int i = 0;

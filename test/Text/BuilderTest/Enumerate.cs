@@ -29,7 +29,7 @@ namespace Kean.Text.BuilderTest
 				yield return new object[] { "string", new Builder(new [] { 's', 't', 'r', 'i', 'n', 'g' }) };
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void IsEnumerate(string expected, Builder actual)
 		{
 			Assert.Equal(Enumerable.Create((Generic.IEnumerable<char>)expected), Enumerable.Create((Generic.IEnumerable<char>)actual));

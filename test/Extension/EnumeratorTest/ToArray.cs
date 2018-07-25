@@ -34,7 +34,7 @@ namespace Kean.Extension.EnumeratorTest
 					yield return new object[] { new [] { '\0' }, "\0".GetEnumerator() };
 				}
 			}
-			[Theory, MemberData("Data")]
+			[Theory, MemberData(nameof(Data))]
 			public void Test(char[] expected, Generic.IEnumerator<char> actual)
 			{
 				Assert.Equal(expected, actual.ToArray());

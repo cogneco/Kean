@@ -30,12 +30,12 @@ namespace Kean.Text.BuilderTest
 				yield return new object[] { "string", new Builder(new [] { 's', 't', 'r', 'i', 'n', 'g' }) };
 			}
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void ToCast(string expected, Builder actual)
 		{
 			Assert.Equal(expected, (string)actual);
 		}
-		[Theory, MemberData("Data")]
+		[Theory, MemberData(nameof(Data))]
 		public void ToMethod(string expected, Builder actual)
 		{
 			Assert.Equal(expected, actual.ToString());

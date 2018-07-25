@@ -45,7 +45,7 @@ namespace Kean.Extension.EnumerableTest
 					yield return new object[] { "421337There are 10 types of people, the ones that know binary and the ones that don't.", new string[] { "42", null, "1337", "There are 10 types of people, the ones that know binary and the ones that don't.", "" } };
 				}
 			}
-			[Theory, MemberData("Data")]
+			[Theory, MemberData(nameof(Data))]
 			public void Equal(string expected, Generic.IEnumerable<string> actual)
 			{
 				Assert.Equal(expected, actual.Join());

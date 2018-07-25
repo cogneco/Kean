@@ -29,24 +29,23 @@ namespace Kean.Extension.EnumerableTest
 				{
 				var data = new string[] { "42", null, "1337", "There are 10 types of people, the ones that know binary and the ones don't.", "" };
 				var copy = new string[] { "42", null, "1337", "There are 10 types of people, the ones that know binary and the ones don't.", "" };
-				yield return new object[] { data, data };
 				yield return new object[] { data, copy };
 			}
 			}
 			[Theory]
-			[MemberData("SameOrEqualsData")]
+			[MemberData(nameof(SameOrEqualsData))]
 			public void Equal(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 			{
 				Assert.Equal(left, right);
 			}
 			[Theory]
-			[MemberData("SameOrEqualsData")]
+			[MemberData(nameof(SameOrEqualsData))]
 			public void ArrayEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 			{
 				Assert.Equal(left.ToArray(), right.ToArray());
 			}
 			[Theory]
-			[MemberData("SameOrEqualsData")]
+			[MemberData(nameof(SameOrEqualsData))]
 			public void EnumerableEqual(Generic.IEnumerable<string> left, Generic.IEnumerable<string> right)
 			{
 				Assert.True(left.SameOrEquals(right));

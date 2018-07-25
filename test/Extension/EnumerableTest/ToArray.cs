@@ -34,7 +34,7 @@ namespace Kean.Extension.EnumerableTest
 					yield return new object[] { new [] { '\0' }, (Generic.IEnumerable<char>)"\0" };
 				}
 			}
-			[Theory, MemberData("Data")]
+			[Theory, MemberData(nameof(Data))]
 			public void Test(char[] expected, Generic.IEnumerable<char> actual)
 			{
 				Assert.Equal(expected, actual.ToArray());

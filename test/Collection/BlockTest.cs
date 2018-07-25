@@ -37,20 +37,20 @@ namespace Kean.Collection
 		public static Generic.IEnumerable<object[]> All {
 			get { return BlockTest.Create.AllPermutations(EnumerableTest.Data, (create, expected) => new object[] { create, expected }); }
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void Count(Func<string[], IBlock<string>> create, string[] expected)
 		{
 			var actual = create(expected);
 			Assert.Equal(expected.Length, actual.Count);
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void Get(Func<string[], IBlock<string>> create, string[] expected)
 		{
 			var actual = create(expected);
 			for (var i = 0; i < expected.Length; i++)
 				Assert.Equal(expected[i], actual[i]);
 		}
-		[Theory, MemberData("All")]
+		[Theory, MemberData(nameof(All))]
 		public void Set(Func<string[], IBlock<string>> create, string[] expected)
 		{
 			var actual = create(expected);
